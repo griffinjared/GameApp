@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">GameApp</string>
     <string name="action_settings">Settings</string>
+
+    //Main menu buttons
+    <string name="main_buton_1">New Game</string>
+    <string name="main_buton_2">Continue</string>
+    <string name="main_buton_3">Settings</string>
+    <string name="main_buton_4">Scores</string>
 </resources>
