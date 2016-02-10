@@ -51,6 +51,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testMethod() {
-        int i = 101;
+        int i = 0;
     }
 }
