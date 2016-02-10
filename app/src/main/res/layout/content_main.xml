@@ -12,8 +12,28 @@
     tools:context="com.gameapp.gameapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Game" />
+    <Button
+        android:layout_width = "fill_parent"
+        android:layout_height = "wrap_content"
+        android:text = "@string/main_button_1">
+    </Button>
+
+    <Button
+        android:layout_width = "fill_parent"
+        android:layout_height = "wrap_content"
+        android:text = "@string/main_button_2">
+    </Button>
+
+    <Button
+        android:layout_width = "fill_parent"
+        android:layout_height = "wrap_content"
+        android:text = "@string/main_button_3">
+    </Button>
+
+    <Button
+        android:layout_width = "fill_parent"
+        android:layout_height = "wrap_content"
+        android:text = "@string/main_button_4">
+    </Button>
+
 </RelativeLayout>
