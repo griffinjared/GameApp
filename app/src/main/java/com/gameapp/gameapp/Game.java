@@ -2,18 +2,16 @@ package com.gameapp.gameapp;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class Game extends Activity {
+/** Despite its name, the Game class doesn't do much
+ *  Instead, it is just the Activity for the Game's starting processes
+ *  Just like how the MainActivity brings up the menu and doesn't do much else, this class starts up the game and then waits for it be over
+ */
 
-    gameClass surfaceView;
+public class Game extends Activity {
 
     private static final String TAG = Game.class.getSimpleName();
 
@@ -28,7 +26,7 @@ public class Game extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //Content View
-        //setContentView(new gameClass(this));
+        setContentView(new Screen(this));
         Log.d(TAG, "View added");
     }
 
