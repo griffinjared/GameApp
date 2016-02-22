@@ -23,6 +23,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
     private static final String TAG = Screen.class.getSimpleName();
+    private SeedGenerator seeder;
 
     public Screen(Context context) {
         super(context);
@@ -30,6 +31,9 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         //create the game loop thread
         thread = new MainThread(getHolder(), this);
+
+        //Game components
+        seeder = new SeedGenerator();
 
         setFocusable(true);
 
@@ -78,6 +82,9 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
+    /** The Paint class can probably used for any on-screen text.
+     *  It cannot however, draw complex graphics and is limited to text and simple shapes like circle and rectangles
+     */
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
 
