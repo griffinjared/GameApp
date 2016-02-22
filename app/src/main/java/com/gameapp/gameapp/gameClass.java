@@ -18,7 +18,7 @@ public class gameClass extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
 
         //create the game loop thread
-        thread = new MainThread(getHolder(), this);
+        thread = new MainThread(getHolder(), new Game());
 
         setFocusable(true);
     }

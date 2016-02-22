@@ -11,7 +11,6 @@ public class MainThread extends Thread {
     //Main components
     private SurfaceHolder surfaceHolder;
     private Game game; //Primary class
-    private gameClass start;
     public static Canvas canvas;
 
     //FPS
@@ -24,10 +23,9 @@ public class MainThread extends Thread {
         this.running = running;
     }
 
-    public MainThread(SurfaceHolder surfaceHolder, gameClass start, Game game) {
+    public MainThread(SurfaceHolder surfaceHolder, Game game) {
         super();
         this.surfaceHolder = surfaceHolder;
-        this.start = start;
         this.game = game;
     }
 
