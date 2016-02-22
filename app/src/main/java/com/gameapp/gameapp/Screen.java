@@ -10,6 +10,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import levels.Level;
+import levels.Level_Demo;
+
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
  *  Since it extends SurfaceView, the Screen is nothing but a layer of graphics that is put over the Game Class
@@ -21,9 +24,12 @@ import android.view.SurfaceView;
 
 public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
-    private MainThread thread;
     private static final String TAG = Screen.class.getSimpleName();
+
+    //Primary Components
+    private MainThread thread;
     private SeedGenerator seeder;
+    private Level level; //one instant of the level can be used for all levels
 
     public Screen(Context context) {
         super(context);
@@ -34,6 +40,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         //Game components
         seeder = new SeedGenerator();
+        level = new Level_Demo(getContext(), 1);
 
         setFocusable(true);
 
@@ -87,6 +94,10 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
      */
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
+
+        for (int i = 0; i < level.getCurrentRoom().getTiles().size(); i++) {
+            level.getCurrentRoom().getTiles().get(i).draw(canvas, paint);
+        }
 
         //HUD, UI, and On-Screen Text
         paint.setColor(Color.RED);
