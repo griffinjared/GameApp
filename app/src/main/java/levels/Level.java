@@ -17,6 +17,10 @@ public class Level {
     protected final int SIZE;
 
     protected Context context;
+
+    /* There will only ever be one room active at a time on-screen
+     * So the currentRoom variable will always be set to the active room, and is what's actually used to render
+     */
     protected Room currentRoom;
 
     public Level(Context context, int size) {
