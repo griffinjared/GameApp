@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 
 import levels.Level;
 import levels.Level_Demo;
+import mob.Player;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -30,6 +31,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
+    private Player player; //the only playable and controllable character on-screen
 
     public Screen(Context context) {
         super(context);
@@ -41,6 +43,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_Demo(getContext(), 1);
+        player = new Player(24*3, 24*3);
 
         setFocusable(true);
 
@@ -95,14 +98,19 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
 
+        //Tiles
         for (int i = 0; i < level.getCurrentRoom().getTiles().size(); i++) {
             level.getCurrentRoom().getTiles().get(i).draw(canvas, paint);
         }
 
+        //Player, Mobs, and Enemies
+        paint.setColor(Color.BLUE);
+        paint.setTextSize(20);
+        player.draw(canvas, paint);
+
         //HUD, UI, and On-Screen Text
         paint.setColor(Color.RED);
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(20);
-        canvas.drawText("Crawler", getWidth()/2, getHeight()/2, paint);
+        //canvas.drawText("Crawler", getWidth()/2, getHeight()/2, paint);
     }
 }
