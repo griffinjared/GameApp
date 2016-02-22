@@ -33,6 +33,8 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
 
+    public static final int SIZE = 288;
+
     public Screen(Context context) {
         super(context);
         getHolder().addCallback(this);
@@ -96,7 +98,21 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
      *  It cannot however, draw complex graphics and is limited to text and simple shapes like circle and rectangles
      */
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
         Paint paint = new Paint();
+
+        /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
+         *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
+         *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
+         *  (or height of the screen if the game is landscape instead)
+         * */
+
+        //Adjust scale to screen size
+        float scaleFactor = ((getWidth() * 1.00f) / (SIZE*1.00f));
+
+        int saveState = canvas.save();
+        canvas.scale(scaleFactor, scaleFactor);
 
         //Tiles
         for (int i = 0; i < level.getCurrentRoom().getTiles().size(); i++) {
@@ -106,11 +122,14 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //Player, Mobs, and Enemies
         paint.setColor(Color.BLUE);
         paint.setTextSize(20);
-        player.draw(canvas, paint);
+        //player.draw(canvas, paint);
+
+        canvas.restoreToCount(saveState); //canvas has to be scaled back down to size
 
         //HUD, UI, and On-Screen Text
+        //Regardless of scaling, the canvas has been scaled back down by this point, so all coordinates are absolute
         paint.setColor(Color.RED);
         paint.setTextAlign(Paint.Align.CENTER);
-        //canvas.drawText("Crawler", getWidth()/2, getHeight()/2, paint);
+        canvas.drawText("Scale: " + scaleFactor, getWidth() * 3 / 4, getHeight() / 2, paint);
     }
 }

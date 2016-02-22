@@ -1,6 +1,7 @@
 package tiles;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,6 +14,7 @@ public class Tile_Wall extends Tile {
         super(x, y, res);
 
         sprite = BitmapFactory.decodeResource(res, R.drawable.wall);
+        sprite = Bitmap.createScaledBitmap(sprite, SIZE, SIZE, true);
     }
 
     public void draw(Canvas c, Paint p) {
