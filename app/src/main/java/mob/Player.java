@@ -21,7 +21,7 @@ public class Player extends Mob {
     }
 
     public void draw(Canvas c, Paint p) {
-        c.drawBitmap(sprite, x*SIZE, y*SIZE, p);
+        super.draw(c, p);
     }
 
 

@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.gameapp.gameapp.Screen;
+
 /** Right now, the Tile class is simply the holder of an image that is 24x24 pixels
  *  Each Tile also has unique coordinates for its placement in a Room
  *  All Tiles are contained in Room classes
@@ -27,6 +29,7 @@ public class Tile {
     }
 
     public void draw(Canvas c, Paint p) {
+
         c.drawBitmap(sprite, X*SIZE, Y*SIZE, p);
     }
 

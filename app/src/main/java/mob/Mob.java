@@ -30,7 +30,7 @@ public class Mob {
     }
 
     public void draw(Canvas c, Paint p) {
-
+        c.drawBitmap(sprite, x*SIZE, y*SIZE, p);
     }
 
 }

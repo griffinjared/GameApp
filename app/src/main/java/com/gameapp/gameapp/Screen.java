@@ -33,7 +33,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
 
-    public static final int SIZE = 288;
+    public static final int SIZE = 288; //Dimensions of one regular room
 
     public Screen(Context context) {
         super(context);
@@ -95,7 +95,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     /** The Paint class can probably used for any on-screen text.
-     *  It cannot however, draw complex graphics and is limited to text and simple shapes like circle and rectangles
+     *  It cannot however, draw complex graphics and is limited to text and simple shapes like circles and rectangles
      */
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -108,8 +108,15 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
          *  (or height of the screen if the game is landscape instead)
          * */
 
+        int w = getWidth(); int h = getHeight();
+
+        paint.setTextSize(20);
+        paint.setColor(Color.RED);
+        paint.setTextAlign(Paint.Align.CENTER);
+
         //Adjust scale to screen size
-        float scaleFactor = ((getWidth() * 1.00f) / (SIZE*1.00f));
+        float scaleFactor = ((w * 1.00f) / (SIZE * 1.00f)); //Portrait
+        //float scaleFactor = ((h * 1.00f) / (SIZE * 1.00f)); //Landscape
 
         int saveState = canvas.save();
         canvas.scale(scaleFactor, scaleFactor);
@@ -125,7 +132,11 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         canvas.restoreToCount(saveState); //canvas has to be scaled back down to size
 
         //HUD, UI, and On-Screen Text
-        paint.setColor(Color.RED);
-        paint.setTextAlign(Paint.Align.CENTER);
+
+        //Layout 1 - Portrait
+        canvas.drawText("UI", w/2, w + paint.getTextSize(), paint);
+
+        //Layout 2 - Landscape Left Side
+        //canvas.drawText("UI", h + ((w-h)/2), paint.getTextSize(), paint);
     }
 }
