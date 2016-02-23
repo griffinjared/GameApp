@@ -45,7 +45,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_Demo(getContext(), 1);
-        player = new Player(24*3, 24*3);
+        player = new Player(3, 3, getResources());
 
         setFocusable(true);
 
@@ -120,16 +120,12 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         //Player, Mobs, and Enemies
-        paint.setColor(Color.BLUE);
-        paint.setTextSize(20);
-        //player.draw(canvas, paint);
+        player.draw(canvas, paint);
 
         canvas.restoreToCount(saveState); //canvas has to be scaled back down to size
 
         //HUD, UI, and On-Screen Text
-        //Regardless of scaling, the canvas has been scaled back down by this point, so all coordinates are absolute
         paint.setColor(Color.RED);
         paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("Scale: " + scaleFactor, getWidth() * 3 / 4, getHeight() / 2, paint);
     }
 }

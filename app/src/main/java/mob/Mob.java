@@ -10,6 +10,7 @@ import android.graphics.Paint;
  */
 public class Mob {
 
+    protected final int SIZE = 24;
     protected int x, y;
     protected Bitmap sprite;
     protected Resources res;
