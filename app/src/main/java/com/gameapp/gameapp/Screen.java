@@ -16,7 +16,6 @@ import java.util.List;
 import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_1_Forest;
-import levels.Level_Demo;
 import mob.Player;
 
 /** The Screen class used to be called "gameClass"
@@ -49,7 +48,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         //Game components
         seeder = new SeedGenerator();
-        level = new Level_1_Forest(getContext(), 1, BitmapFactory.decodeResource(getResources(), R.drawable.Tiles_Level1_Forest));
+        level = new Level_1_Forest(getContext(), 1, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Player(3, 3, getResources());
 
         setFocusable(true);
@@ -143,14 +142,18 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         //Adjust scale to screen size
         float scaleFactor = ((w * 1.00f) / (SIZE * 1.00f)); //Portrait
-        //float scaleFactor = ((h * 1.00f) / (SIZE * 1.00f)); //Landscape
 
         int saveState = canvas.save();
         canvas.scale(scaleFactor, scaleFactor);
 
         //Tiles
-        for (int i = 0; i < level.getCurrentRoom().getTiles().size(); i++) {
-            level.getCurrentRoom().getTiles().get(i).draw(canvas, paint);
+        for (int y = 0; y < level.getCurrentRoom().getTileLayout().length; y++) {
+            for (int x = 0; x < level.getCurrentRoom().getTileLayout()[y].length; x++) {
+                switch(level.getCurrentRoom().getTileLayout()[y][x]) {
+                    case 0: Level.Floor0.draw(canvas, paint, x, y); break;
+                    case 1: Level.Wall.draw(canvas, paint, x, y); break;
+                }
+            }
         }
 
         //Player, Mobs, and Enemies
@@ -159,11 +162,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         canvas.restoreToCount(saveState); //canvas has to be scaled back down to size
 
         //HUD, UI, and On-Screen Text
-
-        //Layout 1 - Portrait
         canvas.drawText("UI", w/2, w + paint.getTextSize(), paint);
-
-        //Layout 2 - Landscape Left Side
-        //canvas.drawText("UI", h + ((w-h)/2), paint.getTextSize(), paint);
     }
 }

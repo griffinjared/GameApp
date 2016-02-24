@@ -35,7 +35,5 @@ public class Spawn_Room extends Room {
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1}
         };
-
-        generateMap();
     }
 }

@@ -25,6 +25,15 @@ public class Level {
      */
     protected Room currentRoom;
 
+    //These Tiles will always have the same names and functions but different sprites depending on the level
+    public static Tile Wall = new Tile(); //Boundaries around the room
+
+    public static Tile Floor0 = new Tile(); //Anything you can walk over normally
+    public static Tile Floor1 = new Tile();
+    public static Tile Floor2 = new Tile();
+
+    public static Tile Solid0 = new Tile(); //Something that isn't a wall but also can't be walked over or through
+
     public Level(Context context, int size) {
         this.context = context;
         SIZE = size;
@@ -43,10 +52,5 @@ public class Level {
         Floor2.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0*size, size, size));
         Wall.setSprite(Bitmap.createBitmap(spriteSheet, 0*size, 1*size, size, size));
     }
-
-    //These Tiles will always have the same names and functions but different sprites depending on the level
-    public static Tile Wall; //Boundaries around the room
-    public static Tile Floor0, Floor1, Floor2; //Anything you can walk over normally
-    public static Tile Solid0; //Something that isn't a wall but also can't be walked over or through
 
 }
