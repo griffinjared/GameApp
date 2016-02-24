@@ -24,6 +24,11 @@ public class Player extends Mob {
         super.draw(c, p);
     }
 
+    public int getX() {
+        return x;
+    }
 
-
+    public int getY() {
+        return y;
+    }
 }
