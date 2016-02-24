@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import tiles.Tile;
+import tiles.Tile_Chest;
 import tiles.Tile_Null;
 import tiles.Tile_Wall;
 
@@ -27,6 +28,7 @@ public class Room {
             for (int x = 0; x < tileLayout[y].length; x++) {
                 switch(tileLayout[y][x]) {
                     case 1: tiles.add(new Tile_Wall(x, y, context.getResources())); break;
+                    case 2: tiles.add(new Tile_Chest(x, y, context.getResources())); break;
                     default: tiles.add(new Tile_Null(x, y, context.getResources())); break;
                 }
             }
