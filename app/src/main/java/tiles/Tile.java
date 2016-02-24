@@ -23,7 +23,6 @@ public class Tile {
     }
 
     public void setSprite(Bitmap sprite) {
-        this.sprite = sprite;
         this.sprite = Bitmap.createScaledBitmap(sprite, SIZE, SIZE, true);
     }
 

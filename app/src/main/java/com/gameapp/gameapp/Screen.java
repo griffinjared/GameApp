@@ -152,6 +152,9 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
                 switch(level.getCurrentRoom().getTileLayout()[y][x]) {
                     case 0: Level.Floor0.draw(canvas, paint, x, y); break;
                     case 1: Level.Wall.draw(canvas, paint, x, y); break;
+                    case 2: Level.Floor1.draw(canvas, paint, x, y); break;
+                    case 3: Level.Floor2.draw(canvas, paint, x, y); break;
+                    default: Level.Floor0.draw(canvas, paint, x, y); break;
                 }
             }
         }
