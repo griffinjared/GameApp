@@ -1,6 +1,8 @@
 package assets;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -19,14 +21,17 @@ public class Chest {
      *  Its sprites will also change depending on the current level since we're going for multiple aesthetics.
      */
 
-    public Chest(int x, int y) {
+    public Chest(int x, int y, Bitmap spriteSheet) {
         this.x = x;
         this.y = y;
+
+        //Change sprites based on level (or rather, the spriteSheet contained in the level)
+        setSprites(Bitmap.createBitmap(spriteSheet, 0*SIZE, 6*SIZE, SIZE, SIZE), Bitmap.createBitmap(spriteSheet, 1*SIZE, 6*SIZE, SIZE, SIZE));
     }
 
-    public void setSprite(Bitmap sprite1, Bitmap sprite2) {
-        this.sprite_closed = Bitmap.createScaledBitmap(sprite1, SIZE, SIZE, true);
-        this.sprite_opened = Bitmap.createScaledBitmap(sprite2, SIZE, SIZE, true);
+    public void setSprites(Bitmap sprite1, Bitmap sprite2) {
+        sprite_closed = Bitmap.createScaledBitmap(sprite1, SIZE, SIZE, true);
+        sprite_opened = Bitmap.createScaledBitmap(sprite2, SIZE, SIZE, true);
     }
 
     public void draw(Canvas c, Paint p) {

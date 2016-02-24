@@ -1,6 +1,11 @@
 package rooms;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+
+import com.gameapp.gameapp.R;
+
+import assets.Chest;
 
 public class Room_Demo extends Room {
 
@@ -27,6 +32,8 @@ public class Room_Demo extends Room {
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
+
+        treasure.add(new Chest(10, 1, BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles_level1_forest)));
     }
 
 }

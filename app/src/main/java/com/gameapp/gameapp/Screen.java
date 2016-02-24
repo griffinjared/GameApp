@@ -146,18 +146,8 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         int saveState = canvas.save();
         canvas.scale(scaleFactor, scaleFactor);
 
-        //Tiles
-        for (int y = 0; y < level.getCurrentRoom().getTileLayout().length; y++) {
-            for (int x = 0; x < level.getCurrentRoom().getTileLayout()[y].length; x++) {
-                switch(level.getCurrentRoom().getTileLayout()[y][x]) {
-                    case 0: Level.Floor0.draw(canvas, paint, x, y); break;
-                    case 1: Level.Wall.draw(canvas, paint, x, y); break;
-                    case 2: Level.Floor1.draw(canvas, paint, x, y); break;
-                    case 3: Level.Floor2.draw(canvas, paint, x, y); break;
-                    default: Level.Floor0.draw(canvas, paint, x, y); break;
-                }
-            }
-        }
+        //Level - a lot of other things are contained and drawn in this class
+        level.draw(canvas, paint);
 
         //Player, Mobs, and Enemies
         player.draw(canvas, paint);

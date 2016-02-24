@@ -2,6 +2,10 @@ package rooms;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
+import assets.Chest;
+
 /** The Room class is essentially an array of Tiles
  *  Each Room will have an integer map of the assortment of Tiles, which are then switched out for actual Tiles
  *  The method getTiles() is called by the Screen class so that each Tile can be individually rendered
@@ -9,6 +13,10 @@ import android.content.Context;
 public class Room {
 
     protected int[][] tileLayout;
+
+    //Chests will typically be put in individually with specific coordinates instead of on the tileLayout grid
+    protected ArrayList<Chest> treasure = new ArrayList<Chest>();
+
     protected Context context;
 
     public Room(Context context) {
@@ -17,6 +25,9 @@ public class Room {
 
     public int[][] getTileLayout() {
         return tileLayout;
+    }
+    public ArrayList<Chest> getTreasures() {
+        return treasure;
     }
 
 }

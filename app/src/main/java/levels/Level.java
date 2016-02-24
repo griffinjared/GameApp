@@ -2,6 +2,8 @@ package levels;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import rooms.Room;
 import tiles.Tile;
@@ -51,6 +53,26 @@ public class Level {
         Floor1.setSprite(Bitmap.createBitmap(spriteSheet, 1*size, 0*size, size, size));
         Floor2.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0*size, size, size));
         Wall.setSprite(Bitmap.createBitmap(spriteSheet, 0*size, 1*size, size, size));
+    }
+
+    public void draw(Canvas c, Paint p) {
+        //Tiles
+        for (int y = 0; y < currentRoom.getTileLayout().length; y++) {
+            for (int x = 0; x < currentRoom.getTileLayout()[y].length; x++) {
+                switch(currentRoom.getTileLayout()[y][x]) {
+                    case 0: Level.Floor0.draw(c, p, x, y); break;
+                    case 1: Level.Wall.draw(c, p, x, y); break;
+                    case 2: Level.Floor1.draw(c, p, x, y); break;
+                    case 3: Level.Floor2.draw(c, p, x, y); break;
+                    default: Level.Floor0.draw(c, p, x, y); break;
+                }
+            }
+        }
+
+        //Treasures
+        for (int i = 0; i < currentRoom.getTreasures().size(); i++) {
+            currentRoom.getTreasures().get(i).draw(c, p);
+        }
     }
 
 }
