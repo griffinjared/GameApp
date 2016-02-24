@@ -10,6 +10,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.List;
+
+import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_Demo;
 import mob.Player;
@@ -90,7 +93,29 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+        // TODO: implement game states
+    }
 
+    public void updateRunning(List touchEvents, float deltaTime) {
+        int len = touchEvents.size();
+
+        for (int i = 0; i < len; i++) {
+            TouchEvent event = (TouchEvent) touchEvents.get(i);
+            if (event.type == TouchEvent.TOUCH_DOWN) { // user touched screen
+                // TODO: implement touch events
+            }
+
+            if (event.type == TouchEvent.TOUCH_UP) { // user stopped touching screen
+                // TODO: implement touch stopped events
+            }
+
+            // TOUCH_DRAGGED and TOUCH_HOLD are also included
+        }
+    }
+
+    private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
+        //this checks if the touchEvent passed occurred within the specified pixel bounds
+        return (event.x > x && event.x < x + width - 1 && event.y > y && event.y < y + height - 1);
     }
 
     @Override
