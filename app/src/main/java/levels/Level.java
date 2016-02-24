@@ -1,6 +1,7 @@
 package levels;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import rooms.Room;
 import tiles.Tile;
@@ -15,7 +16,7 @@ import tiles.Tile;
 
 public class Level {
 
-    protected final int SIZE;
+    protected int SIZE;
 
     protected Context context;
 
@@ -31,6 +32,16 @@ public class Level {
 
     public Room getCurrentRoom() {
         return currentRoom;
+    }
+
+    //Reusable tiles will have their sprites changed per level
+    public void changeTilesSprites(Bitmap spriteSheet) {
+        int size = Tile.SIZE;
+
+        Floor0.setSprite(Bitmap.createBitmap(spriteSheet, 0*size, 0*size, size, size));
+        Floor1.setSprite(Bitmap.createBitmap(spriteSheet, 1*size, 0*size, size, size));
+        Floor2.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0*size, size, size));
+        Wall.setSprite(Bitmap.createBitmap(spriteSheet, 0*size, 1*size, size, size));
     }
 
     //These Tiles will always have the same names and functions but different sprites depending on the level

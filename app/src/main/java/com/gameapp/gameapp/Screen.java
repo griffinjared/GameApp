@@ -2,6 +2,7 @@ package com.gameapp.gameapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import gameapp.framework.Input.TouchEvent;
 import levels.Level;
+import levels.Level_1_Forest;
 import levels.Level_Demo;
 import mob.Player;
 
@@ -47,7 +49,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         //Game components
         seeder = new SeedGenerator();
-        level = new Level_Demo(getContext(), 1);
+        level = new Level_1_Forest(getContext(), 1, BitmapFactory.decodeResource(getResources(), R.drawable.Tiles_Level1_Forest));
         player = new Player(3, 3, getResources());
 
         setFocusable(true);

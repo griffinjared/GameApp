@@ -17,7 +17,7 @@ public class Tile {
 
     //Position in the individual room
     protected final int X, Y;
-    protected final int SIZE = 24;
+    public static final int SIZE = 24;
 
     protected Bitmap sprite;
     protected Resources res;
@@ -31,6 +31,10 @@ public class Tile {
     public void draw(Canvas c, Paint p) {
 
         c.drawBitmap(sprite, X*SIZE, Y*SIZE, p);
+    }
+
+    public void setSprite(Bitmap sprite) {
+        this.sprite = sprite;
     }
 
 }
