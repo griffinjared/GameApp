@@ -1,11 +1,13 @@
-package rooms;
+package rooms.common_rooms;
 
 import android.content.Context;
+
+import rooms.Room;
 
 /**
  * Created by griff on 2/24/2016.
  */
-public class Treasure_Room extends Room{
+public class Treasure_Room extends Room {
 
     public Treasure_Room(Context context) {
         super(context);

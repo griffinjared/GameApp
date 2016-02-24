@@ -3,7 +3,7 @@ package levels;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import rooms.Room_Demo;
+import rooms.common_rooms.Room_Demo;
 
 /**
  * Created by Andrew on 2/24/2016.

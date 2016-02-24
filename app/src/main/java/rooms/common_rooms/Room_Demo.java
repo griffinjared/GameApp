@@ -1,4 +1,4 @@
-package rooms;
+package rooms.common_rooms;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import com.gameapp.gameapp.R;
 
 import assets.Chest;
+import rooms.Room;
 
 public class Room_Demo extends Room {
 
