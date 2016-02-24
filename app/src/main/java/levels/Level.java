@@ -49,10 +49,13 @@ public class Level {
     public void changeTilesSprites(Bitmap spriteSheet) {
         int size = Tile.SIZE;
 
-        Floor0.setSprite(Bitmap.createBitmap(spriteSheet, 0*size, 0*size, size, size));
-        Floor1.setSprite(Bitmap.createBitmap(spriteSheet, 1*size, 0*size, size, size));
-        Floor2.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0*size, size, size));
-        Wall.setSprite(Bitmap.createBitmap(spriteSheet, 0*size, 1*size, size, size));
+        Floor0.setSprite(Bitmap.createBitmap(spriteSheet, 0, 0, size, size));
+        Floor1.setSprite(Bitmap.createBitmap(spriteSheet, size, 0, size, size));
+        Floor2.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0, size, size));
+
+        Wall.setSprite(Bitmap.createBitmap(spriteSheet, 0, size, size, size));
+
+        Solid0.setSprite(Bitmap.createBitmap(spriteSheet, 0, 2*size, size, size));
     }
 
     public void draw(Canvas c, Paint p) {
@@ -60,10 +63,14 @@ public class Level {
         for (int y = 0; y < currentRoom.getTileLayout().length; y++) {
             for (int x = 0; x < currentRoom.getTileLayout()[y].length; x++) {
                 switch(currentRoom.getTileLayout()[y][x]) {
-                    case 0: Level.Floor0.draw(c, p, x, y); break;
-                    case 1: Level.Wall.draw(c, p, x, y); break;
+                    case 0: Level.Wall.draw(c, p, x, y); break;
+
+                    case 1: Level.Floor0.draw(c, p, x, y); break;
                     case 2: Level.Floor1.draw(c, p, x, y); break;
                     case 3: Level.Floor2.draw(c, p, x, y); break;
+
+                    case 4: Level.Solid0.draw(c, p, x, y); break;
+
                     default: Level.Floor0.draw(c, p, x, y); break;
                 }
             }

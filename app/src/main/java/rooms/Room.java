@@ -21,6 +21,10 @@ public class Room {
 
     public Room(Context context) {
         this.context = context;
+
+        //map tileLayout formation here.
+
+        //add chests to the treasure array here.
     }
 
     public int[][] getTileLayout() {
