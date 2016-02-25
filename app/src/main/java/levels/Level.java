@@ -30,11 +30,15 @@ public class Level {
     //These Tiles will always have the same names and functions but different sprites depending on the level
     public static Tile Wall = new Tile(); //Boundaries around the room
 
-    public static Tile Floor0 = new Tile(); //Anything you can walk over normally
-    public static Tile Floor1 = new Tile();
+    public static Tile Floor1 = new Tile(); //Anything you can walk over normally
     public static Tile Floor2 = new Tile();
+    public static Tile Floor3 = new Tile();
+    public static Tile Floor4 = new Tile();
 
-    public static Tile Solid0 = new Tile(); //Something that isn't a wall but also can't be walked over or through
+    public static Tile Solid1 = new Tile(); //Something that isn't a wall but also can't be walked over or through
+    public static Tile Solid2 = new Tile();
+    public static Tile Solid3 = new Tile();
+    public static Tile Solid4 = new Tile();
 
     public Level(Context context, int size) {
         this.context = context;
@@ -49,13 +53,18 @@ public class Level {
     public void changeTilesSprites(Bitmap spriteSheet) {
         int size = Tile.SIZE;
 
-        Floor0.setSprite(Bitmap.createBitmap(spriteSheet, 0, 0, size, size));
-        Floor1.setSprite(Bitmap.createBitmap(spriteSheet, size, 0, size, size));
-        Floor2.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0, size, size));
-
         Wall.setSprite(Bitmap.createBitmap(spriteSheet, 0, size, size, size));
 
-        Solid0.setSprite(Bitmap.createBitmap(spriteSheet, 0, 2*size, size, size));
+        Floor1.setSprite(Bitmap.createBitmap(spriteSheet, 0, 0, size, size));
+        Floor2.setSprite(Bitmap.createBitmap(spriteSheet, size, 0, size, size));
+        Floor3.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 0, size, size));
+        Floor4.setSprite(Bitmap.createBitmap(spriteSheet, 3*size, 0, size, size));
+
+        Solid1.setSprite(Bitmap.createBitmap(spriteSheet, 0, 2*size, size, size));
+        Solid2.setSprite(Bitmap.createBitmap(spriteSheet, size, 2*size, size, size));
+        Solid3.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 2*size, size, size));
+        Solid4.setSprite(Bitmap.createBitmap(spriteSheet, 3*size, 2*size, size, size));
+
     }
 
     public void draw(Canvas c, Paint p) {
@@ -63,15 +72,19 @@ public class Level {
         for (int y = 0; y < currentRoom.getTileLayout().length; y++) {
             for (int x = 0; x < currentRoom.getTileLayout()[y].length; x++) {
                 switch(currentRoom.getTileLayout()[y][x]) {
-                    case 0: Level.Wall.draw(c, p, x, y); break;
+                    case 0: Wall.draw(c, p, x, y); break;
 
-                    case 1: Level.Floor0.draw(c, p, x, y); break;
-                    case 2: Level.Floor1.draw(c, p, x, y); break;
-                    case 3: Level.Floor2.draw(c, p, x, y); break;
+                    case 1: Floor1.draw(c, p, x, y); break;
+                    case 2: Floor2.draw(c, p, x, y); break;
+                    case 3: Floor3.draw(c, p, x, y); break;
+                    case 4: Floor4.draw(c, p, x, y); break;
 
-                    case 4: Level.Solid0.draw(c, p, x, y); break;
+                    case 5: Solid1.draw(c, p, x, y); break;
+                    case 6: Solid2.draw(c, p, x, y); break;
+                    case 7: Solid3.draw(c, p, x, y); break;
+                    case 8: Solid4.draw(c, p, x, y); break;
 
-                    default: Level.Floor0.draw(c, p, x, y); break;
+                    default: Floor1.draw(c, p, x, y); break;
                 }
             }
         }

@@ -26,6 +26,6 @@ public class Treasure_Room extends Room {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
 
-        defineDoorLayout(doorLayout);
+        defineDoorLayout(doorLayout); //Should only ever be 7-10
     }
 }

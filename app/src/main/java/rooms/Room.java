@@ -10,6 +10,7 @@ import assets.Chest;
  *  Each Room will have an integer map of the assortment of Tiles, which are then switched out for actual Tiles
  *  The method getTiles() is called by the Screen class so that each Tile can be individually rendered
  */
+
 public class Room {
 
     protected int[][] tileLayout = new int[12][12];
@@ -37,6 +38,21 @@ public class Room {
         this.context = context;
 
         //map tileLayout formation here.
+        /** Layout numbering key:
+         *  0 = Wall (Usually surrounding border that prevents player from walking off-screen without a doorway)
+         *
+         *  1 = Floor, Type 1
+         *  2 = Floor, Type 2
+         *  3 = Floor, Type 3
+         *  4 = Floor, Type 4
+         *
+         *  5 = Obstacle, Type 1 (Anything that isn't a wall that still blocks hte player, like rocks or water in the environment)
+         *  6 = Obstacle, Type 2
+         *  7 = Obstacle, Type 3
+         *  8 = Obstacle, Type 4
+         *
+         *  9 = Other - Currently undefined. Reserve for any special kind of tile (perhaps the exit)
+         */
 
         //add chests to the treasure array here.
     }
