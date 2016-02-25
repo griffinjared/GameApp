@@ -40,6 +40,8 @@ public class Level {
     public static Tile Solid3 = new Tile();
     public static Tile Solid4 = new Tile();
 
+    public static Tile Exit = new Tile();
+
     public Level(Context context, int size) {
         this.context = context;
         SIZE = size;
@@ -65,6 +67,7 @@ public class Level {
         Solid3.setSprite(Bitmap.createBitmap(spriteSheet, 2*size, 2*size, size, size));
         Solid4.setSprite(Bitmap.createBitmap(spriteSheet, 3*size, 2*size, size, size));
 
+        Exit.setSprite(Bitmap.createBitmap(spriteSheet, 0, 3*size, size, size));
     }
 
     public void draw(Canvas c, Paint p) {
@@ -83,6 +86,8 @@ public class Level {
                     case 6: Solid2.draw(c, p, x, y); break;
                     case 7: Solid3.draw(c, p, x, y); break;
                     case 8: Solid4.draw(c, p, x, y); break;
+
+                    case 9: Exit.draw(c, p, x, y); break;
 
                     default: Floor1.draw(c, p, x, y); break;
                 }
