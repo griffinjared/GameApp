@@ -36,6 +36,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
+    private Paint paint; //for drawing graphics
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
@@ -50,6 +51,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), 1, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Player(3, 3, getResources());
+        paint = new Paint();
 
         setFocusable(true);
 
@@ -124,10 +126,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
      *  It cannot however, draw complex graphics and is limited to text and simple shapes like circles and rectangles
      */
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        Paint paint = new Paint();
-
         /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen

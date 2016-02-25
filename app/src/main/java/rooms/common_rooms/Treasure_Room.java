@@ -4,21 +4,12 @@ import android.content.Context;
 
 import rooms.Room;
 
-/**
- * Created by griff on 2/24/2016.
+/** Idea: Treasure Rooms with valuable loot should always only have one doorway so that they are at the end of a series of rooms
  */
 public class Treasure_Room extends Room {
 
-    public Treasure_Room(Context context) {
+    public Treasure_Room(Context context, int doorLayout) {
         super(context);
-
-        /*
-         * 0 = nothing
-         * 1 = wall
-         * 2 = chest
-         *
-         * There is only one entrance because it should spawn at the end of a stretch of rooms
-         */
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -34,5 +25,7 @@ public class Treasure_Room extends Room {
                 {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
+
+        defineDoorLayout(doorLayout);
     }
 }
