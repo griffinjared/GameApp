@@ -1,6 +1,5 @@
 package mob;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,8 +11,17 @@ public class Mob {
 
     protected final int SIZE = 24;
     protected int x, y;
-    protected Bitmap sprite;
-    protected Resources res;
+    protected Bitmap spriteSheet; //Image where all the sprites are stored
+    protected Bitmap sprite; //Primary, currently-active sprite
+
+    //Sprites
+    protected static Bitmap down, down1, down2;
+    protected static Bitmap up, up1, up2;
+    protected static Bitmap left, left1, left2;
+    protected static Bitmap right, right1, right2;
+
+    //Statistics
+    protected int hp, mp, level, speed;
 
     public int getX() {
         return x;

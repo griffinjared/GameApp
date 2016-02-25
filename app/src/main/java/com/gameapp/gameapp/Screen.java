@@ -50,7 +50,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), 1, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Player(3, 3, getResources());
+        player = new Player(3, 3, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic));
         paint = new Paint();
 
         setFocusable(true);
