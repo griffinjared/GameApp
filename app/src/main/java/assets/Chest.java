@@ -1,8 +1,6 @@
 package assets;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -26,12 +24,14 @@ public class Chest {
         this.y = y;
 
         //Change sprites based on level (or rather, the spriteSheet contained in the level)
-        setSprites(Bitmap.createBitmap(spriteSheet, 0*SIZE, 6*SIZE, SIZE, SIZE), Bitmap.createBitmap(spriteSheet, 1*SIZE, 6*SIZE, SIZE, SIZE));
+        setSprites(spriteSheet);
     }
 
-    public void setSprites(Bitmap sprite1, Bitmap sprite2) {
-        sprite_closed = Bitmap.createScaledBitmap(sprite1, SIZE, SIZE, true);
-        sprite_opened = Bitmap.createScaledBitmap(sprite2, SIZE, SIZE, true);
+    public void setSprites(Bitmap sprites) {
+        Bitmap spriteSheet = Bitmap.createScaledBitmap(sprites, 144, 288, true);
+
+        sprite_closed = Bitmap.createBitmap(spriteSheet, 0, 6*SIZE, SIZE, SIZE);
+        sprite_opened = Bitmap.createBitmap(spriteSheet, SIZE, 6*SIZE, SIZE, SIZE);
     }
 
     public void draw(Canvas c, Paint p) {

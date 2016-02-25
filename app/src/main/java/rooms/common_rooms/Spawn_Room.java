@@ -35,6 +35,7 @@ public class Spawn_Room extends Room {
 
         defineDoorLayout(doorLayout);
 
+        //How to add treasure:
         treasure.add(new Chest(10, 1, BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles_level1_forest)));
     }
 }

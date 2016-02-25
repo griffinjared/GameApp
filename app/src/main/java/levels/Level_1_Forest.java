@@ -19,7 +19,7 @@ public class Level_1_Forest extends Level {
         //Level-specific
         spawn = new Spawn_Room(context, 0);
         exit = new Exit_Room(context, 0);
-        currentRoom = exit;
+        currentRoom = spawn;
     }
 
 }
