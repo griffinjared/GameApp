@@ -2,6 +2,7 @@ package com.gameapp.gameapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,6 +38,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
+    private Bitmap joystick;
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
@@ -52,6 +54,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic)); //Spawns center
         paint = new Paint();
+        joystick = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
 
         setFocusable(true);
 
@@ -134,6 +137,8 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
          */
+        int size = (getHeight() - getWidth() - (getWidth()/24)) - (getWidth() / 40);
+        joystick = Bitmap.createScaledBitmap(joystick, size, size, true);
 
         int w = getWidth();
         int h = getHeight();
@@ -166,9 +171,8 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        int size = (h - w - (int) (paint.getTextSize())) - w / 40;
+        canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
 
-        canvas.drawRect(w / 40, h - size, w * 3 / 5, h - w / 40, paint); //Control Stick / D-pad
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
     }
 }
