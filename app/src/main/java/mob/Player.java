@@ -40,18 +40,18 @@ public class Player extends Mob {
 
     public int update() {
         if (x <= -SIZE) { //West
-            x = (SIZE*SIZE) - SIZE/2;
+            x = (SIZE*12) - SIZE/2;
             return 4;
         }
-        else if (x >= SIZE*SIZE) { //East
+        else if (x >= SIZE*12) { //East
             x = SIZE/2;
             return 2;
         }
-        else if (y <= -24) { //North
-            y = (SIZE*SIZE) - SIZE/2;
+        else if (y <= -SIZE) { //North
+            y = (SIZE*12) - SIZE/2;
             return 1;
         }
-        else if (y >= SIZE*SIZE) { //East
+        else if (y >= SIZE*12) { //East
             y = SIZE/2;
             return 3;
         }
