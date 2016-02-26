@@ -39,9 +39,21 @@ public class Player extends Mob {
     }
 
     public int update() {
-        if (x <= -24) {
+        if (x <= -24) { //West
             x = 288 - 24;
             return 4;
+        }
+        else if (x >= 288) { //East
+            x = 24;
+            return 2;
+        }
+        else if (y <= -24) { //North
+            y = 288 - 24;
+            return 1;
+        }
+        else if (y >= 288) { //East
+            y = 24;
+            return 3;
         }
 
         return 0;

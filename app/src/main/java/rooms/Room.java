@@ -29,8 +29,6 @@ public class Room {
      *  10 - Single West
      */
 
-    protected char roomCode; //Used in level construction
-
     //Chests will typically be put in individually with specific coordinates instead of on the tileLayout grid
     protected ArrayList<Chest> treasure = new ArrayList<Chest>();
 
@@ -64,10 +62,6 @@ public class Room {
     }
     public ArrayList<Chest> getTreasures() {
         return treasure;
-    }
-
-    public char getRoomCode() {
-        return roomCode;
     }
 
     //DOORWAY LAYOUTS

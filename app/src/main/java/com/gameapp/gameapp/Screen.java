@@ -50,7 +50,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Player(1, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic));
+        player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic)); //Spawns center
         paint = new Paint();
 
         setFocusable(true);
@@ -98,7 +98,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-        player.setX(-1);
+        player.setX(2);
 
         level.update(player.update());
     }
