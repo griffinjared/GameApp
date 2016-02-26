@@ -75,7 +75,7 @@ public class Level_1_Forest extends Level {
         else if (east) return 9;
         else if (west) return 10;
 
-        return 0;
+        else return 15;
     }
 
 }

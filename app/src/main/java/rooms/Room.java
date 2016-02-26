@@ -86,6 +86,8 @@ public class Room {
             case 12: three_ESW(); break;
             case 13: three_SWN(); break;
             case 14: three_WNE(); break;
+
+            case 15: trap(); break;
         }
     }
 
