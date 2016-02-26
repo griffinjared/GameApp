@@ -9,8 +9,8 @@ import android.graphics.Paint;
 public class Player extends Mob {
 
     public Player(int x, int y, Bitmap sprites) {
-        this.x = x;
-        this.y = y;
+        this.x = x*SIZE;
+        this.y = y*SIZE;
         this.spriteSheet = Bitmap.createScaledBitmap(sprites, 192, 72, true);
 
         //Set all sprites
@@ -33,15 +33,10 @@ public class Player extends Mob {
         sprite = down;
     }
 
+    public void update() {
+    }
+
     public void draw(Canvas c, Paint p) {
         super.draw(c, p);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }

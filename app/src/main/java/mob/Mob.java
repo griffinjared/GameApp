@@ -10,7 +10,7 @@ import android.graphics.Paint;
 public class Mob {
 
     protected final int SIZE = 24;
-    protected int x, y;
+    public static int x, y;
     protected Bitmap spriteSheet; //Image where all the sprites are stored
     protected Bitmap sprite; //Primary, currently-active sprite
 
@@ -38,7 +38,8 @@ public class Mob {
     }
 
     public void draw(Canvas c, Paint p) {
-        c.drawBitmap(sprite, x*SIZE, y*SIZE, p);
+
+        c.drawBitmap(sprite, x, y, p);
     }
 
 }

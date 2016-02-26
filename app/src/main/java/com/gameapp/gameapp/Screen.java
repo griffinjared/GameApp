@@ -96,7 +96,8 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-        // TODO: implement game states
+        player.setX(1);
+        player.setY(1);
     }
 
     public void updateRunning(List touchEvents, float deltaTime) {
@@ -129,10 +130,10 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
-         *  (or height of the screen if the game is landscape instead)
-         * */
+         */
 
-        int w = getWidth(); int h = getHeight();
+        int w = getWidth();
+        int h = getHeight();
 
         //Adjust scale to screen size
         float scaleFactor = ((w * 1.00f) / (SIZE * 1.00f)); //Portrait
@@ -146,33 +147,34 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //Player, Mobs, and Enemies
         player.draw(canvas, paint);
 
-        canvas.restoreToCount(saveState); //canvas has to be scaled back down to size
-
+        canvas.restoreToCount(saveState);
         //HUD, UI, and On-Screen Text
         paint.setTextSize(w / 24);
 
-        //Place-holder squares for future UI elements
+        //Place-holder rectangles for future UI elements
+        /*
         paint.setColor(Color.BLACK);
-        canvas.drawRect(0, 0, w / 12, w / 12, paint); //Top left (Main Menu button)
-        canvas.drawRect(w - (w / 12), 0, w, w / 12, paint); //Top right (Equipment button)
+        canvas.drawRect(0, w/18, w / 4, w / 12, paint); //Top left (Main Menu button)
+        canvas.drawRect(w-(paint.getTextSize()*6), w/18, w, w / 12, paint); //Top right (Equipment button)
         canvas.drawRect(0, w - (w / 12), w / 12, w, paint); //Bottom left (Map button)
         canvas.drawRect(w - (w / 12), w - (w / 12), w, w, paint); //Bottom right (Inventory button)
+        */
 
         //Button text
         paint.setColor(Color.WHITE);
         paint.setFakeBoldText(true);
-        canvas.drawText("Menu", w/12 + 1, w/18, paint);
-        canvas.drawText("Equipment", w-(paint.getTextSize()*7), w/18, paint);
-        canvas.drawText("Map", w/12 + 1, w-5, paint);
-        canvas.drawText("Inventory", w-(paint.getTextSize()*6), w - 5, paint);
+        canvas.drawText("Menu", 5, w / 18, paint);
+        canvas.drawText("Equipment", w - (paint.getTextSize() * 6), w / 18, paint);
+        canvas.drawText("Map", 5, w - 5, paint);
+        canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
         paint.setColor(Color.BLACK);
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        int size = (h - w - (int)(paint.getTextSize())) - w/40;
+        int size = (h - w - (int) (paint.getTextSize())) - w / 40;
 
-        canvas.drawRect(w/40, h-size, w*3/5, h-w/40, paint); //Control Stick / D-pad
-        canvas.drawRect((w*3/5) + w/40, h-size, w-(w/40), h-w/40, paint); //Attack pad
+        canvas.drawRect(w / 40, h - size, w * 3 / 5, h - w / 40, paint); //Control Stick / D-pad
+        canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
     }
 }

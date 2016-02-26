@@ -32,6 +32,7 @@ public class MainThread extends Thread {
         super();
         this.surfaceHolder = surfaceHolder;
         this.screen = screen;
+        running = true;
     }
 
     @Override
@@ -55,10 +56,10 @@ public class MainThread extends Thread {
 
             //lock canvas
             try {
-                canvas = this.surfaceHolder.lockCanvas();
+                canvas = this.surfaceHolder.lockCanvas(null);
                 synchronized (surfaceHolder) {
                     screen.update();
-                    screen.draw(canvas);
+                    screen.postInvalidate();
                 }
             } catch(Exception e) {}
 
@@ -87,7 +88,7 @@ public class MainThread extends Thread {
                 averageFPS = 1000 / (totalTime/frameCount)/1000000;
                 frameCount = 0;
                 totalTime = 0;
-                System.out.println(averageFPS);
+                //Log.d(TAG, "FPS: " + averageFPS);
             }
         }
         Log.d(TAG, "Game loop executed " + tickCount + " times");
