@@ -49,13 +49,15 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         //Game components
         seeder = new SeedGenerator();
-        level = new Level_1_Forest(getContext(), 1, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Player(3, 3, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic));
+        level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
+        player = new Player(1, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic));
         paint = new Paint();
 
         setFocusable(true);
 
         setBackgroundColor(Color.LTGRAY);
+
+        player.setLevelPosition(level.getRoomX(), level.getRoomY());
     }
 
     @Override
@@ -96,8 +98,9 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-        player.setX(1);
-        player.setY(1);
+        player.setX(-1);
+
+        level.update(player.update());
     }
 
     public void updateRunning(List touchEvents, float deltaTime) {
@@ -150,15 +153,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         canvas.restoreToCount(saveState);
         //HUD, UI, and On-Screen Text
         paint.setTextSize(w / 24);
-
-        //Place-holder rectangles for future UI elements
-        /*
-        paint.setColor(Color.BLACK);
-        canvas.drawRect(0, w/18, w / 4, w / 12, paint); //Top left (Main Menu button)
-        canvas.drawRect(w-(paint.getTextSize()*6), w/18, w, w / 12, paint); //Top right (Equipment button)
-        canvas.drawRect(0, w - (w / 12), w / 12, w, paint); //Bottom left (Map button)
-        canvas.drawRect(w - (w / 12), w - (w / 12), w, w, paint); //Bottom right (Inventory button)
-        */
 
         //Button text
         paint.setColor(Color.WHITE);

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
+
+import com.gameapp.gameapp.MainThread;
 
 import rooms.Room;
 import tiles.Tile;
@@ -18,14 +21,14 @@ import tiles.Tile;
 
 public class Level {
 
-    protected int SIZE;
-
     protected Context context;
 
     /* There will only ever be one room active at a time on-screen
      * So the currentRoom variable will always be set to the active room, and is what's actually used to render
      */
     protected Room currentRoom;
+    protected char[][] levelLayout;
+    protected int roomX = 0, roomY = 0;
 
     //These Tiles will always have the same names and functions but different sprites depending on the level
     public static Tile Wall = new Tile(); //Boundaries around the room
@@ -42,12 +45,15 @@ public class Level {
 
     public static Tile Exit = new Tile();
 
-    public Level(Context context, int size) {
+    public Level(Context context) {
         this.context = context;
-        SIZE = size;
     }
 
     public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public Room changeRoom(int RoomX, int roomY) {
         return currentRoom;
     }
 
@@ -70,6 +76,20 @@ public class Level {
         Solid4.setSprite(Bitmap.createBitmap(spriteSheet, 3*size, 2*size, size, size));
 
         Exit.setSprite(Bitmap.createBitmap(spriteSheet, 0, 3*size, size, size));
+    }
+
+    public void update(int switchRoom) {
+        switch (switchRoom) {
+            case 1: roomY--; break; //North
+            case 2: roomX++; break; //East
+            case 3: roomY++; break; //South
+            case 4: roomX--; break; //West
+            default: break;
+        }
+
+        if (switchRoom > 0) {
+            currentRoom = changeRoom(roomX, roomY);
+        }
     }
 
     public void draw(Canvas c, Paint p) {
@@ -102,4 +122,11 @@ public class Level {
         }
     }
 
+    public int getRoomX() {
+        return roomX;
+    }
+
+    public int getRoomY() {
+        return roomY;
+    }
 }

@@ -3,10 +3,15 @@ package mob;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
+
+import com.gameapp.gameapp.MainThread;
 
 /** The real purpose of the Player class is to provide a sprite and controls
  */
 public class Player extends Mob {
+
+    private int roomX, roomY; //coordinates in the level layout grid
 
     public Player(int x, int y, Bitmap sprites) {
         this.x = x*SIZE;
@@ -33,7 +38,26 @@ public class Player extends Mob {
         sprite = down;
     }
 
-    public void update() {
+    public int update() {
+        if (x <= -24) {
+            x = 288 - 24;
+            return 4;
+        }
+
+        return 0;
+    }
+
+    public int getRoomX() {
+        return roomX;
+    }
+
+    public int getRoomy() {
+        return roomY;
+    }
+
+    public void setLevelPosition(int x, int y) {
+        roomX = x;
+        roomY = y;
     }
 
     public void draw(Canvas c, Paint p) {

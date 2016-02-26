@@ -29,6 +29,8 @@ public class Room {
      *  10 - Single West
      */
 
+    protected char roomCode; //Used in level construction
+
     //Chests will typically be put in individually with specific coordinates instead of on the tileLayout grid
     protected ArrayList<Chest> treasure = new ArrayList<Chest>();
 
@@ -64,6 +66,10 @@ public class Room {
         return treasure;
     }
 
+    public char getRoomCode() {
+        return roomCode;
+    }
+
     //DOORWAY LAYOUTS
     public void defineDoorLayout(int doorLayout) {
         switch(doorLayout) {
@@ -81,6 +87,11 @@ public class Room {
             case 8: south(); break;
             case 9: east(); break;
             case 10: west(); break;
+
+            case 11: three_NES(); break;
+            case 12: three_ESW(); break;
+            case 13: three_SWN(); break;
+            case 14: three_WNE(); break;
         }
     }
 
@@ -146,5 +157,33 @@ public class Room {
     //One exit - West
     public void west() {
         tileLayout[tileLayout.length-1][5] = 1; tileLayout[tileLayout.length-1][6] = 1; //Bottom row
+    }
+
+    //Three exits - North, East, South
+    public void three_NES() {
+        tileLayout[0][tileLayout.length/2] = 1; tileLayout[0][(tileLayout.length/2) - 1] = 1; //Top row
+        tileLayout[tileLayout.length/2][tileLayout.length - 1] = 1; tileLayout[(tileLayout.length/2) - 1][tileLayout.length - 1] = 1; //Right wall
+        tileLayout[tileLayout.length-1][5] = 1; tileLayout[tileLayout.length-1][6] = 1; //Bottom row
+    }
+
+    //Three exits - East, South, West
+    public void three_ESW() {
+        tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
+        tileLayout[tileLayout.length/2][tileLayout.length - 1] = 1; tileLayout[(tileLayout.length/2) - 1][tileLayout.length - 1] = 1; //Right wall
+        tileLayout[tileLayout.length-1][5] = 1; tileLayout[tileLayout.length-1][6] = 1; //Bottom row
+    }
+
+    //Three exits - South, West, North
+    public void three_SWN() {
+        tileLayout[0][tileLayout.length/2] = 1; tileLayout[0][(tileLayout.length/2) - 1] = 1; //Top row
+        tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
+        tileLayout[tileLayout.length-1][5] = 1; tileLayout[tileLayout.length-1][6] = 1; //Bottom row
+    }
+
+    //Three exits - West, North, East
+    public void three_WNE() {
+        tileLayout[0][tileLayout.length/2] = 1; tileLayout[0][(tileLayout.length/2) - 1] = 1; //Top row
+        tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
+        tileLayout[tileLayout.length/2][tileLayout.length - 1] = 1; tileLayout[(tileLayout.length/2) - 1][tileLayout.length - 1] = 1; //Right wall
     }
 }
