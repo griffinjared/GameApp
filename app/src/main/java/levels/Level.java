@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.gameapp.gameapp.MainThread;
 
+import java.util.ArrayList;
+
 import rooms.Room;
 import tiles.Tile;
 
@@ -27,6 +29,7 @@ public class Level {
      * So the currentRoom variable will always be set to the active room, and is what's actually used to render
      */
     protected Room currentRoom;
+    protected ArrayList<Room> rooms;
     protected char[][] levelLayout;
     protected int roomX = 0, roomY = 0;
 
@@ -47,6 +50,7 @@ public class Level {
 
     public Level(Context context) {
         this.context = context;
+        rooms = new ArrayList<Room>();
     }
 
     public Room getCurrentRoom() {

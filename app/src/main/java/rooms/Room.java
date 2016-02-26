@@ -51,7 +51,7 @@ public class Room {
          *  7 = Obstacle, Type 3
          *  8 = Obstacle, Type 4
          *
-         *  9 = Other - Currently undefined. Reserve for any special kind of tile (perhaps the exit)
+         *  9 = Exit
          */
 
         //add chests to the treasure array here.
@@ -87,6 +87,13 @@ public class Room {
             case 13: three_SWN(); break;
             case 14: three_WNE(); break;
         }
+    }
+
+    public void trap() {
+        tileLayout[0][tileLayout.length/2] = 0; tileLayout[0][(tileLayout.length/2) - 1] = 0; //Top row
+        tileLayout[tileLayout.length/2][0] = 0; tileLayout[(tileLayout.length/2) - 1][0] = 0; //Left wall
+        tileLayout[tileLayout.length/2][tileLayout.length - 1] = 0; tileLayout[(tileLayout.length/2) - 0][tileLayout.length - 1] = 1; //Right wall
+        tileLayout[tileLayout.length-1][5] = 0; tileLayout[tileLayout.length-1][6] = 0; //Bottom row
     }
 
     //Room with 4 exits (all four walls)

@@ -25,26 +25,24 @@ public class Level_1_Forest extends Level {
                 {'E', 'E', 'E'}
         };
 
-        //Level-specific
-        spawn = new Spawn_Room(context, 0);
-        exit = new Exit_Room(context, 0);
-        empty = new Empty_Room(context, 0);
-        currentRoom = spawn;
+        for (int y = 0; y < levelLayout.length; y++) {
+            for (int x = 0; x < levelLayout[y].length; x++) {
+                switch(levelLayout[y][x]) {
+                    case 'E': rooms.add(new Empty_Room(context, 0)); break;
+                    case 'S': rooms.add(new Spawn_Room(context, 0)); break;
+                    case 'X': rooms.add(new Exit_Room(context, 0)); break;
+                    default: break;
+                }
+            }
+        }
 
         roomY = 1;
         roomX = 1;
+        currentRoom = rooms.get(roomX + (roomY*levelLayout[roomX].length));
     }
 
     public Room changeRoom(int roomX, int roomY) {
-        int roomCode = levelLayout[roomY][roomX];
-
-        switch(roomCode) {
-            case 'S': return spawn;
-            case 'X': return exit;
-            case 'E': return empty;
-        }
-
-        return currentRoom;
+        return rooms.get(roomX + (roomY*levelLayout[roomX].length));
     }
 
 }
