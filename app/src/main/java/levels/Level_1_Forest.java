@@ -7,21 +7,18 @@ import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
 import rooms.common_rooms.Spawn_Room;
+import rooms.stage1_forest.Deforested_Room;
+import rooms.stage1_forest.River_Room;
 
 public class Level_1_Forest extends Level {
-
-    //List of rooms
-    private Spawn_Room spawn;
-    private Exit_Room exit;
-    private Empty_Room empty;
 
     public Level_1_Forest(Context context, Bitmap spriteSheet) {
         super(context);
         changeTilesSprites(spriteSheet);
 
         levelLayout = new char[][] {
-                {'E', 'E', 'E'},
-                {'X', 'S', 'E'},
+                {'E', 'R', 'E'},
+                {'X', 'S', 'D'},
                 {'E', 'E', 'E'}
         };
 
@@ -31,6 +28,8 @@ public class Level_1_Forest extends Level {
                     case 'E': rooms.add(new Empty_Room(context, 0)); break;
                     case 'S': rooms.add(new Spawn_Room(context, 0)); break;
                     case 'X': rooms.add(new Exit_Room(context, 0)); break;
+                    case 'R': rooms.add(new River_Room(context, 0)); break;
+                    case 'D': rooms.add(new Deforested_Room(context, 0)); break;
                     default: break;
                 }
             }

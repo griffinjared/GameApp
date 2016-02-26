@@ -73,6 +73,7 @@ public class Player extends Mob {
     }
 
     public void draw(Canvas c, Paint p) {
+        if (y > 288-24) return;
         super.draw(c, p);
     }
 }
