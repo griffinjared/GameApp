@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import assets.Chest;
+import assets.chests.Chest;
 
 /** The Room class is essentially an array of Tiles
  *  Each Room will have an integer map of the assortment of Tiles, which are then switched out for actual Tiles
