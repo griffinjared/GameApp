@@ -5,8 +5,7 @@ import android.graphics.BitmapFactory;
 
 import com.gameapp.gameapp.R;
 
-import assets.chests.Chest;
-import assets.chests.Spell_Chest;
+import assets.chests.Weapon_Chest;
 import rooms.Room;
 
 public class Spawn_Room extends Room {
@@ -35,8 +34,5 @@ public class Spawn_Room extends Room {
         };
 
         defineDoorLayout(doorLayout);
-
-        //How to add treasure:
-        treasure.add(new Spell_Chest(10, 1, BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles_level1_forest), 0));
     }
 }

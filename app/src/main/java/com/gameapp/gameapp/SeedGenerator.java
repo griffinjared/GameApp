@@ -15,3 +15,4 @@ public class SeedGenerator {
         return SEED;
     }
 }
+
