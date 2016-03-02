@@ -21,7 +21,7 @@ public class Chest {
         this.y = y;
     }
 
-    public void setSprites(Bitmap sprites, int num) {
+    public void setSprite(Bitmap sprites, int num) {
         Bitmap spriteSheet = Bitmap.createScaledBitmap(sprites, 96, 144, true);
 
         sprite = Bitmap.createBitmap(spriteSheet, num*SIZE, 4*SIZE, SIZE, SIZE);

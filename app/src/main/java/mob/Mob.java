@@ -4,12 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import tiles.Tile;
+
 /** The Mob class can be anything that moves around in the map, not just enemies.
  *  As such, the Player is a Mob as well.
  */
 public class Mob {
 
-    protected final int SIZE = 24;
+    protected final int SIZE = Tile.SIZE;
     public static int x, y;
     protected Bitmap spriteSheet; //Image where all the sprites are stored
     protected Bitmap sprite; //Primary, currently-active sprite
@@ -21,6 +23,7 @@ public class Mob {
     protected static Bitmap right, right1, right2;
 
     //Statistics
+    protected int maxHP, maxMP, baseSpeed;
     protected int hp, mp, level, speed;
 
     public int getX() {
