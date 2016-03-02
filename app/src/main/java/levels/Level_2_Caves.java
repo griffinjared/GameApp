@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import levels.levelLayouts.Level_1_Forest_Layout;
+import levels.levelLayouts.Level_2_Caves_Layout;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
@@ -11,22 +12,18 @@ import rooms.common_rooms.Spawn_Room;
 import rooms.stage1_forest.Deforested_Room;
 import rooms.stage1_forest.River_Room;
 
-public class Level_1_Forest extends Level {
+/**
+ * Created by griff on 3/2/2016.
+ */
+public class Level_2_Caves extends Level {
+    private final int SPAWN_X = 4;
+    private final int SPAWN_Y = 4;
 
-    private final int SPAWN_X = 3;
-    private final int SPAWN_Y = 3;
-
-    public Level_1_Forest(Context context, Bitmap spriteSheet) {
+    public Level_2_Caves(Context context, Bitmap spriteSheet) {
         super(context);
         changeTilesSprites(spriteSheet);
 
-//        levelLayout = new char[][] {          //test layout
-//                {' ', ' ', ' ', ' ', ' '},
-//                {' ', 'E', 'R', 'E', ' '},
-//                {' ', 'X', 'S', 'D', ' '},
-//                {' ', 'E', 'E', 'E', ' '},
-//                {' ', ' ', ' ', ' ', ' '}
-//        };
+        levelLayout = Level_2_Caves_Layout.generateLevel();
 
         levelLayout = Level_1_Forest_Layout.generateLevel();
 
@@ -45,7 +42,7 @@ public class Level_1_Forest extends Level {
 
         roomY = SPAWN_Y;
         roomX = SPAWN_X;
-        currentRoom = rooms.get(roomX + (roomY*levelLayout[roomX].length));
+        currentRoom = rooms.get(roomX + (roomY * levelLayout[roomX].length));
     }
 
     public Room changeRoom(int roomX, int roomY) {
@@ -83,5 +80,4 @@ public class Level_1_Forest extends Level {
 
         else return 15;
     }
-
 }
