@@ -3,8 +3,6 @@ package levels.levelLayouts;
 import java.util.ArrayList;
 import java.util.Random;
 
-import rooms.common_rooms.Spawn_Room;
-
 /**
  * Created by griff on 3/2/2016.
  */
@@ -13,7 +11,7 @@ public class Level_1_Forest_Layout {
     private static final char RIVER_ROOM = 'R';
     private static final char DEFORESTED_ROOM = 'D';
     private static final char EMPTY_ROOM = 'E';
-    private static final int TOTAL_ROOMS = 8; //total rooms is the total size of the 2d char array minus 1
+    private static final int TOTAL_ROOMS = 24; //total rooms is the total size of the 2d char array minus 1
 
     static Random r = new Random();
 
@@ -35,13 +33,13 @@ public class Level_1_Forest_Layout {
             }
         }
 
-        char[][] layout = new char[5][5];
-        for(int y = 0; y < 5; y++) {
-            for(int x = 0; x < 5; x++) {
-                if(y == 0 || y == 4 || x == 0 || x == 4) {
+        char[][] layout = new char[7][7];
+        for(int y = 6; y >= 0; y--) {
+            for(int x = 6; x >= 0; x--) {
+                if(y == 0 || y == 6 || x == 0 || x == 6) {
                     layout[x][y] = ' ';
                 }
-                else if(y == 2 && x == 2) {
+                else if(y == 4 && x == 4) {
                     layout[x][y] = 'S';
                 }
                 else {
@@ -51,6 +49,7 @@ public class Level_1_Forest_Layout {
             }
         }
 
+        System.out.println(layout);
         return layout;
     }
 }
