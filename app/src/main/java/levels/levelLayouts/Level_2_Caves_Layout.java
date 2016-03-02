@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by griff on 3/2/2016.
  */
-public class Level_1_Forest_Layout {
+public class Level_2_Caves_Layout {
     private static final char EXIT_ROOM = 'X';
     private static final char RIVER_ROOM = 'R';
     private static final char DEFORESTED_ROOM = 'D';
@@ -39,7 +39,7 @@ public class Level_1_Forest_Layout {
                 if(y == 0 || y == 6 || x == 0 || x == 6) {
                     layout[x][y] = ' ';
                 }
-                else if(y == 3 && x == 3) {
+                else if(y == 4 && x == 4) {
                     layout[x][y] = 'S';
                 }
                 else {
