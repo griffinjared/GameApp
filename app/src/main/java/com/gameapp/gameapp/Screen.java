@@ -109,9 +109,9 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         player.setX(2);
         level.update(player.update());
 
-        List touchEvents = game.getInput().getTouchEvents();
-        if(state == GameState.Paused)
-            updatePaused(touchEvents);
+        //List touchEvents = game.getInput().getTouchEvents(); //Of what class is "game"?
+        if(state == GameState.Paused);
+            //updatePaused(touchEvents);
     }
 
     private void updatePaused(List touchEvents){
