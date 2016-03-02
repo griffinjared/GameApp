@@ -39,6 +39,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
     private Bitmap joystick;
+    private ControlPad controlPad;
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
@@ -60,6 +61,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic)); //Spawns center
         paint = new Paint();
         joystick = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
+        controlPad = new ControlPad(getWidth()/40, getHeight()-(getHeight() - getWidth() - (getWidth()/24)) - (getWidth() / 40));
 
         setFocusable(true);
 
@@ -109,9 +111,10 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         player.setX(2);
         level.update(player.update());
 
-        List touchEvents = game.getInput().getTouchEvents();
-        if(state == GameState.Paused)
-            updatePaused(touchEvents);
+        //TODO
+        //List touchEvents = Game.getInput().getTouchEvents();
+        //if(state == GameState.Paused)
+            //updatePaused(touchEvents);
     }
 
     private void updatePaused(List touchEvents){
