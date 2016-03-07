@@ -42,11 +42,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
-    enum GameState{
-        Ready, Running, Paused, GameOver
-    }
-    GameState state = GameState.Ready;
-
     public Screen(Context context) {
         super(context);
         getHolder().addCallback(this);
@@ -108,31 +103,10 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         player.setX(2);
         level.update(player.update());
-
-        //List touchEvents = game.getInput().getTouchEvents(); //Of what class is "game"?
-        if(state == GameState.Paused);
-            //updatePaused(touchEvents);
     }
 
-    private void updatePaused(List touchEvents){
-        int len = touchEvents.size();
-        for(int i = 0; i < len; i++){
-            TouchEvent event = (TouchEvent) touchEvents.get(i);
-            if(event.type == TouchEvent.TOUCH_UP){
-                if(inBounds(event, 0, 0, 800, 240)){
-                    if(!inBounds(event, 0, 0, 35, 35)){
-                        // resume(); this allows player to resume the game
 
-                    }
-                }
-                if(inBounds(event, 0, 240, 800, 240)){
-                    // nullify(); resets all of the character and variable information
-                    // goToMenu(); takes the player back to the main menu
-                }
-            }
-        }
 
-    }
 
     public void updateRunning(List touchEvents, float deltaTime) {
         int len = touchEvents.size();
