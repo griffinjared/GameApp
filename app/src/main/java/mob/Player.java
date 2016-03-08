@@ -3,9 +3,6 @@ package mob;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
-
-import com.gameapp.gameapp.MainThread;
 
 /** The real purpose of the Player class is to provide a sprite and controls
  */

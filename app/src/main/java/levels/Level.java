@@ -2,13 +2,8 @@ package levels;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
-
-import com.gameapp.gameapp.MainThread;
-import com.gameapp.gameapp.R;
 
 import java.util.ArrayList;
 
@@ -35,9 +30,6 @@ public class Level {
     protected char[][] levelLayout;
     protected int roomX = 0, roomY = 0;
 
-    //Spritesheets
-    private Bitmap weapons, armors, spells, accessories, items;
-
     //These Tiles will always have the same names and functions but different sprites depending on the level
     public static Tile Wall = new Tile(); //Boundaries around the room
 
@@ -56,12 +48,6 @@ public class Level {
     public Level(Context context) {
         this.context = context;
         rooms = new ArrayList<Room>();
-
-        weapons = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.weapons), 96, 144, true);
-        armors = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.armors), 96, 96, true);
-        spells = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.spells), 72, 96, true);
-        accessories = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.accessories), 72, 96, true);
-        items = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.items), 96, 96, true);
     }
 
     public Room getCurrentRoom() {
