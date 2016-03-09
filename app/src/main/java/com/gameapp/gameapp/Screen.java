@@ -38,6 +38,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
+    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
 
     public static final int SIZE = 288; //Dimensions of one regular room
@@ -64,9 +65,27 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        joystick = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
         int joy = getWidth() * 4 / 9;
-        joystick = Bitmap.createScaledBitmap(joystick, joy, joy, true);
+
+        //Joystick images
+        joy_center = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
+        joy_center = Bitmap.createScaledBitmap(joy_center, joy, joy, true);
+        joy_up = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up);
+        joy_up = Bitmap.createScaledBitmap(joy_up, joy, joy, true);
+        joy_down = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down);
+        joy_down = Bitmap.createScaledBitmap(joy_down, joy, joy, true);
+        joy_left = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_left);
+        joy_left = Bitmap.createScaledBitmap(joy_left, joy, joy, true);
+        joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
+        joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
+        joy_upLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_left);
+        joy_upLeft = Bitmap.createScaledBitmap(joy_upLeft, joy, joy, true);
+        joy_upRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_right);
+        joy_upRight = Bitmap.createScaledBitmap(joy_upRight, joy, joy, true);
+        joy_downLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_left);
+        joy_downLeft = Bitmap.createScaledBitmap(joy_downLeft, joy, joy, true);
+        joy_downRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_right);
+        joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
     }
 
     @Override
@@ -170,6 +189,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
+        joystick = joy_center;
         canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
