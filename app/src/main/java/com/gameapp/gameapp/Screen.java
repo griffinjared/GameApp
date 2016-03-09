@@ -54,7 +54,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic)); //Spawns center
         paint = new Paint();
-        joystick = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
 
         setFocusable(true);
 
@@ -65,7 +64,9 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        joystick = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
+        int joy = getWidth() * 4 / 9;
+        joystick = Bitmap.createScaledBitmap(joystick, joy, joy, true);
     }
 
     @Override
@@ -105,9 +106,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         level.update(player.update());
     }
 
-
-
-
     public void updateRunning(List touchEvents, float deltaTime) {
         int len = touchEvents.size();
 
@@ -140,7 +138,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
          */
         int size = (getHeight() - getWidth() - (getWidth()/24)) - (getWidth() / 40);
-        joystick = Bitmap.createScaledBitmap(joystick, size, size, true);
 
         int w = getWidth();
         int h = getHeight();
