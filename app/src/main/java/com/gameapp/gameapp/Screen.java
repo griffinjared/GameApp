@@ -109,13 +109,15 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            /*
             if(event.getY() > getHeight() - 50) {
                 thread.setRunning(false);
                 ((Activity)getContext()).finish();
             } else {
                 Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
             }
+            */
         }
         return super.onTouchEvent(event);
     }
@@ -135,7 +137,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             if (event.type == TouchEvent.TOUCH_UP) { // user stopped touching screen
-                // TODO: implement touch stopped events
+                joystick = joy_center;
             }
 
             // TOUCH_DRAGGED and TOUCH_HOLD are also included
@@ -156,7 +158,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
          */
-        int size = (getHeight() - getWidth() - (getWidth()/24)) - (getWidth() / 40);
+        int size = getHeight() - getWidth() - (getWidth()/15);
 
         int w = getWidth();
         int h = getHeight();
@@ -175,7 +177,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.restoreToCount(saveState);
         //HUD, UI, and On-Screen Text
-        paint.setTextSize(w / 24);
+        paint.setTextSize(w / 20);
 
         //Button text
         paint.setColor(Color.WHITE);

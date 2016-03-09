@@ -15,6 +15,7 @@ public class Mob {
     public static int x, y;
     protected Bitmap spriteSheet; //Image where all the sprites are stored
     protected Bitmap sprite; //Primary, currently-active sprite
+    protected int anim; //animation cycles
 
     //Sprites
     protected static Bitmap down, down1, down2;
