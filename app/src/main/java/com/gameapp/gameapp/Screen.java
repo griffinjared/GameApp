@@ -38,14 +38,10 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
+    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
 
     public static final int SIZE = 288; //Dimensions of one regular room
-
-    enum GameState{
-        Ready, Running, Paused, GameOver
-    }
-    GameState state = GameState.Ready;
 
     public Screen(Context context) {
         super(context);
@@ -59,7 +55,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic)); //Spawns center
         paint = new Paint();
-        joystick = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
 
         setFocusable(true);
 
@@ -70,7 +65,27 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        int joy = getWidth() * 4 / 9;
 
+        //Joystick images
+        joy_center = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
+        joy_center = Bitmap.createScaledBitmap(joy_center, joy, joy, true);
+        joy_up = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up);
+        joy_up = Bitmap.createScaledBitmap(joy_up, joy, joy, true);
+        joy_down = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down);
+        joy_down = Bitmap.createScaledBitmap(joy_down, joy, joy, true);
+        joy_left = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_left);
+        joy_left = Bitmap.createScaledBitmap(joy_left, joy, joy, true);
+        joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
+        joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
+        joy_upLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_left);
+        joy_upLeft = Bitmap.createScaledBitmap(joy_upLeft, joy, joy, true);
+        joy_upRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_right);
+        joy_upRight = Bitmap.createScaledBitmap(joy_upRight, joy, joy, true);
+        joy_downLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_left);
+        joy_downLeft = Bitmap.createScaledBitmap(joy_downLeft, joy, joy, true);
+        joy_downRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_right);
+        joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
     }
 
     @Override
@@ -108,30 +123,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         player.setX(2);
         level.update(player.update());
-
-        //List touchEvents = game.getInput().getTouchEvents(); //Of what class is "game"?
-        if(state == GameState.Paused);
-            //updatePaused(touchEvents);
-    }
-
-    private void updatePaused(List touchEvents){
-        int len = touchEvents.size();
-        for(int i = 0; i < len; i++){
-            TouchEvent event = (TouchEvent) touchEvents.get(i);
-            if(event.type == TouchEvent.TOUCH_UP){
-                if(inBounds(event, 0, 0, 800, 240)){
-                    if(!inBounds(event, 0, 0, 35, 35)){
-                        // resume(); this allows player to resume the game
-
-                    }
-                }
-                if(inBounds(event, 0, 240, 800, 240)){
-                    // nullify(); resets all of the character and variable information
-                    // goToMenu(); takes the player back to the main menu
-                }
-            }
-        }
-
     }
 
     public void updateRunning(List touchEvents, float deltaTime) {
@@ -166,7 +157,6 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
          */
         int size = (getHeight() - getWidth() - (getWidth()/24)) - (getWidth() / 40);
-        joystick = Bitmap.createScaledBitmap(joystick, size, size, true);
 
         int w = getWidth();
         int h = getHeight();
@@ -199,6 +189,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
+        joystick = joy_center;
         canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
