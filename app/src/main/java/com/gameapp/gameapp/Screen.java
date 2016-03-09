@@ -127,18 +127,138 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     public void updateRunning(List touchEvents, float deltaTime) {
         int len = touchEvents.size();
+        int w = getWidth();
+        int h = getHeight();
+        int size = (h - w - (w/15));
 
         for (int i = 0; i < len; i++) {
             TouchEvent event = (TouchEvent) touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_DOWN) { // user touched screen
-                // TODO: implement touch events
+                if (inBounds(event, w/40, h-size, 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Up-Left
+                    joystick = joy_upLeft;
+                    player.setX(-2);
+                    player.setY(-2);
+                }
+                else if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Up
+                    joystick = joy_up;
+                    player.setX(0);
+                    player.setY(-2);
+                }
+                else if (inBounds(event, (w/40) + (8*w/27), h-size, 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Up-Right
+                    joystick = joy_upRight;
+                    player.setX(2);
+                    player.setY(-2);
+                }
+                else if (inBounds(event, w/40, h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Left
+                    joystick = joy_left;
+                    player.setX(-2);
+                    player.setY(0);
+                }
+                else if (inBounds(event, (w/40) + (4*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Center
+                    joystick = joy_center;
+                    player.setX(0);
+                    player.setY(0);
+                }
+                else if (inBounds(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Right
+                    joystick = joy_right;
+                    player.setX(2);
+                    player.setY(0);
+                }
+                else if (inBounds(event, w/40, h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Down-Left
+                    joystick = joy_downLeft;
+                    player.setX(-2);
+                    player.setY(2);
+                }
+                else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Down
+                    joystick = joy_down;
+                    player.setX(0);
+                    player.setY(2);
+                }
+                else if (inBounds(event, (w/40) + (8*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Down-Right
+                    joystick = joy_downRight;
+                    player.setX(2);
+                    player.setY(2);
+                }
             }
 
             if (event.type == TouchEvent.TOUCH_UP) { // user stopped touching screen
                 // TODO: implement touch stopped events
+                if (inBounds(event, 0, h-size, 4*w/9, size)) {
+                    joystick = joy_center;
+                    player.setX(0);
+                    player.setY(0);
+                }
             }
 
-            // TOUCH_DRAGGED and TOUCH_HOLD are also included
+            if (event.type == TouchEvent.TOUCH_HOLD) { // user holding screen
+                if (inBounds(event, w/40, h-size, 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Up-Left
+                    joystick = joy_upLeft;
+                    player.setX(-2);
+                    player.setY(-2);
+                }
+                else if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Up
+                    joystick = joy_up;
+                    player.setX(0);
+                    player.setY(-2);
+                }
+                else if (inBounds(event, (w/40) + (8*w/27), h-size, 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Up-Right
+                    joystick = joy_upRight;
+                    player.setX(2);
+                    player.setY(-2);
+                }
+                else if (inBounds(event, w/40, h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Left
+                    joystick = joy_left;
+                    player.setX(-2);
+                    player.setY(0);
+                }
+                else if (inBounds(event, (w/40) + (4*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Center
+                    joystick = joy_center;
+                    player.setX(0);
+                    player.setY(0);
+                }
+                else if (inBounds(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Right
+                    joystick = joy_right;
+                    player.setX(2);
+                    player.setY(0);
+                }
+                else if (inBounds(event, w/40, h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Down-Left
+                    joystick = joy_downLeft;
+                    player.setX(-2);
+                    player.setY(2);
+                }
+                else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Down
+                    joystick = joy_down;
+                    player.setX(0);
+                    player.setY(2);
+                }
+                else if (inBounds(event, (w/40) + (8*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                    //TODO: Joystick Down-Right
+                    joystick = joy_downRight;
+                    player.setX(2);
+                    player.setY(2);
+                }
+            }
+
+            if (event.type == TouchEvent.TOUCH_DRAGGED) { // user dragged screen
+                //TODO: implement touch drag events
+            }
         }
     }
 
@@ -156,7 +276,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
          */
-        int size = (getHeight() - getWidth() - (getWidth()/24)) - (getWidth() / 40);
+        int size = (getHeight() - getWidth() - (getWidth()/15));
 
         int w = getWidth();
         int h = getHeight();

@@ -13,8 +13,10 @@ public class Mob {
 
     protected final int SIZE = Tile.SIZE;
     public static int x, y;
+    protected int direction = 7;
     protected Bitmap spriteSheet; //Image where all the sprites are stored
     protected Bitmap sprite; //Primary, currently-active sprite
+    protected int anim; //animation cycles
 
     //Sprites
     protected static Bitmap down, down1, down2;
@@ -43,6 +45,43 @@ public class Mob {
     public void draw(Canvas c, Paint p) {
 
         c.drawBitmap(sprite, x, y, p);
+    }
+
+    public void animate() {
+        anim++;
+        int animation = 25;
+        int stage1 = animation/4, stage2 = animation/2, stage3 = animation * 3 / 4, stage4 = animation;
+        if (anim > animation) anim = 0;
+
+        switch(direction) {
+            //Left
+            case 1:case 4:case 6:
+                if (anim < stage1) sprite = left1;
+                else if (anim < stage2) sprite = left;
+                else if (anim < stage3) sprite = left2;
+                else if (anim < stage4) sprite = left;
+                break;
+            //Up
+            case 2:
+                if (anim < stage1) sprite = up1;
+                else if (anim < stage2) sprite = up;
+                else if (anim < stage3) sprite = up2;
+                else if (anim < stage4) sprite = up;
+                break;
+            //Right
+            case 3:case 5:case 8:
+                if (anim < stage1) sprite = right1;
+                else if (anim < stage2) sprite = right;
+                else if (anim < stage3) sprite = right2;
+                else if (anim < stage4) sprite = right;
+                break;
+            case 7:
+                if (anim < stage1) sprite = down1;
+                else if (anim < stage2) sprite = down;
+                else if (anim < stage3) sprite = down2;
+                else if (anim < stage4) sprite = down;
+                break;
+        }
     }
 
 }
