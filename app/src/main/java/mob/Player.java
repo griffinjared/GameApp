@@ -8,6 +8,11 @@ import android.graphics.Paint;
  */
 public class Player extends Mob {
 
+    /** 1 2 3
+     *  4   5
+     *  6 7 8
+     */
+
     private int roomX, roomY; //coordinates in the level layout grid
 
     public Player(int x, int y, Bitmap sprites) {
@@ -32,10 +37,12 @@ public class Player extends Mob {
         right1 = Bitmap.createBitmap(spriteSheet, 3, SIZE, SIZE, SIZE);
         right2 = Bitmap.createBitmap(spriteSheet, 3, 2*SIZE, SIZE, SIZE);
 
-        sprite = down;
+        sprite = left;
     }
 
     public int update() {
+        animate();
+
         if (x <= -SIZE) { //West
             x = (SIZE*12) - SIZE/2;
             return 4;
@@ -84,4 +91,7 @@ public class Player extends Mob {
         if (y > 288-24) return;
         super.draw(c, p);
     }
+
+
+
 }
