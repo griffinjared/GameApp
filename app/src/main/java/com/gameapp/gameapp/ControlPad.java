@@ -14,4 +14,44 @@ public class ControlPad {
         y = givenY;
 
     }
+
+    public void update() {
+
+    }
+
+    public void moveUpLeft() {
+
+    }
+
+    public void moveUp() {
+
+    }
+
+    public void moveUpRight() {
+
+    }
+
+    public void moveLeft() {
+
+    }
+
+    public void moveCenter() {
+
+    }
+
+    public void moveRight() {
+
+    }
+
+    public void moveDownLeft() {
+
+    }
+
+    public void moveDown() {
+
+    }
+
+    public void moveDownRight() {
+
+    }
 }
