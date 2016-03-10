@@ -16,8 +16,8 @@ import rooms.stage1_forest.River_Room;
  * Created by griff on 3/2/2016.
  */
 public class Level_2_Caves extends Level {
-    private final int SPAWN_X = 4;
-    private final int SPAWN_Y = 4;
+    private final int SPAWN_X = 5;
+    private final int SPAWN_Y = 5;
 
     public Level_2_Caves(Context context, Bitmap spriteSheet) {
         super(context);

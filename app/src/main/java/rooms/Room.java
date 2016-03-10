@@ -46,7 +46,7 @@ public class Room {
          *  3 = Floor, Type 3
          *  4 = Floor, Type 4
          *
-         *  5 = Obstacle, Type 1 (Anything that isn't a wall that still blocks hte player, like rocks or water in the environment)
+         *  5 = Obstacle, Type 1 (Anything that isn't a wall that still blocks the player, like rocks or water in the environment)
          *  6 = Obstacle, Type 2
          *  7 = Obstacle, Type 3
          *  8 = Obstacle, Type 4
