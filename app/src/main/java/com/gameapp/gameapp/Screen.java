@@ -1,7 +1,6 @@
 package com.gameapp.gameapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -41,9 +40,10 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
 
+
     public static final int SIZE = 288; //Dimensions of one regular room
 
-    public Screen(Context context) {
+    public Screen(Game context) {
         super(context);
         getHolder().addCallback(this);
 
