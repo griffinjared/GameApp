@@ -1,12 +1,10 @@
 package com.gameapp.gameapp;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -37,6 +35,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
+    private Bitmap dPad;
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
     private int direction = 7;
@@ -88,6 +87,10 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
 
         joystick = joy_center;
+
+        //D-Pad
+        dPad = BitmapFactory.decodeResource(getResources(), R.drawable.dpad);
+        dPad = Bitmap.createScaledBitmap(dPad, joy, joy, true);
     }
 
     @Override
@@ -109,6 +112,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    //PLAYER CONTROLS
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int w = getWidth();
@@ -126,16 +130,19 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
                 joystick = joy_down;
                 player.setY(1);
+                direction = 7;
             }
             //Left
             else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_left;
                 player.setX(-1);
+                direction = 4;
             }
             //Right
-            else if (inBounds2(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
+            else if (inBounds2(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_right;
                 player.setX(1);
+                direction = 5;
             }
         }
         return super.onTouchEvent(event);
@@ -333,7 +340,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
+        canvas.drawBitmap(dPad, w/40, h-size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
     }

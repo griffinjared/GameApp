@@ -37,7 +37,7 @@ public class Player extends Mob {
         right1 = Bitmap.createBitmap(spriteSheet, 3, SIZE, SIZE, SIZE);
         right2 = Bitmap.createBitmap(spriteSheet, 3, 2*SIZE, SIZE, SIZE);
 
-        sprite = left;
+        sprite = down;
     }
 
     public int update(int direction) {
