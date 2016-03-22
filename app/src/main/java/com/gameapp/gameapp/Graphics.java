@@ -27,9 +27,9 @@ import mob.Player;
  *  onDraw and update are both repeatedly called by the the MainThread every frame
  */
 
-public class Screen extends SurfaceView implements SurfaceHolder.Callback {
+public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
-    private static final String TAG = Screen.class.getSimpleName();
+    private static final String TAG = Graphics.class.getSimpleName();
 
     //Primary Components
     private MainThread thread;
@@ -43,7 +43,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
-    public Screen(Game context) {
+    public Graphics(Game context) {
         super(context);
         getHolder().addCallback(this);
 

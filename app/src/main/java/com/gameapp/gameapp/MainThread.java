@@ -19,7 +19,7 @@ public class MainThread extends Thread{
 
     //Main components
     private SurfaceHolder surfaceHolder;
-    private Screen screen; //Primary class
+    private Graphics graphics; //Primary class
     public static Canvas canvas;
     public static Game game;
 
@@ -33,10 +33,10 @@ public class MainThread extends Thread{
         this.running = running;
     }
 
-    public MainThread(SurfaceHolder surfaceHolder, Screen screen) {
+    public MainThread(SurfaceHolder surfaceHolder, Graphics graphics) {
         super();
         this.surfaceHolder = surfaceHolder;
-        this.screen = screen;
+        this.graphics = graphics;
         running = true;
     }
 
@@ -57,7 +57,7 @@ public class MainThread extends Thread{
         while (running) {
             tickCount++;
 
-            touchEvents = game.getInput().getTouchEvents();
+            //touchEvents = game.getInput().getTouchEvents();
             startTime = System.nanoTime();
             canvas = null;
 
@@ -65,9 +65,9 @@ public class MainThread extends Thread{
             try {
                 canvas = this.surfaceHolder.lockCanvas(null);
                 synchronized (surfaceHolder) {
-                    screen.update();
-                    screen.updateRunning(touchEvents,0);
-                    screen.postInvalidate();
+                    graphics.update();
+                    //graphics.updateRunning(touchEvents,0);
+                    graphics.postInvalidate();
                 }
             } catch(Exception e) {}
 

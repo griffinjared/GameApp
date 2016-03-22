@@ -29,10 +29,22 @@ import gameapp.framework.implementation.AndroidInput;
  *  Just like how the MainActivity brings up the menu and doesn't do much else, this class starts up the game and then waits for it be over
  */
 
-public class Game extends AndroidGame {
+public class Game extends Activity {
 
     private static final String TAG = gameapp.framework.Game.class.getSimpleName();
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(new Graphics(this));
+    }
+
+    /*
     public static String map;
     boolean firstTimeCreate = true;
 
@@ -92,4 +104,5 @@ public class Game extends AndroidGame {
         Assets.theme.pause();
 
     }
+    */
 }

@@ -13,11 +13,11 @@ public class SplashLoadingScreen extends gameapp.framework.Screen {
 
     @Override
     public void update(float deltaTime) {
-        Graphics g = game.getGraphics();
+        //Graphics g = game.getGraphics();
         //Assets.splash = g.newImage("splash.jpg", Graphics.ImageFormat.RGB565);
 
 
-        game.setScreen(new LoadingScreen(game));
+        //game.setScreen(new LoadingScreen(game));
 
     }
 
