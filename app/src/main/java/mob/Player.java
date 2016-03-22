@@ -40,23 +40,24 @@ public class Player extends Mob {
         sprite = left;
     }
 
-    public int update() {
+    public int update(int direction) {
+        this.direction = direction;
         animate();
 
         if (x <= -SIZE) { //West
-            x = (SIZE*12) - SIZE/2;
+            x = (SIZE*12) - SIZE;
             return 4;
         }
         else if (x >= SIZE*12) { //East
-            x = SIZE/2;
+            x = 0;
             return 2;
         }
         else if (y <= -SIZE) { //North
-            y = (SIZE*12) - SIZE/2;
+            y = (SIZE*12) - SIZE;
             return 1;
         }
         else if (y >= SIZE*12) { //East
-            y = SIZE/2;
+            y = 0;
             return 3;
         }
 

@@ -39,7 +39,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint; //for drawing graphics
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
-
+    private int direction = 7;
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
@@ -86,6 +86,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_downLeft = Bitmap.createScaledBitmap(joy_downLeft, joy, joy, true);
         joy_downRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_right);
         joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
+
+        joystick = joy_center;
     }
 
     @Override
@@ -109,20 +111,38 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        int w = getWidth();
+        int h = getHeight();
+        int size = (h - w - (w/15));
+
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            if(event.getY() > getHeight() - 50) {
-                thread.setRunning(false);
-                ((Activity)getContext()).finish();
-            } else {
-                Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
+            //Up
+            if (inBounds2(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+                joystick = joy_up;
+                player.setY(-1);
+                direction = 2;
+            }
+            //Down
+            else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                joystick = joy_down;
+                player.setY(1);
+            }
+            //Left
+            else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+                joystick = joy_left;
+                player.setX(-1);
+            }
+            //Right
+            else if (inBounds2(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
+                joystick = joy_right;
+                player.setX(1);
             }
         }
         return super.onTouchEvent(event);
     }
 
     public void update() {
-        player.setX(2);
-        level.update(player.update());
+        level.update(player.update(direction));
     }
 
     public void updateRunning(List touchEvents, float deltaTime) {
@@ -267,6 +287,10 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         return (event.x > x && event.x < x + width - 1 && event.y > y && event.y < y + height - 1);
     }
 
+    private boolean inBounds2(MotionEvent event, int x, int y, int width, int height) {
+        return (event.getX() > x && event.getX() < x + width - 1 && event.getY() > y && event.getY() < y + height - 1);
+    }
+
     @Override
     /** The Paint class can probably used for any on-screen text.
      *  It cannot however, draw complex graphics and is limited to text and simple shapes like circles and rectangles
@@ -309,7 +333,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        joystick = joy_center;
         canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
