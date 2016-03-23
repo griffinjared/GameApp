@@ -62,17 +62,36 @@ public class Mob {
         return y;
     }
 
-    public void setX(int num) {
-        x += (num*SIZE);
-
-        if (num == 1) sprite = right;
-        else sprite = left;
+    public void setX(int num, Room room) {
+        if (num == 1) {
+            if (!collision(num, 0, room)) x += (num*SIZE);
+            sprite = right;
+        }
+        else {
+            if (!collision(num, 0, room)) x += (num*SIZE);
+            sprite = left;
+        }
     }
-    public void setY(int num) {
-        y += (num*SIZE);
+    public void setY(int num, Room room) {
+        if (num == 1) {
+            if (!collision(0, num, room)) y += (num*SIZE);
+            sprite = down;
+        }
+        else {
+            if (!collision(0, num, room)) y += (num*SIZE);
+            sprite = up;
+        }
+    }
 
-        if (num == 1) sprite = down;
-        else sprite = up;
+    public boolean collision(int xa, int ya, Room room) {
+        try {
+            if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] == 0) return true;
+            else if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] > 4) return true;
+            else return false;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     public void draw(Canvas c, Paint p) {
@@ -137,24 +156,5 @@ public class Mob {
     }
     public int getMaxMP() {
         return maxMP;
-    }
-
-    public boolean collision(int direction, Room room) {
-        switch(direction) {
-            //Up
-            case 0:
-                if (room.getTileLayout()[(y/24)-1][x/24] > 4 || room.getTileLayout()[x][y] == 0) return true;
-
-                //Right
-            case 1: break;
-
-            //Down
-            case 2: break;
-
-            //Left
-            case 3: break;
-        }
-
-        return false;
     }
 }

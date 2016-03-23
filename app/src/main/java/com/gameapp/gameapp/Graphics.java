@@ -60,7 +60,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Knight(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
+        player = new Knight(3, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
         paint = new Paint();
         isHolding = false;
         speed = 0;
@@ -135,53 +135,45 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             isHolding = true;
 
             //Up
-            if (inBounds2(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+            if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
                 joystick = joy_up;
-//                player.setY(-1);
                 direction = Direction.UP;
             }
             //Down
-            else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+            else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
                 joystick = joy_down;
-//                player.setY(1);
                 direction = Direction.DOWN;
             }
             //Left
-            else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+            else if (inBounds(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_left;
-//                player.setX(-1);
                 direction = Direction.LEFT;
             }
             //Right
-            else if (inBounds2(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+            else if (inBounds(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_right;
-//                player.setX(1);
                 direction = Direction.RIGHT;
             }
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             //Up
-            if (inBounds2(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+            if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
                 joystick = joy_up;
-//                player.setY(-1);
                 direction = Direction.UP;
             }
             //Down
-            else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+            else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
                 joystick = joy_down;
-//                player.setY(1);
                 direction = Direction.DOWN;
             }
             //Left
-            else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+            else if (inBounds(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_left;
-//                player.setX(-1);
                 direction = Direction.LEFT;
             }
             //Right
-            else if (inBounds2(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+            else if (inBounds(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_right;
-//                player.setX(1);
                 direction = Direction.RIGHT;
             }
         }
@@ -204,13 +196,13 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         if (isHolding) {
             if (speed == 0) {
                 if (direction == Direction.UP) {
-                    player.setY(-1);
+                    player.setY(-1, level.getCurrentRoom());
                 } else if (direction == Direction.DOWN) {
-                    player.setY(1);
+                    player.setY(1, level.getCurrentRoom());
                 } else if (direction == Direction.LEFT) {
-                    player.setX(-1);
+                    player.setX(-1, level.getCurrentRoom());
                 } else if (direction == Direction.RIGHT) {
-                    player.setX(1);
+                    player.setX(1, level.getCurrentRoom());
                 }
             }
             speed++;
@@ -220,128 +212,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         level.update(player.update());
     }
 
-    /*
-    public void updateRunning(List touchEvents, float deltaTime) {
-        int len = touchEvents.size();
-        int w = getWidth();
-        int h = getHeight();
-        int size = (h - w - (w/15));
-
-        for (int i = 0; i < len; i++) {
-            TouchEvent event = (TouchEvent) touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_DOWN) { // user touched screen
-                if (inBounds(event, w/40, h-size, 4*w/27, 4*w/27)) {
-                    joystick = joy_upLeft;
-                    player.setX(-2);
-                    player.setY(-2);
-                }
-                else if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
-                    joystick = joy_up;
-                    player.setX(0);
-                    player.setY(-2);
-                }
-                else if (inBounds(event, (w/40) + (8*w/27), h-size, 4*w/27, 4*w/27)) {
-                    joystick = joy_upRight;
-                    player.setX(2);
-                    player.setY(-2);
-                }
-                else if (inBounds(event, w/40, h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_left;
-                    player.setX(-2);
-                    player.setY(0);
-                }
-                else if (inBounds(event, (w/40) + (4*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_center;
-                    player.setX(0);
-                    player.setY(0);
-                }
-                else if (inBounds(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_right;
-                    player.setX(2);
-                    player.setY(0);
-                }
-                else if (inBounds(event, w/40, h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_downLeft;
-                    player.setX(-2);
-                    player.setY(2);
-                }
-                else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_down;
-                    player.setX(0);
-                    player.setY(2);
-                }
-                else if (inBounds(event, (w/40) + (8*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_downRight;
-                    player.setX(2);
-                    player.setY(2);
-                }
-            }
-
-            if (event.type == TouchEvent.TOUCH_UP) { // user stopped touching screen
-                if (inBounds(event, 0, h-size, 4*w/9, size)) {
-                    joystick = joy_center;
-                    player.setX(0);
-                    player.setY(0);
-                }
-            }
-
-            if (event.type == TouchEvent.TOUCH_HOLD) { // user holding screen
-                if (inBounds(event, w/40, h-size, 4*w/27, 4*w/27)) {
-                    joystick = joy_upLeft;
-                    player.setX(-2);
-                    player.setY(-2);
-                }
-                else if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
-                    joystick = joy_up;
-                    player.setX(0);
-                    player.setY(-2);
-                }
-                else if (inBounds(event, (w/40) + (8*w/27), h-size, 4*w/27, 4*w/27)) {
-                    joystick = joy_upRight;
-                    player.setX(2);
-                    player.setY(-2);
-                }
-                else if (inBounds(event, w/40, h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_left;
-                    player.setX(-2);
-                    player.setY(0);
-                }
-                else if (inBounds(event, (w/40) + (4*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_center;
-                    player.setX(0);
-                    player.setY(0);
-                }
-                else if (inBounds(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_right;
-                    player.setX(2);
-                    player.setY(0);
-                }
-                else if (inBounds(event, w/40, h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_downLeft;
-                    player.setX(-2);
-                    player.setY(2);
-                }
-                else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_down;
-                    player.setX(0);
-                    player.setY(2);
-                }
-                else if (inBounds(event, (w/40) + (8*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    joystick = joy_downRight;
-                    player.setX(2);
-                    player.setY(2);
-                }
-            }
-        }
-    }
-    */
-
-    private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
-        //this checks if the touchEvent passed occurred within the specified pixel bounds
-        return (event.x > x && event.x < x + width - 1 && event.y > y && event.y < y + height - 1);
-    }
-
-    private boolean inBounds2(MotionEvent event, int x, int y, int width, int height) {
+    private boolean inBounds(MotionEvent event, int x, int y, int width, int height) {
         return (event.getX() > x && event.getX() < x + width - 1 && event.getY() > y && event.getY() < y + height - 1);
     }
 
@@ -387,7 +258,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("HP: " + player.getHP() + " / " + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: " + player.getMP() + " / " + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        canvas.drawBitmap(dPad, w/40, h-size, paint); //joystick
+        canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
     }
