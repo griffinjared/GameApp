@@ -1,6 +1,10 @@
 package mob.enemies_1_forest;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.gameapp.gameapp.R;
 
 import mob.Enemy;
 import rooms.Room;
@@ -10,8 +14,11 @@ import rooms.Room;
  */
 public class Fouling extends Enemy {
 
-    public Fouling(int x, int y, Bitmap sprites) {
-        super(x, y, sprites);
+    public Fouling(int x, int y, Context context) {
+        super(x, y);
+
+        Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.forest_enemy_fouling);
+        setSprites(sprites);
 
         hp = maxHP = 2;
         mp = maxMP = 0;

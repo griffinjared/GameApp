@@ -1,8 +1,12 @@
 package mob.players;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import com.gameapp.gameapp.R;
 
 import mob.Mob;
 import rooms.Room;
@@ -18,8 +22,8 @@ public class Player extends Mob {
 
     private int roomX, roomY; //coordinates in the level layout grid
 
-    public Player(int x, int y, Bitmap sprites) {
-        super(x, y, sprites);
+    public Player(int x, int y) {
+        super(x, y);
     }
 
     public int update() {

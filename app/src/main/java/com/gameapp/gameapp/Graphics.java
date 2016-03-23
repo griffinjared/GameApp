@@ -60,7 +60,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Knight(3, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
+        player = new Knight(3, 5, getContext()); //Spawns center
         paint = new Paint();
         isHolding = false;
         speed = 0;
@@ -100,8 +100,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joystick = joy_center;
 
         //D-Pad
-        dPad = BitmapFactory.decodeResource(getResources(), R.drawable.dpad);
-        dPad = Bitmap.createScaledBitmap(dPad, joy, joy, true);
+        //dPad = BitmapFactory.decodeResource(getResources(), R.drawable.dpad);
+        //dPad = Bitmap.createScaledBitmap(dPad, joy, joy, true);
     }
 
     @Override

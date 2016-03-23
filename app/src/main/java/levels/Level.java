@@ -130,4 +130,8 @@ public class Level {
     public int getRoomY() {
         return roomY;
     }
+
+    public Context getContext() {
+        return context;
+    }
 }

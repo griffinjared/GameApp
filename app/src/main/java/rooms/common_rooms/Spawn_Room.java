@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import com.gameapp.gameapp.R;
 
 import assets.chests.Weapon_Chest;
+import mob.enemies_1_forest.Fouling;
 import rooms.Room;
 
 public class Spawn_Room extends Room {
@@ -34,5 +35,7 @@ public class Spawn_Room extends Room {
         };
 
         defineDoorLayout(doorLayout);
+
+        enemies.add(new Fouling(10, 10, context));
     }
 }

@@ -1,7 +1,5 @@
 package mob;
 
-import android.graphics.Bitmap;
-
 import java.util.Random;
 
 import rooms.Room;
@@ -11,8 +9,8 @@ import rooms.Room;
  */
 public class Enemy extends Mob {
 
-    public Enemy(int x, int y, Bitmap sprites) {
-        super(x, y, sprites);
+    public Enemy(int x, int y) {
+        super(x, y);
     }
 
     public void update(Room room) {

@@ -29,10 +29,15 @@ public class Mob {
     protected int maxHP, maxMP, baseSpeed;
     protected int hp, mp, level, speed;
 
-    public Mob(int x, int y, Bitmap sprites) {
+    public Mob(int x, int y) {
         this.x = x*SIZE;
         this.y = y*SIZE;
-        this.spriteSheet = Bitmap.createScaledBitmap(sprites, 192, 72, true);
+
+        level = 1;
+    }
+
+    public void setSprites(Bitmap sprites) {
+        spriteSheet = Bitmap.createScaledBitmap(sprites, 192, 72, true);
 
         //Set all sprites
         down = Bitmap.createBitmap(spriteSheet, 0, 0, SIZE, SIZE);
@@ -52,9 +57,7 @@ public class Mob {
         //right2 = Bitmap.createBitmap(spriteSheet, 3*SIZE, 2*SIZE, SIZE, SIZE);
 
         sprite = down;
-        level = 1;
     }
-
 
     public int getX() {
         return x;
