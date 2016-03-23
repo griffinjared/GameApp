@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import mob.Mob;
+import rooms.Room;
 
 /** The real purpose of the Player class is to provide a sprite and controls
  */

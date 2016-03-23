@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import rooms.Room;
 import tiles.Tile;
 
 /** The Mob class can be anything that moves around in the map, not just enemies.
@@ -138,4 +139,22 @@ public class Mob {
         return maxMP;
     }
 
+    public boolean collision(int direction, Room room) {
+        switch(direction) {
+            //Up
+            case 0:
+                if (room.getTileLayout()[(y/24)-1][x/24] > 4 || room.getTileLayout()[x][y] == 0) return true;
+
+                //Right
+            case 1: break;
+
+            //Down
+            case 2: break;
+
+            //Left
+            case 3: break;
+        }
+
+        return false;
+    }
 }

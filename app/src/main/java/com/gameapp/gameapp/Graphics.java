@@ -148,6 +148,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         level.update(player.update());
     }
 
+    /*
     public void updateRunning(List touchEvents, float deltaTime) {
         int len = touchEvents.size();
         int w = getWidth();
@@ -284,6 +285,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
+    */
 
     private boolean inBounds(TouchEvent event, int x, int y, int width, int height) {
         //this checks if the touchEvent passed occurred within the specified pixel bounds
