@@ -19,7 +19,7 @@ public class Level_1_Forest_Layout {
         ArrayList<Character> rooms = new ArrayList<>();
         rooms.add(EXIT_ROOM);
         for(int i = rooms.size(); i < TOTAL_ROOMS; i++) {
-            int whichRoom = r.nextInt() % 5;
+            int whichRoom = r.nextInt(4);
             switch(whichRoom) {
                 case 0:
                     rooms.add(RIVER_ROOM);
