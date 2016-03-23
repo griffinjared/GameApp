@@ -2,7 +2,7 @@ package equipment.accessory;
 
 import android.graphics.Bitmap;
 
-import mob.Player;
+import mob.players.Player;
 
 public class Lifesaver extends Accessory {
 

@@ -124,4 +124,18 @@ public class Mob {
         }
     }
 
+    //STAT METHODS
+    public int getHP() {
+        return hp;
+    }
+    public int getMaxHP() {
+        return maxHP;
+    }
+    public int getMP() {
+        return mp;
+    }
+    public int getMaxMP() {
+        return maxMP;
+    }
+
 }

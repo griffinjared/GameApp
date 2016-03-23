@@ -14,7 +14,8 @@ import java.util.List;
 import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_1_Forest;
-import mob.Player;
+import mob.players.Knight;
+import mob.players.Player;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -51,7 +52,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
+        player = new Knight(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
         paint = new Paint();
 
         setFocusable(true);
@@ -332,8 +333,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
         paint.setColor(Color.BLACK);
-        canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
-        canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
+        canvas.drawText("HP: " + player.getHP() + " / " + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
+        canvas.drawText("MP: " + player.getMP() + " / " + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
         canvas.drawBitmap(dPad, w/40, h-size, paint); //joystick
 

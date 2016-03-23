@@ -1,8 +1,10 @@
-package mob;
+package mob.players;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import mob.Mob;
 
 /** The real purpose of the Player class is to provide a sprite and controls
  */
@@ -17,6 +19,7 @@ public class Player extends Mob {
 
     public Player(int x, int y, Bitmap sprites) {
         super(x, y, sprites);
+        level = 1;
     }
 
     public int update() {
