@@ -37,13 +37,10 @@ public class Player extends Mob {
         right1 = Bitmap.createBitmap(spriteSheet, 3, SIZE, SIZE, SIZE);
         right2 = Bitmap.createBitmap(spriteSheet, 3, 2*SIZE, SIZE, SIZE);
 
-        sprite = down;
+        sprite = up;
     }
 
-    public int update(int direction) {
-        this.direction = direction;
-        animate();
-
+    public int update() {
         if (x <= -SIZE) { //West
             x = (SIZE*12) - SIZE;
             return 4;

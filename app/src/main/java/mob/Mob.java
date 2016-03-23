@@ -37,9 +37,15 @@ public class Mob {
 
     public void setX(int num) {
         x += (num*SIZE);
+
+        if (num == 1) sprite = right;
+        else sprite = left;
     }
     public void setY(int num) {
         y += (num*SIZE);
+
+        if (num == 1) sprite = down;
+        else sprite = up;
     }
 
     public void draw(Canvas c, Paint p) {

@@ -38,7 +38,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap dPad;
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
-    private int direction = 7;
 
     public static final int SIZE = 288; //Dimensions of one regular room
 
@@ -52,7 +51,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.player_sprites_basic)); //Spawns center
+        player = new Player(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
         paint = new Paint();
 
         setFocusable(true);
@@ -124,32 +123,28 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             if (inBounds2(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
                 joystick = joy_up;
                 player.setY(-1);
-                direction = 2;
             }
             //Down
             else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
                 joystick = joy_down;
                 player.setY(1);
-                direction = 7;
             }
             //Left
             else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_left;
                 player.setX(-1);
-                direction = 4;
             }
             //Right
             else if (inBounds2(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_right;
                 player.setX(1);
-                direction = 5;
             }
         }
         return super.onTouchEvent(event);
     }
 
     public void update() {
-        level.update(player.update(direction));
+        level.update(player.update());
     }
 
     public void updateRunning(List touchEvents, float deltaTime) {
