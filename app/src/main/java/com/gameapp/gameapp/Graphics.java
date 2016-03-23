@@ -30,6 +30,10 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = Graphics.class.getSimpleName();
 
+    public enum Direction {
+        UP, LEFT, RIGHT, DOWN, STOP
+    }
+
     //Primary Components
     private MainThread thread;
     private SeedGenerator seeder;
@@ -39,8 +43,12 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap dPad;
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
+    private boolean isHolding;
+    private Direction direction;
+    private int speed;
 
     public static final int SIZE = 288; //Dimensions of one regular room
+    public static final int MAXSPEED = 7; //number of loop iterations between player moves, larger values slow player
 
     public Graphics(Game context) {
         super(context);
@@ -54,6 +62,9 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Knight(5, 5, BitmapFactory.decodeResource(getResources(), R.drawable.knight_sprites)); //Spawns center
         paint = new Paint();
+        isHolding = false;
+        speed = 0;
+        direction = Direction.STOP;
 
         setFocusable(true);
 
@@ -120,31 +131,92 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         int size = (h - w - (w/15));
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
+
+            isHolding = true;
+
             //Up
             if (inBounds2(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
                 joystick = joy_up;
-                player.setY(-1);
+//                player.setY(-1);
+                direction = Direction.UP;
             }
             //Down
             else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
                 joystick = joy_down;
-                player.setY(1);
+//                player.setY(1);
+                direction = Direction.DOWN;
             }
             //Left
             else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_left;
-                player.setX(-1);
+//                player.setX(-1);
+                direction = Direction.LEFT;
             }
             //Right
             else if (inBounds2(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
                 joystick = joy_right;
-                player.setX(1);
+//                player.setX(1);
+                direction = Direction.RIGHT;
             }
         }
-        return super.onTouchEvent(event);
+        else if(event.getAction() == MotionEvent.ACTION_MOVE) {
+            //Up
+            if (inBounds2(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+                joystick = joy_up;
+//                player.setY(-1);
+                direction = Direction.UP;
+            }
+            //Down
+            else if (inBounds2(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+                joystick = joy_down;
+//                player.setY(1);
+                direction = Direction.DOWN;
+            }
+            //Left
+            else if (inBounds2(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+                joystick = joy_left;
+//                player.setX(-1);
+                direction = Direction.LEFT;
+            }
+            //Right
+            else if (inBounds2(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+                joystick = joy_right;
+//                player.setX(1);
+                direction = Direction.RIGHT;
+            }
+        }
+        else if(event.getAction() == MotionEvent.ACTION_UP) {
+            isHolding = false;
+            speed = 0;
+        }
+
+
+        //return super.onTouchEvent(event);
+        return true;
     }
 
+    public boolean getHolding() { return isHolding; }
+
+    public Direction getDirection() { return this.direction; }
+
     public void update() {
+
+        if (isHolding) {
+            if (speed == 0) {
+                if (direction == Direction.UP) {
+                    player.setY(-1);
+                } else if (direction == Direction.DOWN) {
+                    player.setY(1);
+                } else if (direction == Direction.LEFT) {
+                    player.setX(-1);
+                } else if (direction == Direction.RIGHT) {
+                    player.setX(1);
+                }
+            }
+            speed++;
+            speed = speed % MAXSPEED;
+        }
+
         level.update(player.update());
     }
 
@@ -158,55 +230,46 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             TouchEvent event = (TouchEvent) touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_DOWN) { // user touched screen
                 if (inBounds(event, w/40, h-size, 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Up-Left
                     joystick = joy_upLeft;
                     player.setX(-2);
                     player.setY(-2);
                 }
                 else if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Up
                     joystick = joy_up;
                     player.setX(0);
                     player.setY(-2);
                 }
                 else if (inBounds(event, (w/40) + (8*w/27), h-size, 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Up-Right
                     joystick = joy_upRight;
                     player.setX(2);
                     player.setY(-2);
                 }
                 else if (inBounds(event, w/40, h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Left
                     joystick = joy_left;
                     player.setX(-2);
                     player.setY(0);
                 }
                 else if (inBounds(event, (w/40) + (4*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Center
                     joystick = joy_center;
                     player.setX(0);
                     player.setY(0);
                 }
                 else if (inBounds(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Right
                     joystick = joy_right;
                     player.setX(2);
                     player.setY(0);
                 }
                 else if (inBounds(event, w/40, h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Down-Left
                     joystick = joy_downLeft;
                     player.setX(-2);
                     player.setY(2);
                 }
                 else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Down
                     joystick = joy_down;
                     player.setX(0);
                     player.setY(2);
                 }
                 else if (inBounds(event, (w/40) + (8*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Down-Right
                     joystick = joy_downRight;
                     player.setX(2);
                     player.setY(2);
@@ -214,7 +277,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             if (event.type == TouchEvent.TOUCH_UP) { // user stopped touching screen
-                // TODO: implement touch stopped events
                 if (inBounds(event, 0, h-size, 4*w/9, size)) {
                     joystick = joy_center;
                     player.setX(0);
@@ -224,63 +286,50 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
             if (event.type == TouchEvent.TOUCH_HOLD) { // user holding screen
                 if (inBounds(event, w/40, h-size, 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Up-Left
                     joystick = joy_upLeft;
                     player.setX(-2);
                     player.setY(-2);
                 }
                 else if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Up
                     joystick = joy_up;
                     player.setX(0);
                     player.setY(-2);
                 }
                 else if (inBounds(event, (w/40) + (8*w/27), h-size, 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Up-Right
                     joystick = joy_upRight;
                     player.setX(2);
                     player.setY(-2);
                 }
                 else if (inBounds(event, w/40, h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Left
                     joystick = joy_left;
                     player.setX(-2);
                     player.setY(0);
                 }
                 else if (inBounds(event, (w/40) + (4*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Center
                     joystick = joy_center;
                     player.setX(0);
                     player.setY(0);
                 }
                 else if (inBounds(event, (w/40)+(8*w/27), h-size+(4*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Right
                     joystick = joy_right;
                     player.setX(2);
                     player.setY(0);
                 }
                 else if (inBounds(event, w/40, h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Down-Left
                     joystick = joy_downLeft;
                     player.setX(-2);
                     player.setY(2);
                 }
                 else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Down
                     joystick = joy_down;
                     player.setX(0);
                     player.setY(2);
                 }
                 else if (inBounds(event, (w/40) + (8*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                    //TODO: Joystick Down-Right
                     joystick = joy_downRight;
                     player.setX(2);
                     player.setY(2);
                 }
-            }
-
-            if (event.type == TouchEvent.TOUCH_DRAGGED) { // user dragged screen
-                //TODO: implement touch drag events
             }
         }
     }
