@@ -2,7 +2,7 @@ package items;
 
 import android.graphics.Bitmap;
 
-import mob.Player;
+import mob.players.Player;
 
 public class Potion extends Item {
 

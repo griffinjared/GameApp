@@ -1,7 +1,7 @@
 package equipment.accessory;
 
 import equipment.Equipment;
-import mob.Player;
+import mob.players.Player;
 
 public abstract class Accessory extends Equipment {
 

@@ -28,6 +28,32 @@ public class Mob {
     protected int maxHP, maxMP, baseSpeed;
     protected int hp, mp, level, speed;
 
+    public Mob(int x, int y, Bitmap sprites) {
+        this.x = x*SIZE;
+        this.y = y*SIZE;
+        this.spriteSheet = Bitmap.createScaledBitmap(sprites, 192, 72, true);
+
+        //Set all sprites
+        down = Bitmap.createBitmap(spriteSheet, 0, 0, SIZE, SIZE);
+        down1 = Bitmap.createBitmap(spriteSheet, 0, SIZE, SIZE, SIZE);
+        down2 = Bitmap.createBitmap(spriteSheet, 0, 2*SIZE, SIZE, SIZE);
+
+        up = Bitmap.createBitmap(spriteSheet, SIZE, 0, SIZE, SIZE);
+        up1 = Bitmap.createBitmap(spriteSheet, SIZE, SIZE, SIZE, SIZE);
+        up2 = Bitmap.createBitmap(spriteSheet, SIZE, 2*SIZE, SIZE, SIZE);
+
+        left = Bitmap.createBitmap(spriteSheet, 2*SIZE, 0, SIZE, SIZE);
+        left1 = Bitmap.createBitmap(spriteSheet, 2*SIZE, SIZE, SIZE, SIZE);
+        left2 = Bitmap.createBitmap(spriteSheet, 2*SIZE, 2*SIZE, SIZE, SIZE);
+
+        right = Bitmap.createBitmap(spriteSheet, 3*SIZE, 0, SIZE, SIZE);
+        right1 = Bitmap.createBitmap(spriteSheet, 3*SIZE, SIZE, SIZE, SIZE);
+        right2 = Bitmap.createBitmap(spriteSheet, 3*SIZE, 2*SIZE, SIZE, SIZE);
+
+        sprite = down;
+    }
+
+
     public int getX() {
         return x;
     }
@@ -96,6 +122,20 @@ public class Mob {
                 */
                 break;
         }
+    }
+
+    //STAT METHODS
+    public int getHP() {
+        return hp;
+    }
+    public int getMaxHP() {
+        return maxHP;
+    }
+    public int getMP() {
+        return mp;
+    }
+    public int getMaxMP() {
+        return maxMP;
     }
 
 }
