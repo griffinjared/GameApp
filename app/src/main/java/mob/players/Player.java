@@ -20,7 +20,6 @@ public class Player extends Mob {
 
     public Player(int x, int y, Bitmap sprites) {
         super(x, y, sprites);
-        level = 1;
     }
 
     public int update() {

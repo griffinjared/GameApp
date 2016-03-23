@@ -36,22 +36,23 @@ public class Mob {
 
         //Set all sprites
         down = Bitmap.createBitmap(spriteSheet, 0, 0, SIZE, SIZE);
-        down1 = Bitmap.createBitmap(spriteSheet, 0, SIZE, SIZE, SIZE);
-        down2 = Bitmap.createBitmap(spriteSheet, 0, 2*SIZE, SIZE, SIZE);
+        //down1 = Bitmap.createBitmap(spriteSheet, 0, SIZE, SIZE, SIZE);
+        //down2 = Bitmap.createBitmap(spriteSheet, 0, 2*SIZE, SIZE, SIZE);
 
         up = Bitmap.createBitmap(spriteSheet, SIZE, 0, SIZE, SIZE);
-        up1 = Bitmap.createBitmap(spriteSheet, SIZE, SIZE, SIZE, SIZE);
-        up2 = Bitmap.createBitmap(spriteSheet, SIZE, 2*SIZE, SIZE, SIZE);
+        //up1 = Bitmap.createBitmap(spriteSheet, SIZE, SIZE, SIZE, SIZE);
+        //up2 = Bitmap.createBitmap(spriteSheet, SIZE, 2*SIZE, SIZE, SIZE);
 
         left = Bitmap.createBitmap(spriteSheet, 2*SIZE, 0, SIZE, SIZE);
-        left1 = Bitmap.createBitmap(spriteSheet, 2*SIZE, SIZE, SIZE, SIZE);
-        left2 = Bitmap.createBitmap(spriteSheet, 2*SIZE, 2*SIZE, SIZE, SIZE);
+        //left1 = Bitmap.createBitmap(spriteSheet, 2*SIZE, SIZE, SIZE, SIZE);
+        //left2 = Bitmap.createBitmap(spriteSheet, 2*SIZE, 2*SIZE, SIZE, SIZE);
 
         right = Bitmap.createBitmap(spriteSheet, 3*SIZE, 0, SIZE, SIZE);
-        right1 = Bitmap.createBitmap(spriteSheet, 3*SIZE, SIZE, SIZE, SIZE);
-        right2 = Bitmap.createBitmap(spriteSheet, 3*SIZE, 2*SIZE, SIZE, SIZE);
+        //right1 = Bitmap.createBitmap(spriteSheet, 3*SIZE, SIZE, SIZE, SIZE);
+        //right2 = Bitmap.createBitmap(spriteSheet, 3*SIZE, 2*SIZE, SIZE, SIZE);
 
         sprite = down;
+        level = 1;
     }
 
 
