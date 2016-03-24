@@ -3,6 +3,8 @@ package mob.enemies_1_forest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.gameapp.gameapp.R;
 

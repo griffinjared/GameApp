@@ -1,6 +1,8 @@
 package rooms;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,18 @@ public class Room {
     public void update() {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update(this);
+        }
+        for (int i = 0; i < treasure.size(); i++) {
+            //treasure.get(i).update();
+        }
+    }
+
+    public void draw(Canvas c, Paint p) {
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).draw(c, p);
+        }
+        for (int i = 0; i < treasure.size(); i++) {
+            treasure.get(i).draw(c, p);
         }
     }
 

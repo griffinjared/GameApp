@@ -35,7 +35,5 @@ public class Spawn_Room extends Room {
         };
 
         defineDoorLayout(doorLayout);
-
-        enemies.add(new Fouling(10, 10, context));
     }
 }

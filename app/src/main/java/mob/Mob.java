@@ -99,7 +99,6 @@ public class Mob {
     }
 
     public void draw(Canvas c, Paint p) {
-
         c.drawBitmap(sprite, x, y, p);
     }
 
@@ -155,6 +154,12 @@ public class Mob {
     public int getMaxHP() {
         return maxHP;
     }
+    public void setHP(int num) {
+        hp += num;
+        if (hp > maxHP) hp = maxHP;
+        if (hp < 0) hp = 0;
+    }
+
     public int getMP() {
         return mp;
     }

@@ -55,24 +55,9 @@ public class Player extends Mob {
         return roomY;
     }
 
-    //STAT METHODS
-    public int getHP() {
-        return hp;
-    }
-
-    public void setHP(int num) {
-        hp += num;
-        if (hp > maxHP) hp = maxHP;
-        if (hp < 0) hp = 0;
-    }
-
     public void setLevelPosition(int x, int y) {
         roomX = x;
         roomY = y;
-    }
-
-    public void draw(Canvas c, Paint p) {
-        super.draw(c, p);
     }
 
 

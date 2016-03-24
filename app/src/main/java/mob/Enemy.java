@@ -23,16 +23,16 @@ public class Enemy extends Mob {
 
         switch(direction) {
             //Up
-            case 0: setY(-1, room); break;
+            case 0: //setY(-1, room); break;
 
             //Right
-            case 1: setX(1, room); break;
+            case 1: //setX(1, room); break;
 
             //Down
-            case 2: setY(1, room); break;
+            case 2: //setY(1, room); break;
 
             //Left
-            case 3: setX(-1, room); break;
+            case 3: //setX(-1, room); break;
         }
     }
 
