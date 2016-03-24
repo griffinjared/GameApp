@@ -48,7 +48,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private int speed;
 
     public static final int SIZE = 288; //Dimensions of one regular room
-    public static final int MAXSPEED = 7; //number of loop iterations between player moves, larger values slow player
+    public static int maxSpeed = 7; //number of loop iterations between player moves, larger values slow player
 
     public Graphics(Game context) {
         super(context);
@@ -61,6 +61,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Knight(3, 5, getContext()); //Spawns center
+        maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
         speed = 0;
@@ -185,8 +186,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             joystick = joy_center;
             speed = 0;
         }
-
-
         //return super.onTouchEvent(event);
         return true;
     }
@@ -210,7 +209,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
             speed++;
-            speed = speed % MAXSPEED;
+            speed = speed % maxSpeed;
         }
 
         level.update(player.update());

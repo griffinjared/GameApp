@@ -166,4 +166,16 @@ public class Mob {
     public int getMaxMP() {
         return maxMP;
     }
+    public void setMP(int num) {
+        mp += num;
+        if (mp > maxMP) mp = maxMP;
+        if (mp < 0) mp = 0;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+    public int getBaseSpeed() {
+        return baseSpeed;
+    }
 }
