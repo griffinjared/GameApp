@@ -40,8 +40,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
-    private Bitmap dPad;
-    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
+    //private Bitmap dPad;
+    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right; //joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
     private boolean isHolding;
     private Direction direction;
@@ -88,6 +88,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_left = Bitmap.createScaledBitmap(joy_left, joy, joy, true);
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
+
+        /*
         joy_upLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_left);
         joy_upLeft = Bitmap.createScaledBitmap(joy_upLeft, joy, joy, true);
         joy_upRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_right);
@@ -96,6 +98,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_downLeft = Bitmap.createScaledBitmap(joy_downLeft, joy, joy, true);
         joy_downRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_right);
         joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
+        */
 
         joystick = joy_center;
 
@@ -179,6 +182,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         }
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             isHolding = false;
+            joystick = joy_center;
             speed = 0;
         }
 
