@@ -29,7 +29,7 @@ public class Enemy extends Mob {
 
         if (x + num == 0 || x + num == 11) return;
     }
-    
+
     @Override
     public void setY(int num, Room room) {
         super.setY(num, room);
