@@ -4,19 +4,20 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import java.util.List;
 
 import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_1_Forest;
 import mob.Player;
+
+import static android.graphics.Color.*;
+import static com.gameapp.gameapp.Screen.GameState.*;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -39,9 +40,15 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint; //for drawing graphics
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right, joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
-
-
     public static final int SIZE = 288; //Dimensions of one regular room
+
+    enum GameState {
+        Running, Paused, Over
+    }
+    GameState state = Running;
+
+
+
 
     public Screen(Game context) {
         super(context);
@@ -58,7 +65,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
         setFocusable(true);
 
-        setBackgroundColor(Color.LTGRAY);
+        setBackgroundColor(LTGRAY);
 
         player.setLevelPosition(level.getRoomX(), level.getRoomY());
     }
@@ -266,7 +273,75 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         //this checks if the touchEvent passed occurred within the specified pixel bounds
         return (event.x > x && event.x < x + width - 1 && event.y > y && event.y < y + height - 1);
     }
+    public void updatePaused(List touchEvents)
+    {
+        int len = touchEvents.size();
+        for(int i = 0; i < len; i++)
+        {
+            TouchEvent event = (TouchEvent) touchEvents.get(i);
+            if(event.type == TouchEvent.TOUCH_UP){
+                if(inBounds(event, 0, 0, 800, 240))
+                {
+                    if(!inBounds(event, 0, 0, 35, 35))
+                    {
+                        resume();
+                    }
+                }
+                if(inBounds(event, 0, 240, 800, 240)){
+                    // resetGame(); resets all of the character and variable information
+                    // goToMenu(); takes the player back to the main menu
+                }
+            }
+        }
 
+    }
+    public void updateOver(List touchEvents)
+    {
+        int len = touchEvents.size();
+        for(int i = 0; i < len; i++)
+        {
+            TouchEvent event = (TouchEvent) touchEvents.get(i);
+            if(event.type == TouchEvent.TOUCH_DOWN)
+            {
+                if(inBounds(event, 0, 0, 800, 480))
+                {
+                    //resetGame();
+                    //goToMenu();
+                }
+            }
+        }
+    }
+    public void paint (Canvas canvas) {
+
+        switch (state) {
+            case Running:
+                break;
+            case Paused:
+                drawPausedUI(canvas);
+                break;
+            case Over:
+                drawGameOverUI(canvas);
+                break;
+        }
+    }
+    private void drawPausedUI(Canvas canvas)
+    {
+        paint.setColor(WHITE);
+        paint.setTextSize(100);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawARGB(155, 0, 0, 0);
+        canvas.drawText("Resume", 400, 165, paint);
+        canvas.drawText("Menu", 400, 360, paint);
+    }
+    private void drawGameOverUI(Canvas canvas)
+    {
+        paint.setColor(WHITE);
+        paint.setTextSize(30);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawRect(0, 0, 1281, 801, paint);
+        canvas.drawText("Game Over.", 400, 240, paint);
+        canvas.drawText("Tap to return.", 400, 290, paint);
+    }
     @Override
     /** The Paint class can probably used for any on-screen text.
      *  It cannot however, draw complex graphics and is limited to text and simple shapes like circles and rectangles
@@ -298,20 +373,49 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(w / 24);
 
         //Button text
-        paint.setColor(Color.WHITE);
+        paint.setColor(WHITE);
         paint.setFakeBoldText(true);
         canvas.drawText("Menu", 5, w / 18, paint);
         canvas.drawText("Equipment", w - (paint.getTextSize() * 6), w / 18, paint);
         canvas.drawText("Map", 5, w - 5, paint);
         canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
-        paint.setColor(Color.BLACK);
+        paint.setColor(BLACK);
         canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
         joystick = joy_center;
-        canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
+        canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
+
+        switch(state)
+        {
+            //case Running: drawGame(canvas); break;
+            case Paused: drawPausedUI(canvas); break;
+            case Over: drawGameOverUI(canvas); break;
+        }
+    }
+    public void pause()
+    {
+        if(state == Running)
+        {
+            state = Paused;
+        }
+    }
+    public void resume()
+    {
+        if(state == Paused)
+        {
+            state = Running;
+        }
+    }
+    private void goToMenu()
+    {
+        //TODO reverts back to main menu
+    }
+    private void resetGame()
+    {
+        //TODO sets all statistics to initial values
     }
 }
