@@ -11,6 +11,7 @@ import rooms.common_rooms.Spawn_Room;
 import rooms.stage1_forest.Deforested_Room;
 import rooms.stage1_forest.River_Room;
 
+
 public class Level_1_Forest extends Level {
 
     private final int SPAWN_X = 3;

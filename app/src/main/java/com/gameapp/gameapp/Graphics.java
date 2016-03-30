@@ -35,6 +35,15 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     public enum Direction {
         UP, LEFT, RIGHT, DOWN, STOP
     }
+    public enum Combat {
+        NONE, MAGIC, PHYSICAL
+    }
+
+    public enum CombatDirection {
+        NORTH, EAST, SOUTH, WEST,
+        NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
+        NONE
+    }
 
     //Primary Components
     private MainThread thread;
@@ -47,7 +56,10 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right; //joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
     private boolean isHolding;
+    private boolean isSwiping;
     private Direction direction;
+    private Combat combat;
+    private CombatDirection combatDirection;
     private int speed;
 
     public static final int SIZE = 288; //Dimensions of one regular room
@@ -68,8 +80,11 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
+        isSwiping = false;
         speed = 0;
         direction = Direction.STOP;
+        combat = Combat.NONE;
+        combatDirection = CombatDirection.NONE;
 
         setFocusable(true);
 
@@ -162,6 +177,44 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
                 joystick = joy_right;
                 direction = Direction.RIGHT;
             }
+
+            //Combat
+            else if (inBounds(event, (2*w/40) + (12*w/27), h - size, 12*w/27, 12*w/27)) {
+                isSwiping = true;
+
+                //NorthWest corner
+                if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.SOUTHEAST;
+                }
+                //North corner
+                else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.SOUTH;
+                }
+                //NorthEast corner
+                else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.SOUTHWEST;
+                }
+                //West corner
+                else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.EAST;
+                }
+                //East corner
+                else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.WEST;
+                }
+                //SouthWest corner
+                else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.NORTHEAST;
+                }
+                //South corner
+                else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.NORTH;
+                }
+                //SouthEast corner
+                else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.NORTHWEST;
+                }
+            }
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             //Up
@@ -188,6 +241,9 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             isHolding = false;
             joystick = joy_center;
+            isSwiping = false;
+            combat = Combat.NONE;
+            combatDirection = CombatDirection.NONE;
             speed = 0;
         }
         //return super.onTouchEvent(event);
