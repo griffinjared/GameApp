@@ -9,15 +9,13 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.util.List;
-
-import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_1_Forest;
-import mob.Enemy;
-import mob.enemies_1_forest.Fouling;
 import mob.players.Knight;
 import mob.players.Player;
+
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -35,15 +33,23 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     public enum Direction {
         UP, LEFT, RIGHT, DOWN, STOP
     }
+
     public enum Combat {
         NONE, MAGIC, PHYSICAL
     }
+    private Combat combat = Combat.NONE;
+
+    enum GameState {
+        Running, Paused, Over
+    }
+    GameState state = GameState.Running;
 
     public enum CombatDirection {
         NORTH, EAST, SOUTH, WEST,
         NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
         NONE
     }
+    CombatDirection combatDirection = CombatDirection.NONE;
 
     //Primary Components
     private MainThread thread;
@@ -58,8 +64,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private boolean isHolding;
     private boolean isSwiping;
     private Direction direction;
-    private Combat combat;
-    private CombatDirection combatDirection;
     private int speed;
 
     public static final int SIZE = 288; //Dimensions of one regular room
@@ -84,7 +88,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         speed = 0;
         direction = Direction.STOP;
         combat = Combat.NONE;
-        combatDirection = CombatDirection.NONE;
 
         setFocusable(true);
 
@@ -279,10 +282,34 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    /** The Paint class can probably used for any on-screen text.
-     *  It cannot however, draw complex graphics and is limited to text and simple shapes like circles and rectangles
-     */
-    protected void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
+
+        switch (state) {
+            case Running: drawMainUI(canvas); break;
+            case Paused: drawPausedUI(canvas); break;
+            case Over: drawGameOverUI(canvas); break;
+        }
+    }
+
+    private void drawPausedUI(Canvas canvas)
+    {
+        paint.setColor(WHITE);
+        paint.setTextSize(100);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawARGB(155, 0, 0, 0);
+        canvas.drawText("Resume", 400, 165, paint);
+        canvas.drawText("Menu", 400, 360, paint);
+    }
+    private void drawGameOverUI(Canvas canvas)
+    {
+        paint.setColor(WHITE);
+        paint.setTextSize(30);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawRect(0, 0, 1281, 801, paint);
+        canvas.drawText("Game Over.", 400, 240, paint);
+        canvas.drawText("Tap to return.", 400, 290, paint);
+    }
+    private void drawMainUI(Canvas canvas) {
         /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
@@ -309,19 +336,43 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(w / 24);
 
         //Button text
-        paint.setColor(Color.WHITE);
+        paint.setColor(WHITE);
         paint.setFakeBoldText(true);
         canvas.drawText("Menu", 5, w / 18, paint);
         canvas.drawText("Equipment", w - (paint.getTextSize() * 6), w / 18, paint);
         canvas.drawText("Map", 5, w - 5, paint);
         canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
-        paint.setColor(Color.BLACK);
-        canvas.drawText("HP: " + player.getHP() + " / " + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
-        canvas.drawText("MP: " + player.getMP() + " / " + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
+        paint.setColor(BLACK);
+        canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
+        canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
+        joystick = joy_center;
+        canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
+    }
+
+    public void pause()
+    {
+        if(state == GameState.Running)
+        {
+            state = GameState.Paused;
+        }
+    }
+    public void resume()
+    {
+        if(state == GameState.Paused)
+        {
+            state = GameState.Running;
+        }
+    }
+    private void goToMenu()
+    {
+        //TODO reverts back to main menu
+    }
+    private void resetGame()
+    {
+        //TODO sets all statistics to initial values
     }
 }
