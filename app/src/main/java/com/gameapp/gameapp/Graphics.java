@@ -9,13 +9,13 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.util.List;
-
-import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_1_Forest;
 import mob.players.Knight;
 import mob.players.Player;
+
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -34,16 +34,35 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         UP, LEFT, RIGHT, DOWN, STOP
     }
 
+    public enum Combat {
+        NONE, MAGIC, PHYSICAL
+    }
+    private Combat combat = Combat.NONE;
+
+    enum GameState {
+        Running, Paused, Over
+    }
+    GameState state = GameState.Running;
+
+    public enum CombatDirection {
+        NORTH, EAST, SOUTH, WEST,
+        NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
+        NONE
+    }
+    CombatDirection combatDirection = CombatDirection.NONE;
+
     //Primary Components
     private MainThread thread;
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
+    //private Enemy enemy;
     private Paint paint; //for drawing graphics
     //private Bitmap dPad;
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right; //joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
     private Bitmap joystick;
     private boolean isHolding;
+    private boolean isSwiping;
     private Direction direction;
     private int speed;
 
@@ -60,12 +79,15 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Knight(3, 5, getContext()); //Spawns center
+        player = new Knight(3, 5, getContext());
+        //enemy = new Fouling(5, 5, getContext());
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
+        isSwiping = false;
         speed = 0;
         direction = Direction.STOP;
+        combat = Combat.NONE;
 
         setFocusable(true);
 
@@ -158,6 +180,44 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
                 joystick = joy_right;
                 direction = Direction.RIGHT;
             }
+
+            //Combat
+            else if (inBounds(event, (2*w/40) + (12*w/27), h - size, 12*w/27, 12*w/27)) {
+                isSwiping = true;
+
+                //NorthWest corner
+                if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.SOUTHEAST;
+                }
+                //North corner
+                else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.SOUTH;
+                }
+                //NorthEast corner
+                else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.SOUTHWEST;
+                }
+                //West corner
+                else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.EAST;
+                }
+                //East corner
+                else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.WEST;
+                }
+                //SouthWest corner
+                else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.NORTHEAST;
+                }
+                //South corner
+                else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.NORTH;
+                }
+                //SouthEast corner
+                else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+                    combatDirection = CombatDirection.NORTHWEST;
+                }
+            }
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             //Up
@@ -184,6 +244,9 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             isHolding = false;
             joystick = joy_center;
+            isSwiping = false;
+            combat = Combat.NONE;
+            combatDirection = CombatDirection.NONE;
             speed = 0;
         }
         //return super.onTouchEvent(event);
@@ -195,7 +258,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     public Direction getDirection() { return this.direction; }
 
     public void update() {
-
         if (isHolding) {
             if (speed == 0) {
                 if (direction == Direction.UP) {
@@ -220,10 +282,34 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    /** The Paint class can probably used for any on-screen text.
-     *  It cannot however, draw complex graphics and is limited to text and simple shapes like circles and rectangles
-     */
-    protected void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
+
+        switch (state) {
+            case Running: drawMainUI(canvas); break;
+            case Paused: drawPausedUI(canvas); break;
+            case Over: drawGameOverUI(canvas); break;
+        }
+    }
+
+    private void drawPausedUI(Canvas canvas)
+    {
+        paint.setColor(WHITE);
+        paint.setTextSize(100);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawARGB(155, 0, 0, 0);
+        canvas.drawText("Resume", 400, 165, paint);
+        canvas.drawText("Menu", 400, 360, paint);
+    }
+    private void drawGameOverUI(Canvas canvas)
+    {
+        paint.setColor(WHITE);
+        paint.setTextSize(30);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawRect(0, 0, 1281, 801, paint);
+        canvas.drawText("Game Over.", 400, 240, paint);
+        canvas.drawText("Tap to return.", 400, 290, paint);
+    }
+    private void drawMainUI(Canvas canvas) {
         /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
          *  The canvas is scaled up the proper amount so that the length of the room is equal to the width of the screen
@@ -250,19 +336,43 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(w / 24);
 
         //Button text
-        paint.setColor(Color.WHITE);
+        paint.setColor(WHITE);
         paint.setFakeBoldText(true);
         canvas.drawText("Menu", 5, w / 18, paint);
         canvas.drawText("Equipment", w - (paint.getTextSize() * 6), w / 18, paint);
         canvas.drawText("Map", 5, w - 5, paint);
         canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
-        paint.setColor(Color.BLACK);
-        canvas.drawText("HP: " + player.getHP() + " / " + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
-        canvas.drawText("MP: " + player.getMP() + " / " + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
+        paint.setColor(BLACK);
+        canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
+        canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        canvas.drawBitmap(joystick, w/40, h-size, paint); //joystick
+        joystick = joy_center;
+        canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
+    }
+
+    public void pause()
+    {
+        if(state == GameState.Running)
+        {
+            state = GameState.Paused;
+        }
+    }
+    public void resume()
+    {
+        if(state == GameState.Paused)
+        {
+            state = GameState.Running;
+        }
+    }
+    private void goToMenu()
+    {
+        //TODO reverts back to main menu
+    }
+    private void resetGame()
+    {
+        //TODO sets all statistics to initial values
     }
 }

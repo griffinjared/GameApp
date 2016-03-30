@@ -29,7 +29,12 @@ public class Fouling extends Enemy {
 
     @Override
     public void update(Room room) {
-        randomMovement(room);
-    }
+        long currentTime = System.currentTimeMillis();
 
+        if (Math.abs(currentTime - timer) > 1000) {
+            timer = currentTime;
+
+            randomMovement(room);
+        }
+    }
 }
