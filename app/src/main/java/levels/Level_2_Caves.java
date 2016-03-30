@@ -3,14 +3,12 @@ package levels;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import levels.levelLayouts.Level_1_Forest_Layout;
 import levels.levelLayouts.Level_2_Caves_Layout;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
 import rooms.common_rooms.Spawn_Room;
-import rooms.stage1_forest.Deforested_Room;
-import rooms.stage1_forest.River_Room;
+import rooms.stage2_caves.*;
 
 /**
  * Created by griff on 3/2/2016.
@@ -25,16 +23,15 @@ public class Level_2_Caves extends Level {
 
         levelLayout = Level_2_Caves_Layout.generateLevel();
 
-        levelLayout = Level_1_Forest_Layout.generateLevel();
-
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {
                 switch(levelLayout[y][x]) {
                     case 'E': rooms.add(new Empty_Room(context, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
                     case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
-                    case 'R': rooms.add(new River_Room(context, configureDoors(x, y))); break;
-                    case 'D': rooms.add(new Deforested_Room(context, configureDoors(x, y))); break;
+                    case 'O': rooms.add(new Sea_Cave(context, configureDoors(x, y))); break;
+                    case 'L': rooms.add(new Lava_Cave(context, configureDoors(x, y))); break;
+                    case 'T': rooms.add(new Talis_Cave(context, configureDoors(x, y))); break;
                     default: rooms.add(new Room(context)); break;
                 }
             }

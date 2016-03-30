@@ -1,6 +1,10 @@
 package equipment.weapon;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.gameapp.gameapp.R;
 
 import equipment.Equipment;
 
@@ -14,8 +18,9 @@ public abstract class Weapon extends Equipment {
     protected float forwardRange;
     protected float sideRange;
 
-    public Weapon(int x, int y) {
-        super(x, y);
+    public Weapon(int x, int y, Context context) {
+
+        super(x, y, context);
     }
 
 }

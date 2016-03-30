@@ -1,17 +1,21 @@
 package equipment.weapon;
 
-import android.graphics.Bitmap;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+
+import com.gameapp.gameapp.R;
 
 public class Sword extends Weapon {
 
-    public Sword(int x, int y, Bitmap spriteSheet) {
-        super(x, y);
+    public Sword(int x, int y, Context context) {
+        super(x, y, context);
 
         name = "Sword";
-        sprite = Bitmap.createBitmap(spriteSheet, 0, 0, SIZE, SIZE);
         damage = 2;
         forwardRange = 1.5f;
         sideRange = 0f;
+
+        setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.weapons), 0, 0);
     }
 
 }

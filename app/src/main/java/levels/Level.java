@@ -92,6 +92,8 @@ public class Level {
         if (switchRoom > 0) {
             currentRoom = changeRoom(roomX, roomY);
         }
+
+        currentRoom.update();
     }
 
     public void draw(Canvas c, Paint p) {
@@ -118,10 +120,8 @@ public class Level {
             }
         }
 
-        //Treasures
-        for (int i = 0; i < currentRoom.getTreasures().size(); i++) {
-            currentRoom.getTreasures().get(i).draw(c, p);
-        }
+        //Enemies,chests, and items
+        currentRoom.draw(c, p);
     }
 
     public int getRoomX() {
@@ -130,5 +130,9 @@ public class Level {
 
     public int getRoomY() {
         return roomY;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }
