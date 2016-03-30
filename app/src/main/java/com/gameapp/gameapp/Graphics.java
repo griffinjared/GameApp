@@ -14,6 +14,8 @@ import java.util.List;
 import gameapp.framework.Input.TouchEvent;
 import levels.Level;
 import levels.Level_1_Forest;
+import mob.Enemy;
+import mob.enemies_1_forest.Fouling;
 import mob.players.Knight;
 import mob.players.Player;
 
@@ -39,6 +41,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
+    //private Enemy enemy;
     private Paint paint; //for drawing graphics
     //private Bitmap dPad;
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right; //joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
@@ -60,7 +63,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        player = new Knight(3, 5, getContext()); //Spawns center
+        player = new Knight(3, 5, getContext());
+        //enemy = new Fouling(5, 5, getContext());
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
@@ -195,7 +199,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     public Direction getDirection() { return this.direction; }
 
     public void update() {
-
         if (isHolding) {
             if (speed == 0) {
                 if (direction == Direction.UP) {

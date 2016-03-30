@@ -57,16 +57,11 @@ public class Room {
          *
          *  9 = Exit
          */
-
-        //add chests to the treasure array here.
     }
 
     public void update() {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update(this);
-        }
-        for (int i = 0; i < treasure.size(); i++) {
-            //treasure.get(i).update();
         }
     }
 
