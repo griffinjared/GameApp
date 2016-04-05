@@ -3,15 +3,11 @@ package levels;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import levels.levelLayouts.Level_2_Caves_Layout;
 import levels.levelLayouts.Level_3_Underwater_Layout;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
 import rooms.common_rooms.Spawn_Room;
-import rooms.stage2_caves.Lava_Cave;
-import rooms.stage2_caves.Sea_Cave;
-import rooms.stage2_caves.Talis_Cave;
 import rooms.stage3_underwater.Deep_Water;
 import rooms.stage3_underwater.Toxic_Lake;
 import rooms.stage3_underwater.Underwater_Cave;
