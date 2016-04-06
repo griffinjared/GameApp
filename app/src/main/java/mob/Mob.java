@@ -18,10 +18,9 @@ public class Mob {
     protected Bitmap sprite; //Primary, currently-active sprite
 
     //Sprites
-    protected Bitmap down;
-    protected Bitmap up;
-    protected Bitmap left;
-    protected Bitmap right;
+    protected Bitmap down, up, left, right;
+    protected Bitmap atk_down, atk_up, atk_left, atk_right;
+    protected Bitmap hit;
 
     //Statistics
     protected int maxHP, maxMP, baseSpeed;
@@ -39,12 +38,16 @@ public class Mob {
 
         //Set all sprites
         down = Bitmap.createBitmap(spriteSheet, 0, 0, SIZE, SIZE);
-
         up = Bitmap.createBitmap(spriteSheet, SIZE, 0, SIZE, SIZE);
-
         left = Bitmap.createBitmap(spriteSheet, 2*SIZE, 0, SIZE, SIZE);
+        right = Bitmap.createBitmap(spriteSheet, 3 * SIZE, 0, SIZE, SIZE);
 
-        right = Bitmap.createBitmap(spriteSheet, 3*SIZE, 0, SIZE, SIZE);
+        atk_down = Bitmap.createBitmap(spriteSheet, 4*SIZE, 0, SIZE, SIZE);
+        atk_up = Bitmap.createBitmap(spriteSheet, 5*SIZE, 0, SIZE, SIZE);
+        atk_left = Bitmap.createBitmap(spriteSheet, 6*SIZE, 0, SIZE, SIZE);
+        atk_right = Bitmap.createBitmap(spriteSheet, 7*SIZE, 0, SIZE, SIZE);
+
+        hit = Bitmap.createBitmap(spriteSheet, 8*SIZE, 0, SIZE, SIZE);
 
         sprite = down;
     }
