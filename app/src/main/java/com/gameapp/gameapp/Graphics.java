@@ -14,8 +14,7 @@ import levels.Level_1_Forest;
 import mob.players.Knight;
 import mob.players.Player;
 
-import static android.graphics.Color.BLACK;
-import static android.graphics.Color.WHITE;
+import static android.graphics.Color.*;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -56,10 +55,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
-    //private Enemy enemy;
     private Paint paint; //for drawing graphics
-    //private Bitmap dPad;
-    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right; //joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
+    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right;
     private Bitmap joystick;
     private boolean isHolding;
     private boolean isSwiping;
@@ -112,22 +109,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
 
-        /*
-        joy_upLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_left);
-        joy_upLeft = Bitmap.createScaledBitmap(joy_upLeft, joy, joy, true);
-        joy_upRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_right);
-        joy_upRight = Bitmap.createScaledBitmap(joy_upRight, joy, joy, true);
-        joy_downLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_left);
-        joy_downLeft = Bitmap.createScaledBitmap(joy_downLeft, joy, joy, true);
-        joy_downRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_right);
-        joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
-        */
-
         joystick = joy_center;
-
-        //D-Pad
-        //dPad = BitmapFactory.decodeResource(getResources(), R.drawable.dpad);
-        //dPad = Bitmap.createScaledBitmap(dPad, joy, joy, true);
     }
 
     @Override
@@ -255,7 +237,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
     public boolean getHolding() { return isHolding; }
 
-    public Direction getDirection() { return this.direction; }
+    public Direction getDirection() { return direction; }
 
     public void update() {
         if (isHolding) {
