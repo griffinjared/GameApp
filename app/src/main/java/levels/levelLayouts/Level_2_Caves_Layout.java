@@ -20,11 +20,16 @@ public class Level_2_Caves_Layout {
         ArrayList<Character> rooms = new ArrayList<>();
         rooms.add(EXIT_ROOM);
 
-        char[][] layout = new char[9][9];
+        char[][] layout = emptyLayout();
+
+        generateCaves(5, 5, 4, 5, layout, 0);
+        generateCaves(5, 5, 6, 5, layout, 0);
+        generateCaves(5, 5, 5, 4, layout, 0);
+        generateCaves(5, 5, 5, 6, layout, 0);
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                if (y == 0 || y == 6 || x == 0 || x == 6) {
+                if (y == 0 || y == 8 || x == 0 || x == 8) {
                     layout[x][y] = ' ';
                 } else if (y == 5 && x == 5) {
                     layout[x][y] = 'S';
@@ -32,12 +37,17 @@ public class Level_2_Caves_Layout {
             }
         }
 
-        generateCaves(5, 5, 4, 5, layout, 0);
-        generateCaves(5, 5, 6, 5, layout, 0);
-        generateCaves(5, 5, 5, 4, layout, 0);
-        generateCaves(5, 5, 5, 6, layout, 0);
-
         return layout;
+    }
+
+    private static char[][] emptyLayout() {
+        char[][] empty = new char[9][9];
+        for(int x = 0; x < empty.length; x++) {
+            for(int y = 0; y < empty[x].length; y++) {
+                empty[x][y] = ' ';
+            }
+        }
+        return empty;
     }
 
     private static boolean generateCaves(int lastX, int lastY, int curX, int curY, char[][] layout, int numberOfRooms) {
@@ -65,6 +75,7 @@ public class Level_2_Caves_Layout {
         count++;
 
         if (curX == 0 || curX == 8 || curY == 0 || curY == 8) {
+            layout[curX][curY] = ' ';
             if (!isBossRoomGenerated(layout)) {
                 layout[lastX][lastY] = 'X';
             }

@@ -11,6 +11,7 @@ public class Toxic_Lake extends Room{
 
     public Toxic_Lake(Context context, int doorLayout) {
         super(context);
+        name = "Toxic_Lake";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

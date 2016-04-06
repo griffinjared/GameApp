@@ -3,6 +3,9 @@ package levels;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import levels.levelLayouts.Level_2_Caves_Layout;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
@@ -14,14 +17,23 @@ import rooms.stage2_caves.*;
  * Created by griff on 3/2/2016.
  */
 public class Level_2_Caves extends Level {
-    private final int SPAWN_X = 4;
-    private final int SPAWN_Y = 4;
+    private final int SPAWN_X = 5;
+    private final int SPAWN_Y = 5;
 
     public Level_2_Caves(Context context, Bitmap spriteSheet) {
         super(context);
         changeTilesSprites(spriteSheet);
 
         levelLayout = Level_2_Caves_Layout.generateLevel();
+        for(char[] row : levelLayout) {
+            for(char r : row) {
+                if(r != ' ')
+                    System.out.print(r);
+                else
+                    System.out.print("-");
+            }
+            System.out.println("");
+        }
 
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {

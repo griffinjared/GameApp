@@ -8,6 +8,7 @@ public class River_Room extends Room {
 
     public River_Room(Context context, int doorLayout) {
         super(context);
+        name = "River_Room";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

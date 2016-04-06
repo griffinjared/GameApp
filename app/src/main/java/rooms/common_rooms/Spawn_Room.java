@@ -13,6 +13,7 @@ public class Spawn_Room extends Room {
 
     public Spawn_Room(Context context, int doorLayout) {
         super(context);
+        name = "Spawn_Room";
 
         /** Spawn room layout
          *  Has four exits so that it will have four paths for the player to choose from

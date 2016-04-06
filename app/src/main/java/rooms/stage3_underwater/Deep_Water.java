@@ -11,6 +11,7 @@ public class Deep_Water extends Room {
 
     public Deep_Water(Context context, int doorLayout) {
         super(context);
+        name = "Deep_Water";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

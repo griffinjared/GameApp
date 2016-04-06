@@ -8,6 +8,7 @@ public class Deforested_Room extends Room {
 
     public Deforested_Room(Context context, int doorLayout) {
         super(context);
+        name = "Deforested_Room";
 
         tileLayout = new int[][] {
                 {0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 5, 0},

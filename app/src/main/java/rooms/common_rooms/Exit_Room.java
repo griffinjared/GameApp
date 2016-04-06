@@ -8,6 +8,7 @@ public class Exit_Room extends Room {
 
     public Exit_Room(Context context, int doorLayout) {
         super(context);
+        name = "Exit_Room";
 
         /** The Exit Room contains the tile that leads to the next area upon being touched
          *  The player should be prompted to continue before going to the next level

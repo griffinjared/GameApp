@@ -8,6 +8,7 @@ public class Talis_Cave extends Room {
 
     public Talis_Cave(Context context, int doorLayout) {
         super(context);
+        name = "Talis_Cave";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

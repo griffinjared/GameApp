@@ -11,6 +11,7 @@ public class Underwater_Cave extends Room{
 
     public Underwater_Cave(Context context, int doorLayout) {
         super(context);
+        name = "Underwater_Cave";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

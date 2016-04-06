@@ -18,6 +18,7 @@ public class Room {
 
     protected int[][] tileLayout = new int[12][12];
     protected ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    protected String name;
 
     /** Door Layouts
      *  0 - Four-way
@@ -205,5 +206,9 @@ public class Room {
         tileLayout[0][tileLayout.length/2] = 1; tileLayout[0][(tileLayout.length/2) - 1] = 1; //Top row
         tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
         tileLayout[tileLayout.length/2][tileLayout.length - 1] = 1; tileLayout[(tileLayout.length/2) - 1][tileLayout.length - 1] = 1; //Right wall
+    }
+
+    public String getName() {
+        return name;
     }
 }

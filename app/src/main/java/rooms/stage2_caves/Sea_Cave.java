@@ -8,6 +8,7 @@ public class Sea_Cave extends Room {
 
     public Sea_Cave(Context context, int doorLayout) {
         super(context);
+        name = "Sea_Cave";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

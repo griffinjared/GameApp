@@ -10,6 +10,7 @@ public class Treasure_Room extends Room {
 
     public Treasure_Room(Context context, int doorLayout) {
         super(context);
+        name = "Treasure_Room";
 
         tileLayout = new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

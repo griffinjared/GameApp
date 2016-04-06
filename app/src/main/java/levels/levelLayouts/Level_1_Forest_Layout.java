@@ -39,7 +39,7 @@ public class Level_1_Forest_Layout {
                 if(y == 0 || y == 6 || x == 0 || x == 6) {
                     layout[x][y] = ' ';
                 }
-                else if(y == 4 && x == 4) {
+                else if(y == 3 && x == 3) {
                     layout[x][y] = 'S';
                 }
                 else {
