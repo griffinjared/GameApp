@@ -35,7 +35,7 @@ public class Mob {
     }
 
     public void setSprites(Bitmap sprites) {
-        spriteSheet = Bitmap.createScaledBitmap(sprites, 192, 24, true);
+        spriteSheet = Bitmap.createScaledBitmap(sprites, 216, 24, true);
 
         //Set all sprites
         down = Bitmap.createBitmap(spriteSheet, 0, 0, SIZE, SIZE);

@@ -139,96 +139,32 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            isHolding = true;
+            isHolding = false;
 
             //State Change
-            if (inBounds(event, 0, 0, w/40, w/40)) {
+            if (inBounds(event, 0, 0, 50, 50)) {
                 pauseEquip();
+                return true;
             }
-            else if (inBounds(event, w-(w/40), 0, w/40, w/40)) {
+            else if (inBounds(event, w-(w/40), 0, w - 50, 50)) {
                 pauseItem();
+                return true;
             }
 
-            //Up
-            if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
-                joystick = joy_up;
-                direction = Direction.UP;
-            }
-            //Down
-            else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                joystick = joy_down;
-                direction = Direction.DOWN;
-            }
-            //Left
-            else if (inBounds(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
-                joystick = joy_left;
-                direction = Direction.LEFT;
-            }
-            //Right
-            else if (inBounds(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
-                joystick = joy_right;
-                direction = Direction.RIGHT;
-            }
+            isHolding = true;
 
             //Combat
-            else if (inBounds(event, (2*w/40) + (12*w/27), h - size, 12*w/27, 12*w/27)) {
-                isSwiping = true;
+            if (inBounds(event, (2*w/40) + (12*w/27), h - size, 12*w/27, 12*w/27)) {
+                combat(event);
+            }
 
-                //NorthWest corner
-                if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.SOUTHEAST;
-                }
-                //North corner
-                else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.SOUTH;
-                }
-                //NorthEast corner
-                else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.SOUTHWEST;
-                }
-                //West corner
-                else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.EAST;
-                }
-                //East corner
-                else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.WEST;
-                }
-                //SouthWest corner
-                else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.NORTHEAST;
-                }
-                //South corner
-                else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.NORTH;
-                }
-                //SouthEast corner
-                else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-                    combatDirection = CombatDirection.NORTHWEST;
-                }
-            }
+            //Tap movement
+            changeDirection(event);
         }
+
+        //Drag movement
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
-            //Up
-            if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
-                joystick = joy_up;
-                direction = Direction.UP;
-            }
-            //Down
-            else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
-                joystick = joy_down;
-                direction = Direction.DOWN;
-            }
-            //Left
-            else if (inBounds(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
-                joystick = joy_left;
-                direction = Direction.LEFT;
-            }
-            //Right
-            else if (inBounds(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
-                joystick = joy_right;
-                direction = Direction.RIGHT;
-            }
+            changeDirection(event);
         }
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             isHolding = false;
@@ -240,6 +176,77 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         }
         return true;
     }
+
+    //Combat events
+    public void combat(MotionEvent event) {
+        int w = getWidth();
+        int h = getHeight();
+        int size = (h - w - (w/15));
+
+        isSwiping = true;
+        isHolding = false;
+
+        //NorthWest corner
+        if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.SOUTHEAST;
+        }
+        //North corner
+        else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.SOUTH;
+        }
+        //NorthEast corner
+        else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.SOUTHWEST;
+        }
+        //West corner
+        else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.EAST;
+        }
+        //East corner
+        else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.WEST;
+        }
+        //SouthWest corner
+        else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.NORTHEAST;
+        }
+        //South corner
+        else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.NORTH;
+        }
+        //SouthEast corner
+        else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+            combatDirection = CombatDirection.NORTHWEST;
+        }
+    }
+
+    public void changeDirection(MotionEvent event) {
+        int w = getWidth();
+        int h = getHeight();
+        int size = (h - w - (w/15));
+
+        //Up
+        if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
+            joystick = joy_up;
+            direction = Direction.UP;
+        }
+        //Down
+        else if (inBounds(event, (w/40) + (4*w/27), h-size+(8*w/27), 4*w/27, 4*w/27)) {
+            joystick = joy_down;
+            direction = Direction.DOWN;
+        }
+        //Left
+        else if (inBounds(event, w / 40, h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+            joystick = joy_left;
+            direction = Direction.LEFT;
+        }
+        //Right
+        else if (inBounds(event, (w / 40) + (8 * w / 27), h - size + (4 * w / 27), 4 * w / 27, 4 * w / 27)) {
+            joystick = joy_right;
+            direction = Direction.RIGHT;
+        }
+    }
+
 
     public boolean getHolding() { return isHolding; }
 
@@ -291,23 +298,28 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
     private void drawPausedUI(Canvas canvas)
     {
+        int w = getWidth();
+        int h = getHeight();
+
         paint.setColor(WHITE);
-        paint.setTextSize(100);
-        paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawARGB(155, 0, 0, 0);
-        canvas.drawText("Resume", 400, 165, paint);
-        canvas.drawText("Menu", 400, 360, paint);
+        paint.setTextSize(30);
+        canvas.drawRect(0, 0, w, h, paint);
+
+        paint.setColor(BLACK);
+        canvas.drawText("Resume", 5, h/3, paint);
     }
     private void drawGameOverUI(Canvas canvas)
     {
+        int w = getWidth();
+        int h = getHeight();
+
         paint.setColor(BLACK);
         paint.setTextSize(30);
-        paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawRect(0, 0, 1281, 801, paint);
+        canvas.drawRect(0, 0, w, h, paint);
 
         paint.setColor(WHITE);
-        canvas.drawText("Game Over.", 400, 240, paint);
-        canvas.drawText("Tap to return.", 400, 290, paint);
+        canvas.drawText("Game Over", 5, h/3 - (paint.getTextSize() * 2), paint);
+        canvas.drawText("Main Menu", 5, h/3, paint);
     }
     private void drawMainUI(Canvas canvas) {
         /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
@@ -338,16 +350,13 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Button text
         paint.setColor(WHITE);
         paint.setFakeBoldText(true);
-        canvas.drawText("Menu", 5, w / 18, paint);
-        canvas.drawText("Equipment", w - (paint.getTextSize() * 6), w / 18, paint);
-        canvas.drawText("Map", 5, w - 5, paint);
-        canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
+        canvas.drawText("Item", 5, w / 18, paint);
+        canvas.drawText("Equip", w - (paint.getTextSize() * 6), w / 18, paint);
 
         paint.setColor(BLACK);
         canvas.drawText("HP: " + player.getHP() + "/" + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
         canvas.drawText("MP: " + player.getMP() + "/" + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
-        joystick = joy_center;
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
