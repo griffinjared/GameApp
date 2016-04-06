@@ -39,7 +39,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Combat combat = Combat.NONE;
 
     enum GameState {
-        Running, Paused, Over
+        Running, Equip, Item, Over
     }
     GameState state = GameState.Running;
 
@@ -141,6 +141,14 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
             isHolding = true;
 
+            //State Change
+            if (inBounds(event, 0, 0, w/40, w/40)) {
+                pauseEquip();
+            }
+            else if (inBounds(event, w-(w/40), 0, w/40, w/40)) {
+                pauseItem();
+            }
+
             //Up
             if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
                 joystick = joy_up;
@@ -230,7 +238,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             combatDirection = CombatDirection.NONE;
             speed = 0;
         }
-        //return super.onTouchEvent(event);
         return true;
     }
 
@@ -239,6 +246,15 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     public Direction getDirection() { return direction; }
 
     public void update() {
+        switch (state) {
+            case Running: gameUpdate(); break;
+            case Equip: break;
+            case Item: break;
+            case Over: break;
+        }
+    }
+
+    public void gameUpdate() {
         if (isHolding) {
             if (speed == 0) {
                 if (direction == Direction.UP) {
@@ -267,7 +283,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         switch (state) {
             case Running: drawMainUI(canvas); break;
-            case Paused: drawPausedUI(canvas); break;
+            case Equip: drawPausedUI(canvas); break;
+            case Item: drawPausedUI(canvas); break;
             case Over: drawGameOverUI(canvas); break;
         }
     }
@@ -283,10 +300,12 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     }
     private void drawGameOverUI(Canvas canvas)
     {
-        paint.setColor(WHITE);
+        paint.setColor(BLACK);
         paint.setTextSize(30);
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawRect(0, 0, 1281, 801, paint);
+
+        paint.setColor(WHITE);
         canvas.drawText("Game Over.", 400, 240, paint);
         canvas.drawText("Tap to return.", 400, 290, paint);
     }
@@ -334,19 +353,23 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
     }
 
-    public void pause()
+    public void pauseEquip()
     {
         if(state == GameState.Running)
         {
-            state = GameState.Paused;
+            state = GameState.Equip;
         }
+        else resume();
+    }
+    public void pauseItem() {
+        if (state == GameState.Running) {
+            state = GameState.Item;
+        }
+        else resume();
     }
     public void resume()
     {
-        if(state == GameState.Paused)
-        {
-            state = GameState.Running;
-        }
+        state = GameState.Running;
     }
     private void goToMenu()
     {
