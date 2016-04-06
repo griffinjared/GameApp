@@ -17,19 +17,29 @@ public class Level_3_Underwater_Layout {
         ArrayList<Character> rooms = new ArrayList<>();
         rooms.add(EXIT_ROOM);
 
-        char[][] layout = new char[9][9];
+        char[][] layout = emptyLayout();
 
-        for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++) {
-                if (y == 0 || y == 6 || x == 0 || x == 6) {
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                if (y == 0 || y == 8 || x == 0 || x == 8) {
                     layout[x][y] = ' ';
-                } else if (y == 5 && x == 5) {
-                    layout[x][y] = 'S';
+                } else if (x == 1 && y == 4) {
+                    layout[y][x] = 'S';
                 }
             }
         }
 
         return layout;
+    }
+
+    private static char[][] emptyLayout() {
+        char[][] empty = new char[9][9];
+        for(int x = 0; x < empty.length; x++) {
+            for(int y = 0; y < empty[x].length; y++) {
+                empty[x][y] = ' ';
+            }
+        }
+        return empty;
     }
 
     private static void generateBranch(char[][] layout, int curX, int curY, int lastX, int lastY, int roomCount) {
