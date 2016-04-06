@@ -29,6 +29,8 @@ public class Level_3_Underwater_Layout {
             }
         }
 
+        generateBranch(layout, 1, 4, 1, 4, 0);
+
         return layout;
     }
 
@@ -46,6 +48,7 @@ public class Level_3_Underwater_Layout {
         Random rand = new Random();
         final int MAX_NUMBER_OF_ROOMS = 20;
         if(curX == 0 || curY == 0 || curX == layout.length - 1 || curY == layout.length - 1 || roomCount >= MAX_NUMBER_OF_ROOMS) {
+            layout[curX][curY] = ' ';
             if(!isExitRoomGenerated(layout)) {
                 layout[lastX][lastY] = EXIT_ROOM;
             }
@@ -54,6 +57,11 @@ public class Level_3_Underwater_Layout {
         else {
             int whichRoom = rand.nextInt(4);
             int nextDirection = rand.nextInt(3);
+            int shouldCreateNewBranch = rand.nextInt(10);
+
+            if(shouldCreateNewBranch < 1) {
+                generateBranch(layout, curX, curY, lastX, lastY, roomCount);
+            }
 
             switch(whichRoom) {
                 case 0:

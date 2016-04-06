@@ -78,8 +78,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         player = new Knight(3, 5, getContext());
-        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-//        level = new Level_3_Underwater(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level3_underwater));
+//        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
+        level = new Level_3_Underwater(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level3_underwater));
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
