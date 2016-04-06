@@ -75,9 +75,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         //Game components
         seeder = new SeedGenerator();
-        level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Knight(3, 5, getContext());
-        //enemy = new Fouling(5, 5, getContext());
+        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
@@ -326,8 +325,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
         paint.setColor(BLACK);
-        canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
-        canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
+        canvas.drawText("HP: " + player.getHP() + "/" + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
+        canvas.drawText("MP: " + player.getMP() + "/" + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
         joystick = joy_center;
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick

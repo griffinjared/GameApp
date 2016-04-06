@@ -7,6 +7,7 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
+import mob.players.Player;
 import rooms.Room;
 import tiles.Tile;
 

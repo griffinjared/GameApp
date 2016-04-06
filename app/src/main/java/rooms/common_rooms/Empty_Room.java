@@ -4,11 +4,12 @@ import android.content.Context;
 
 import assets.chests.Weapon_Chest;
 import mob.enemies_1_forest.Fouling;
+import mob.players.Player;
 import rooms.Room;
 
 public class Empty_Room extends Room {
 
-    public Empty_Room(Context context, int doorLayout) {
+    public Empty_Room(Context context, Player player, int doorLayout) {
         super(context);
 
         tileLayout = new int[][] {
@@ -28,6 +29,6 @@ public class Empty_Room extends Room {
 
         defineDoorLayout(doorLayout);
 
-        enemies.add(new Fouling(5, 5, context));
+        enemies.add(new Fouling(5, 5, context, player));
     }
 }

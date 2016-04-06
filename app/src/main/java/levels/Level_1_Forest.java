@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import levels.levelLayouts.Level_1_Forest_Layout;
+import mob.players.Player;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
@@ -17,24 +18,16 @@ public class Level_1_Forest extends Level {
     private final int SPAWN_X = 3;
     private final int SPAWN_Y = 3;
 
-    public Level_1_Forest(Context context, Bitmap spriteSheet) {
+    public Level_1_Forest(Context context, Player player, Bitmap spriteSheet) {
         super(context);
         changeTilesSprites(spriteSheet);
-
-//        levelLayout = new char[][] {          //test layout
-//                {' ', ' ', ' ', ' ', ' '},
-//                {' ', 'E', 'R', 'E', ' '},
-//                {' ', 'X', 'S', 'D', ' '},
-//                {' ', 'E', 'E', 'E', ' '},
-//                {' ', ' ', ' ', ' ', ' '}
-//        };
 
         levelLayout = Level_1_Forest_Layout.generateLevel();
 
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {
                 switch(levelLayout[y][x]) {
-                    case 'E': rooms.add(new Empty_Room(context, configureDoors(x, y))); break;
+                    case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
                     case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
                     case 'R': rooms.add(new River_Room(context, configureDoors(x, y))); break;
