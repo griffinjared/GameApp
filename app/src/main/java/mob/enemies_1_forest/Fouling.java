@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import com.gameapp.gameapp.R;
 
 import mob.Enemy;
+import mob.players.Player;
 import rooms.Room;
 
 /**
@@ -16,8 +17,8 @@ import rooms.Room;
  */
 public class Fouling extends Enemy {
 
-    public Fouling(int x, int y, Context context) {
-        super(x, y);
+    public Fouling(int x, int y, Context context, Player player) {
+        super(x, y, player);
 
         Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.forest_enemy_fouling);
         setSprites(sprites);
@@ -25,6 +26,9 @@ public class Fouling extends Enemy {
         hp = maxHP = 2;
         mp = maxMP = 0;
         speed = baseSpeed = 1;
+        pwr = 1;
+        mag = 0;
+
     }
 
     @Override

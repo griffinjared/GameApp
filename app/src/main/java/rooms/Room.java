@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import assets.chests.Chest;
 import mob.Enemy;
+import mob.players.Player;
 
 /** The Room class is essentially an array of Tiles
  *  Each Room will have an integer map of the assortment of Tiles, which are then switched out for actual Tiles
@@ -18,6 +19,7 @@ public class Room {
 
     protected int[][] tileLayout = new int[12][12];
     protected ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    protected Player player;
     protected String name;
 
     /** Door Layouts

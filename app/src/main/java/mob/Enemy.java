@@ -5,6 +5,7 @@ import android.graphics.Paint;
 
 import java.util.Random;
 
+import mob.players.Player;
 import rooms.Room;
 
 /**
@@ -12,11 +13,14 @@ import rooms.Room;
  */
 public class Enemy extends Mob {
 
+    protected int pwr, mag;
     protected long timer = 0;
+    protected Player player;
 
-    public Enemy(int x, int y) {
+    public Enemy(int x, int y, Player player) {
         super(x, y);
 
+        this.player = player;
         timer = System.currentTimeMillis();
     }
 
@@ -38,6 +42,8 @@ public class Enemy extends Mob {
     }
 
     public void randomMovement(Room room) {
+        if (attack()) return;
+
         Random random = new Random();
 
         int direction = random.nextInt(4);
@@ -55,6 +61,15 @@ public class Enemy extends Mob {
             //Left
             case 3: setX(-1, room); break;
         }
+    }
+
+    public boolean attack() {
+        if (Math.abs(player.getX() - getX()) <= 1 && Math.abs(player.getY() - getY()) <= 1) {
+            player.setHP(-pwr);
+            return true;
+        }
+
+        return false;
     }
 
     public void draw(Canvas c, Paint p) {

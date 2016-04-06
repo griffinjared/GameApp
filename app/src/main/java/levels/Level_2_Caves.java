@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import levels.levelLayouts.Level_2_Caves_Layout;
+import mob.players.Player;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
@@ -20,7 +21,7 @@ public class Level_2_Caves extends Level {
     private final int SPAWN_X = 5;
     private final int SPAWN_Y = 5;
 
-    public Level_2_Caves(Context context, Bitmap spriteSheet) {
+    public Level_2_Caves(Context context, Player player, Bitmap spriteSheet) {
         super(context);
         changeTilesSprites(spriteSheet);
 
@@ -38,7 +39,7 @@ public class Level_2_Caves extends Level {
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {
                 switch(levelLayout[y][x]) {
-                    case 'E': rooms.add(new Empty_Room(context, configureDoors(x, y))); break;
+                    case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
                     case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
                     case 'O': rooms.add(new Sea_Cave(context, configureDoors(x, y))); break;

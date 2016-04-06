@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import levels.levelLayouts.Level_3_Underwater_Layout;
+import mob.players.Player;
 import rooms.Room;
 import rooms.common_rooms.Empty_Room;
 import rooms.common_rooms.Exit_Room;
@@ -19,7 +20,7 @@ public class Level_3_Underwater extends Level {
     private final int SPAWN_X = 1;
     private final int SPAWN_Y = 4;
 
-    public Level_3_Underwater(Context context, Bitmap spriteSheet) {
+    public Level_3_Underwater(Context context, Player player, Bitmap spriteSheet) {
         super(context);
         changeTilesSprites(spriteSheet);
 
@@ -28,7 +29,7 @@ public class Level_3_Underwater extends Level {
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {
                 switch(levelLayout[y][x]) {
-                    case 'E': rooms.add(new Empty_Room(context, configureDoors(x, y))); break;
+                    case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
                     case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
                     case 'D': rooms.add(new Deep_Water(context, configureDoors(x, y))); break;

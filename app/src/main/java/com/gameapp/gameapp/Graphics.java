@@ -15,8 +15,7 @@ import levels.Level_2_Caves;
 import mob.players.Knight;
 import mob.players.Player;
 
-import static android.graphics.Color.BLACK;
-import static android.graphics.Color.WHITE;
+import static android.graphics.Color.*;
 
 /** The Screen class used to be called "gameClass"
  *  Instead, it is now the graphics portion of the Game and only the graphics portion
@@ -41,7 +40,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Combat combat = Combat.NONE;
 
     enum GameState {
-        Running, Paused, Over
+        Running, Equip, Item, Over
     }
     GameState state = GameState.Running;
 
@@ -57,10 +56,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
-    //private Enemy enemy;
     private Paint paint; //for drawing graphics
-    //private Bitmap dPad;
-    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right; //joy_upLeft, joy_upRight, joy_downLeft, joy_downRight;
+    private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right;
     private Bitmap joystick;
     private boolean isHolding;
     private boolean isSwiping;
@@ -79,9 +76,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         //Game components
         seeder = new SeedGenerator();
-        level = new Level_1_Forest(getContext(), BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         player = new Knight(3, 5, getContext());
-        //enemy = new Fouling(5, 5, getContext());
+        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
@@ -113,22 +109,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
 
-        /*
-        joy_upLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_left);
-        joy_upLeft = Bitmap.createScaledBitmap(joy_upLeft, joy, joy, true);
-        joy_upRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_up_right);
-        joy_upRight = Bitmap.createScaledBitmap(joy_upRight, joy, joy, true);
-        joy_downLeft = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_left);
-        joy_downLeft = Bitmap.createScaledBitmap(joy_downLeft, joy, joy, true);
-        joy_downRight = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_down_right);
-        joy_downRight = Bitmap.createScaledBitmap(joy_downRight, joy, joy, true);
-        */
-
         joystick = joy_center;
-
-        //D-Pad
-        //dPad = BitmapFactory.decodeResource(getResources(), R.drawable.dpad);
-        //dPad = Bitmap.createScaledBitmap(dPad, joy, joy, true);
     }
 
     @Override
@@ -160,6 +141,14 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
             isHolding = true;
+
+            //State Change
+            if (inBounds(event, 0, 0, w/40, w/40)) {
+                pauseEquip();
+            }
+            else if (inBounds(event, w-(w/40), 0, w/40, w/40)) {
+                pauseItem();
+            }
 
             //Up
             if (inBounds(event, (w/40) + (4*w/27), h-size, 4*w/27, 4*w/27)) {
@@ -250,15 +239,23 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             combatDirection = CombatDirection.NONE;
             speed = 0;
         }
-        //return super.onTouchEvent(event);
         return true;
     }
 
     public boolean getHolding() { return isHolding; }
 
-    public Direction getDirection() { return this.direction; }
+    public Direction getDirection() { return direction; }
 
     public void update() {
+        switch (state) {
+            case Running: gameUpdate(); break;
+            case Equip: break;
+            case Item: break;
+            case Over: break;
+        }
+    }
+
+    public void gameUpdate() {
         if (isHolding) {
             if (speed == 0) {
                 if (direction == Direction.UP) {
@@ -287,7 +284,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         switch (state) {
             case Running: drawMainUI(canvas); break;
-            case Paused: drawPausedUI(canvas); break;
+            case Equip: drawPausedUI(canvas); break;
+            case Item: drawPausedUI(canvas); break;
             case Over: drawGameOverUI(canvas); break;
         }
     }
@@ -303,10 +301,12 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     }
     private void drawGameOverUI(Canvas canvas)
     {
-        paint.setColor(WHITE);
+        paint.setColor(BLACK);
         paint.setTextSize(30);
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawRect(0, 0, 1281, 801, paint);
+
+        paint.setColor(WHITE);
         canvas.drawText("Game Over.", 400, 240, paint);
         canvas.drawText("Tap to return.", 400, 290, paint);
     }
@@ -345,8 +345,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("Inventory", w - (paint.getTextSize() * 5), w - 5, paint);
 
         paint.setColor(BLACK);
-        canvas.drawText("HP: 9999", 5, w + paint.getTextSize(), paint); //HP
-        canvas.drawText("MP: 999", w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
+        canvas.drawText("HP: " + player.getHP() + "/" + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
+        canvas.drawText("MP: " + player.getMP() + "/" + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
         joystick = joy_center;
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
@@ -354,19 +354,23 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
     }
 
-    public void pause()
+    public void pauseEquip()
     {
         if(state == GameState.Running)
         {
-            state = GameState.Paused;
+            state = GameState.Equip;
         }
+        else resume();
+    }
+    public void pauseItem() {
+        if (state == GameState.Running) {
+            state = GameState.Item;
+        }
+        else resume();
     }
     public void resume()
     {
-        if(state == GameState.Paused)
-        {
-            state = GameState.Running;
-        }
+        state = GameState.Running;
     }
     private void goToMenu()
     {

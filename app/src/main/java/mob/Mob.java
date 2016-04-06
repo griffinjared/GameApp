@@ -50,10 +50,10 @@ public class Mob {
     }
 
     public int getX() {
-        return x;
+        return x/24;
     }
     public int getY() {
-        return y;
+        return y/24;
     }
 
     public void setX(int num, Room room) {
