@@ -28,10 +28,11 @@ public class Level_3_Underwater extends Level {
         levelName = "Underwater";
         for(char[] row : levelLayout) {
             for(char r : row) {
-                if(r != ' ')
+                if(r == ' ')
+                    System.out.print('-');
+                else {
                     System.out.print(r);
-                else
-                    System.out.print("-");
+                }
             }
             System.out.println("");
         }

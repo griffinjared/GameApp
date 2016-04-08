@@ -19,17 +19,17 @@ public class Level_3_Underwater_Layout {
 
         char[][] layout = emptyLayout();
 
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+        generateBranch(layout, 4, 2, 4, 1, 0);
+
+        for (int y = 0; y < 9; y++) {
+            for (int x = 0; x < 9; x++) {
                 if (y == 0 || y == 8 || x == 0 || x == 8) {
                     layout[x][y] = ' ';
-                } else if (x == 1 && y == 4) {
-                    layout[y][x] = 'S';
+                } else if (x == 4 && y == 1) {
+                    layout[x][y] = 'S';
                 }
             }
         }
-
-        generateBranch(layout, 1, 4, 1, 4, 0);
 
         return layout;
     }

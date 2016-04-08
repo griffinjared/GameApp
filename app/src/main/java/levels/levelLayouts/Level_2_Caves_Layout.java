@@ -17,9 +17,6 @@ public class Level_2_Caves_Layout {
     static Random r = new Random();
 
     public static char[][] generateLevel() {
-        ArrayList<Character> rooms = new ArrayList<>();
-        rooms.add(EXIT_ROOM);
-
         char[][] layout = emptyLayout();
 
         generateCaves(5, 5, 4, 5, layout, 0);
@@ -77,7 +74,7 @@ public class Level_2_Caves_Layout {
         if (curX == 0 || curX == 8 || curY == 0 || curY == 8) {
             layout[curX][curY] = ' ';
             if (!isBossRoomGenerated(layout)) {
-                layout[lastX][lastY] = 'X';
+                layout[lastX][lastY] = EXIT_ROOM;
             }
             return true;
         }
