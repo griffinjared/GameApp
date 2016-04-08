@@ -78,8 +78,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         //Game components
         seeder = new SeedGenerator();
         player = new Knight(3, 5, getContext());
-//        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        level = new Level_3_Underwater(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level3_underwater));
+        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
@@ -269,12 +268,24 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             if (speed == 0) {
                 if (direction == Direction.UP) {
                     player.setY(-1, level.getCurrentRoom());
+                    if(player.goingToNextLevel(0, -1, level.getCurrentRoom())) {
+                        level = nextLevel();
+                    }
                 } else if (direction == Direction.DOWN) {
                     player.setY(1, level.getCurrentRoom());
+                    if(player.goingToNextLevel(0, 1, level.getCurrentRoom())) {
+                        level = nextLevel();
+                    }
                 } else if (direction == Direction.LEFT) {
                     player.setX(-1, level.getCurrentRoom());
+                    if(player.goingToNextLevel(-1, 0, level.getCurrentRoom())) {
+                        level = nextLevel();
+                    }
                 } else if (direction == Direction.RIGHT) {
                     player.setX(1, level.getCurrentRoom());
+                    if(player.goingToNextLevel(1, 0, level.getCurrentRoom())) {
+                        level = nextLevel();
+                    }
                 }
             }
             speed++;
@@ -321,7 +332,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawRect(0, 0, w, h, paint);
 
         paint.setColor(WHITE);
-        canvas.drawText("Game Over", 5, h/3 - (paint.getTextSize() * 2), paint);
+        canvas.drawText("Game Over", 5, h / 3 - (paint.getTextSize() * 2), paint);
         canvas.drawText("Main Menu", 5, h/3, paint);
     }
     private void drawMainUI(Canvas canvas) {
@@ -390,5 +401,17 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private void resetGame()
     {
         //TODO sets all statistics to initial values
+    }
+
+    public Level nextLevel() {
+        if(level.getLevelName() == "Forest") {
+            return new Level_2_Caves(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level2_caves));
+        }
+        else if(level.getLevelName() == "Caves") {
+            return new Level_3_Underwater(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level3_underwater));
+        }
+        else {
+            return new Level(getContext());
+        }
     }
 }

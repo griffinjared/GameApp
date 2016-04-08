@@ -23,6 +23,7 @@ public class Level_1_Forest extends Level {
         changeTilesSprites(spriteSheet);
 
         levelLayout = Level_1_Forest_Layout.generateLevel();
+        levelName = "Forest";
 
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {

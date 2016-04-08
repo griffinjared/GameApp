@@ -1,9 +1,15 @@
 package mob;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.gameapp.gameapp.Graphics;
+import com.gameapp.gameapp.R;
+
+import levels.Level;
+import levels.Level_2_Caves;
 import rooms.Room;
 import tiles.Tile;
 
@@ -88,7 +94,19 @@ public class Mob {
         } catch (Exception e) {
             return false;
         }
+    }
 
+    public boolean goingToNextLevel(int xa, int ya, Room room) {
+        try {
+            if(room.getTileLayout()[(y/24)+ya][(x/24)+xa] == 9) {
+                return true;
+            }
+            return false;
+
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public void draw(Canvas c, Paint p) {

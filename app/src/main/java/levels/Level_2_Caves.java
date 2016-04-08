@@ -26,6 +26,7 @@ public class Level_2_Caves extends Level {
         changeTilesSprites(spriteSheet);
 
         levelLayout = Level_2_Caves_Layout.generateLevel();
+        levelName = "Caves";
         for(char[] row : levelLayout) {
             for(char r : row) {
                 if(r != ' ')

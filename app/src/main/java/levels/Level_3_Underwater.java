@@ -25,6 +25,7 @@ public class Level_3_Underwater extends Level {
         changeTilesSprites(spriteSheet);
 
         levelLayout = Level_3_Underwater_Layout.generateLevel();
+        levelName = "Underwater";
         for(char[] row : levelLayout) {
             for(char r : row) {
                 if(r != ' ')

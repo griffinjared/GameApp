@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.gameapp.gameapp.Graphics;
+
 import java.util.ArrayList;
 
 import mob.players.Player;
@@ -20,7 +22,7 @@ import tiles.Tile;
  *      level = new Level2();
  */
 
-public class Level {
+public class Level{
 
     protected Context context;
 
@@ -31,6 +33,7 @@ public class Level {
     protected ArrayList<Room> rooms;
     protected char[][] levelLayout;
     protected int roomX = 0, roomY = 0;
+    protected String levelName;
 
     //These Tiles will always have the same names and functions but different sprites depending on the level
     public static Tile Wall = new Tile(); //Boundaries around the room
@@ -135,5 +138,9 @@ public class Level {
 
     public Context getContext() {
         return context;
+    }
+
+    public String getLevelName() {
+        return levelName;
     }
 }
