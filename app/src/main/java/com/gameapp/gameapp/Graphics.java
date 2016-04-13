@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -158,6 +159,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             //Combat
             if (inBounds(event, (2*w/40) + (12*w/27), h - size, 12*w/27, 12*w/27)) {
                 combat(event);
+                return true;
             }
 
             //Tap movement
@@ -168,6 +170,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             changeDirection(event);
         }
+
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             isHolding = false;
             joystick = joy_center;
@@ -190,36 +193,37 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         //NorthWest corner
         if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.SOUTHEAST;
+            combatDirection = CombatDirection.NORTHWEST;
         }
         //North corner
         else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.SOUTH;
+            combatDirection = CombatDirection.NORTH;
         }
         //NorthEast corner
         else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.SOUTHWEST;
+            combatDirection = CombatDirection.NORTHEAST;
         }
         //West corner
         else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.EAST;
+            combatDirection = CombatDirection.WEST;
         }
         //East corner
         else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.WEST;
+            combatDirection = CombatDirection.EAST;
         }
         //SouthWest corner
         else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.NORTHEAST;
+            combatDirection = CombatDirection.SOUTHWEST;
         }
         //South corner
         else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.NORTH;
+            combatDirection = CombatDirection.SOUTH;
         }
         //SouthEast corner
         else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.NORTHWEST;
+            combatDirection = CombatDirection.SOUTHEAST;
         }
+        Log.i(TAG, "Combat Start: " + combatDirection);
     }
 
     public void changeDirection(MotionEvent event) {
@@ -373,7 +377,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
-        canvas.drawRect((w * 3 / 5) + w / 40, h - size, w - (w / 40), h - w / 40, paint); //Attack pad
+        canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
     }
 
     public void pauseEquip()
@@ -404,13 +408,11 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public Level nextLevel() {
-        if(level.getLevelName() == "Forest") {
+        if (level.getLevelName().equals("Forest")) {
             return new Level_2_Caves(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level2_caves));
-        }
-        else if(level.getLevelName() == "Caves") {
+        } else if (level.getLevelName().equals("Caves")) {
             return new Level_3_Underwater(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level3_underwater));
-        }
-        else {
+        } else {
             return new Level(getContext());
         }
     }
