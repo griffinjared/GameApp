@@ -44,8 +44,8 @@ public class Level_3_Underwater extends Level {
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
                     case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
                     case 'D': rooms.add(new Deep_Water(context, configureDoors(x, y))); break;
-                    case 'T': rooms.add(new Toxic_Lake(context, configureDoors(x, y))); break;
                     case 'C': rooms.add(new Underwater_Cave(context, configureDoors(x, y))); break;
+                    case 'T': rooms.add(new Toxic_Lake(context, configureDoors(x, y))); break;
                     default: rooms.add(new Room(context)); break;
                 }
             }
@@ -61,12 +61,12 @@ public class Level_3_Underwater extends Level {
     }
 
     public int configureDoors(int roomX, int roomY) {
-        boolean north = false, south = false, east = false, west = false;
+        boolean north = true, south = true, east = true, west = true;
 
-        if (levelLayout[roomY-1][roomX] != ' ') north = true; //north
-        if (levelLayout[roomY+1][roomX] != ' ') south = true; //south
-        if (levelLayout[roomY][roomX-1] != ' ') west = true; //west
-        if (levelLayout[roomY][roomX+1] != ' ') east = true; //east
+        if (levelLayout[roomY-1][roomX] == ' ') north = false; //north
+        if (levelLayout[roomY+1][roomX] == ' ') south = false; //south
+        if (levelLayout[roomY][roomX-1] == ' ') west = false; //west
+        if (levelLayout[roomY][roomX+1] == ' ') east = false; //east
 
         //Assignment
         if (north && south && east && west) return 0;

@@ -19,14 +19,14 @@ public class Level_3_Underwater_Layout {
 
         char[][] layout = emptyLayout();
 
-        generateBranch(layout, 4, 2, 4, 1, 0);
+        generateBranch(layout, 2, 4, 1, 4, 0);
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 if (y == 0 || y == 8 || x == 0 || x == 8) {
-                    layout[x][y] = ' ';
-                } else if (x == 4 && y == 1) {
-                    layout[x][y] = 'S';
+                    layout[y][x] = ' ';
+                } else if (y == 4 && x == 1) {
+                    layout[y][x] = 'S';
                 }
             }
         }
@@ -48,9 +48,9 @@ public class Level_3_Underwater_Layout {
         Random rand = new Random();
         final int MAX_NUMBER_OF_ROOMS = 20;
         if(curX == 0 || curY == 0 || curX == layout.length - 1 || curY == layout.length - 1 || roomCount >= MAX_NUMBER_OF_ROOMS) {
-            layout[curX][curY] = ' ';
+            layout[curY][curX] = ' ';
             if(!isExitRoomGenerated(layout)) {
-                layout[lastX][lastY] = EXIT_ROOM;
+                layout[lastY][lastX] = EXIT_ROOM;
             }
             return;
         }
@@ -62,19 +62,19 @@ public class Level_3_Underwater_Layout {
             if(shouldCreateNewBranch < 1) {
                 generateBranch(layout, curX, curY, lastX, lastY, roomCount);
             }
-
+            System.out.println("next direction: " + nextDirection);
             switch(whichRoom) {
                 case 0:
-                    layout[curX][curY] = EMPTY_ROOM;
+                    layout[curY][curX] = EMPTY_ROOM;
                     break;
                 case 1:
-                    layout[curX][curY] = DEEP_WATER;
+                    layout[curY][curX] = DEEP_WATER;
                     break;
                 case 2:
-                    layout[curX][curY] = TOXIC_WATER;
+                    layout[curY][curX] = TOXIC_WATER;
                     break;
                 default:
-                    layout[curX][curY] = UNDERWATER_CAVE;
+                    layout[curY][curX] = UNDERWATER_CAVE;
                     break;
             }
 

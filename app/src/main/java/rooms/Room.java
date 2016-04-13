@@ -127,13 +127,13 @@ public class Room {
     }
 
     //Room with 2 vertical exits (top and bottom)
-    public void twoWayVertical() {
+    public void twoWayHorizontal() {
         tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
         tileLayout[tileLayout.length/2][tileLayout.length - 1] = 1; tileLayout[(tileLayout.length/2) - 1][tileLayout.length - 1] = 1;
     }
 
     //Room with 2 horizontal exits (top and bottom)
-    public void twoWayHorizontal() {
+    public void twoWayVertical() {
         tileLayout[0][tileLayout.length/2] = 1; tileLayout[0][(tileLayout.length/2) - 1] = 1; //Top row
         tileLayout[tileLayout.length-1][5] = 1; tileLayout[tileLayout.length-1][6] = 1; //Bottom row
     }
@@ -174,12 +174,12 @@ public class Room {
 
     //One exit - East
     public void east() {
-        tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
+        tileLayout[tileLayout.length/2][tileLayout.length - 1] = 1; tileLayout[(tileLayout.length/2) - 1][tileLayout.length - 1] = 1; //Right wall
     }
 
     //One exit - West
     public void west() {
-        tileLayout[tileLayout.length-1][5] = 1; tileLayout[tileLayout.length-1][6] = 1; //Bottom row
+        tileLayout[tileLayout.length/2][0] = 1; tileLayout[(tileLayout.length/2) - 1][0] = 1; //Left wall
     }
 
     //Three exits - North, East, South
