@@ -89,7 +89,7 @@ public class Mob {
     public boolean collision(int xa, int ya, Room room) {
         try {
             if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] == 0) return true;
-            else if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] > 4) return true;
+            else if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] > 4 && room.getTileLayout()[(y/24)+ya][(x/24)+xa] != 9) return true;
             else return false;
         } catch (Exception e) {
             return false;
