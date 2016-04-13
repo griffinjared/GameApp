@@ -44,6 +44,14 @@ public class Game extends Activity {
         setContentView(new Graphics(this));
     }
 
+    @Override
+    public void onBackPressed() {
+        // TODO: code for back button
+
+        super.onBackPressed(); //default behavior, remove if changed
+        return;
+    }
+
     /*
     public static String map;
     boolean firstTimeCreate = true;

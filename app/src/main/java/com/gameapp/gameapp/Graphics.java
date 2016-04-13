@@ -61,6 +61,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint; //for drawing graphics
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right;
     private Bitmap joystick;
+    private Bitmap attackGrid;
     private boolean isHolding;
     private boolean isSwiping;
     private Direction direction;
@@ -110,6 +111,9 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_left = Bitmap.createScaledBitmap(joy_left, joy, joy, true);
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
+
+        attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.attackgrid);
+        attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
 
         joystick = joy_center;
     }
@@ -377,7 +381,24 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
-        canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
+        //canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
+        canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
+
+        /*
+        paint.setColor(RED);
+        float[] linePts = {
+        (w/20) + (w * 4/9) + (w * 4/27), h - size, (w/20) + (w * 4/9) + (w * 4/27), h - size + (w * 4/9),
+        (w/20) + (w * 4/9) + (w * 8/27), h - size, (w/20) + (w * 4/9) + (w * 8/27), h - size + (w * 4/9),
+        (w/20) + (w * 4/9), h - size + (w * 4/27), (w/20) + (w * 4/9) + (w * 4/9), h - size + (w * 4/27),
+        (w/20) + (w * 4/9), h - size + (w * 8/27), (w/20) + (w * 4/9) + (w * 4/9), h - size + (w * 8/27)
+        };
+        // canvas.drawLine((w/20) + (w * 4/9) + (w * 4/27), h - size, (w/20) + (w * 4/9) + (w * 4/27), h - size + (w * 4/9), paint);
+        // canvas.drawLine((w/20) + (w * 4/9) + (w * 8/27), h - size, (w/20) + (w * 4/9) + (w * 8/27), h - size + (w * 4/9), paint);
+        canvas.drawLine(linePts[0], linePts[1], linePts[2], linePts[3], paint);
+        canvas.drawLine(linePts[4], linePts[5], linePts[6], linePts[7], paint);
+        canvas.drawLine(linePts[8], linePts[9], linePts[10], linePts[11], paint);
+        canvas.drawLine(linePts[12], linePts[13], linePts[14], linePts[15], paint);
+        */
     }
 
     public void pauseEquip()
