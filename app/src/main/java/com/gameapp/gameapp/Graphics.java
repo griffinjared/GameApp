@@ -112,8 +112,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
 
-        attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.attackgrid);
-        attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
+        //attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.attackgrid);
+        //attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
 
         joystick = joy_center;
     }
