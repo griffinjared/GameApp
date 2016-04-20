@@ -2,6 +2,7 @@ package com.gameapp.gameapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -32,85 +33,30 @@ import gameapp.framework.implementation.AndroidInput;
 public class Game extends Activity {
 
     private static final String TAG = gameapp.framework.Game.class.getSimpleName();
+    private Graphics graphics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        graphics = new Graphics(this);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(new Graphics(this));
+        setContentView(graphics);
     }
 
     @Override
     public void onBackPressed() {
-        // TODO: code for back button
-
-        super.onBackPressed(); //default behavior, remove if changed
+        graphics.pauseEquip();
+        //super.onBackPressed(); //default behavior, remove if changed
         return;
     }
 
-    /*
-    public static String map;
-    boolean firstTimeCreate = true;
-
-    @Override
-    public Screen getInitScreen() {
-
-        if (firstTimeCreate) {
-            Assets.load(this);
-            firstTimeCreate = false;
-        }
-
-        //InputStream is = getResources().openRawResource(R.raw.map1);
-        //map = convertStreamToString(is);
-
-        return new SplashLoadingScreen(this);
-
+    public void sendMessage() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed() {
-        getCurrentScreen().backButton();
-    }
-
-    private static String convertStreamToString(InputStream is) {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            Log.w("LOG", e.getMessage());
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                Log.w("LOG", e.getMessage());
-            }
-        }
-        return sb.toString();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Assets.theme.play();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Assets.theme.pause();
-
-    }
-    */
 }

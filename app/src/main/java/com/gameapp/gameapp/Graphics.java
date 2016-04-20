@@ -51,9 +51,11 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
         NONE
     }
+
     CombatDirection combatDirection = CombatDirection.NONE;
 
     //Primary Components
+    private Game context;
     private MainThread thread;
     private SeedGenerator seeder;
     private Level level; //one instant of the level can be used for all levels
@@ -72,33 +74,16 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
     public Graphics(Game context) {
         super(context);
+        this.context = context;
         getHolder().addCallback(this);
-
-        //create the game loop thread
-        thread = new MainThread(getHolder(), this);
-
-        //Game components
-        seeder = new SeedGenerator();
-        player = new Knight(3, 5, getContext());
-        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
-        maxSpeed = player.getBaseSpeed();
-        paint = new Paint();
-        isHolding = false;
-        isSwiping = false;
-        speed = 0;
-        direction = Direction.STOP;
-        combat = Combat.NONE;
-
-        setFocusable(true);
-
-        setBackgroundColor(Color.LTGRAY);
-
-        player.setLevelPosition(level.getRoomX(), level.getRoomY());
+        resetGame();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         int joy = getWidth() * 4 / 9;
+
+        System.gc();
 
         //Joystick images
         joy_center = BitmapFactory.decodeResource(getResources(), R.drawable.joystick);
@@ -145,29 +130,45 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         int size = (h - w - (w/15));
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-
-            isHolding = false;
-
-            //State Change
-            if (inBounds(event, 0, 0, 50, 50)) {
-                pauseEquip();
-                return true;
-            }
-            else if (inBounds(event, w-(w/40), 0, w - 50, 50)) {
-                pauseItem();
-                return true;
+            if (state == GameState.Item || state == GameState.Equip) {
+                if (inBounds(event, w / 4, h * 2/3- (h/16), w/2, h/10)) {
+                    Log.i(TAG, "going to menu");
+                    goToMenu();
+                    return true;
+                }
             }
 
-            isHolding = true;
+            else if (state == GameState.Running) {
+                if (inBounds(event, 0, 0, w, h - size)) {
+                    //Log.i(TAG, "upper half");
+                    isHolding = false;
 
-            //Combat
-            if (inBounds(event, (2*w/40) + (12*w/27), h - size, 12*w/27, 12*w/27)) {
-                combat(event);
-                return true;
+                    //State Change
+                    if (state == GameState.Running) {
+                        if (inBounds(event, 0, 0, w / 3, h / 16)) {
+                            Log.i(TAG, "pauseItem");
+                            pauseItem();
+                            return true;
+                        } else if (inBounds(event, w - (w * 3 / 8), 0, w / 3, h / 16)) {
+                            Log.i(TAG, "pauseEquip");
+                            pauseEquip();
+                            return true;
+                        }
+                    }
+                }
+                if (inBounds(event, 0, h - size, w, size)) {
+                    //Log.i(TAG, "bottom half");
+                    isHolding = true;
+
+                    //Combat
+                    if (inBounds(event, (2 * w / 40) + (12 * w / 27), h - size, 12 * w / 27, 12 * w / 27)) {
+                        combat(event);
+                        return true;
+                    }
+                }
+                //Tap movement
+                changeDirection(event);
             }
-
-            //Tap movement
-            changeDirection(event);
         }
 
         //Drag movement
@@ -326,9 +327,13 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(WHITE);
         paint.setTextSize(30);
         canvas.drawRect(0, 0, w, h, paint);
+        paint.setTextAlign(Paint.Align.CENTER);
 
         paint.setColor(BLACK);
-        canvas.drawText("Resume", 5, h/3, paint);
+        canvas.drawText("Press the back button to resume", w / 2, h/3, paint);
+        canvas.drawText("Press here to go back to the main menu", w / 2, h * 2/3, paint);
+
+        paint.setTextAlign(Paint.Align.LEFT);
     }
     private void drawGameOverUI(Canvas canvas)
     {
@@ -420,13 +425,37 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     {
         state = GameState.Running;
     }
+
     private void goToMenu()
     {
         //TODO reverts back to main menu
+        thread.setRunning(false);
+        System.gc();
+        context.sendMessage();
     }
+
     private void resetGame()
     {
-        //TODO sets all statistics to initial values
+        //create the game loop thread
+        thread = new MainThread(getHolder(), this);
+
+        //Game components
+        seeder = new SeedGenerator();
+        player = new Knight(3, 5, getContext());
+        level = new Level_1_Forest(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level1_forest));
+        maxSpeed = player.getBaseSpeed();
+        paint = new Paint();
+        isHolding = false;
+        isSwiping = false;
+        speed = 0;
+        direction = Direction.STOP;
+        combat = Combat.NONE;
+
+        setFocusable(true);
+
+        setBackgroundColor(Color.LTGRAY);
+
+        player.setLevelPosition(level.getRoomX(), level.getRoomY());
     }
 
     public Level nextLevel() {
