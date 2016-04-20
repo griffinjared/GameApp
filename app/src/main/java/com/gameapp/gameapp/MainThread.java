@@ -66,7 +66,6 @@ public class MainThread extends Thread{
                 canvas = this.surfaceHolder.lockCanvas(null);
                 synchronized (surfaceHolder) {
                     graphics.update();
-                    //graphics.updateRunning(touchEvents,0);
                     graphics.postInvalidate();
                 }
             } catch(Exception e) {}

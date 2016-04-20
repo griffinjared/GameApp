@@ -50,8 +50,7 @@ public class Game extends Activity {
 
     @Override
     public void onBackPressed() {
-        graphics.pauseEquip();
-        //super.onBackPressed(); //default behavior, remove if changed
+        graphics.pauseMain();
         return;
     }
 

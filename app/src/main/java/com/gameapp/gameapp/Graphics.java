@@ -42,7 +42,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Combat combat = Combat.NONE;
 
     enum GameState {
-        Running, Equip, Item, Over
+        Running, Equip, Item, Main, Over
     }
     GameState state = GameState.Running;
 
@@ -130,7 +130,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         int size = (h - w - (w/15));
 
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (state == GameState.Item || state == GameState.Equip) {
+            if (state == GameState.Main || state == GameState.Over) {
                 if (inBounds(event, w / 4, h * 2/3- (h/16), w/2, h/10)) {
                     Log.i(TAG, "going to menu");
                     goToMenu();
@@ -145,11 +145,11 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
                     //State Change
                     if (state == GameState.Running) {
-                        if (inBounds(event, 0, 0, w / 3, h / 16)) {
+                        if (inBounds(event, 0, 0, w / 3, h / 5)) {
                             Log.i(TAG, "pauseItem");
                             pauseItem();
                             return true;
-                        } else if (inBounds(event, w - (w * 3 / 8), 0, w / 3, h / 16)) {
+                        } else if (inBounds(event, w - (w * 3 / 8), 0, w / 3, h / 5)) {
                             Log.i(TAG, "pauseEquip");
                             pauseEquip();
                             return true;
@@ -266,6 +266,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         switch (state) {
             case Running: gameUpdate(); break;
+            case Main: break;
             case Equip: break;
             case Item: break;
             case Over: break;
@@ -302,6 +303,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         level.update(player.update());
+
+        if (player.getHP() == 0) state = GameState.Over;
     }
 
     private boolean inBounds(MotionEvent event, int x, int y, int width, int height) {
@@ -313,8 +316,9 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         switch (state) {
             case Running: drawMainUI(canvas); break;
-            case Equip: drawPausedUI(canvas); break;
-            case Item: drawPausedUI(canvas); break;
+            case Main: drawPausedUI(canvas); break;
+            case Equip: drawEquipUI(canvas); break;
+            case Item: drawInventoryUI(canvas); break;
             case Over: drawGameOverUI(canvas); break;
         }
     }
@@ -330,11 +334,44 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextAlign(Paint.Align.CENTER);
 
         paint.setColor(BLACK);
-        canvas.drawText("Press the back button to resume", w / 2, h/3, paint);
-        canvas.drawText("Press here to go back to the main menu", w / 2, h * 2/3, paint);
+        canvas.drawText("Back Button to Resume", w / 2, h / 3, paint);
+        canvas.drawText("Main Menu", w / 2, h * 2/3, paint);
 
         paint.setTextAlign(Paint.Align.LEFT);
     }
+
+    private void drawEquipUI(Canvas canvas) {
+        int w = getWidth();
+        int h = getHeight();
+
+        paint.setColor(WHITE);
+        paint.setTextSize(30);
+        canvas.drawRect(0, 0, w, h, paint);
+        paint.setTextAlign(Paint.Align.CENTER);
+
+        paint.setColor(BLACK);
+        canvas.drawText("Back Button to Resume", w / 2, h / 3, paint);
+        canvas.drawText("Equipment", w / 2, h * 2/3, paint);
+
+        paint.setTextAlign(Paint.Align.LEFT);
+    }
+
+    private void drawInventoryUI(Canvas canvas) {
+        int w = getWidth();
+        int h = getHeight();
+
+        paint.setColor(WHITE);
+        paint.setTextSize(30);
+        canvas.drawRect(0, 0, w, h, paint);
+        paint.setTextAlign(Paint.Align.CENTER);
+
+        paint.setColor(BLACK);
+        canvas.drawText("Back Button to Resume", w / 2, h / 3, paint);
+        canvas.drawText("Inventory", w / 2, h * 2/3, paint);
+
+        paint.setTextAlign(Paint.Align.LEFT);
+    }
+
     private void drawGameOverUI(Canvas canvas)
     {
         int w = getWidth();
@@ -343,11 +380,15 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(BLACK);
         paint.setTextSize(30);
         canvas.drawRect(0, 0, w, h, paint);
+        paint.setTextAlign(Paint.Align.CENTER);
 
         paint.setColor(WHITE);
-        canvas.drawText("Game Over", 5, h / 3 - (paint.getTextSize() * 2), paint);
-        canvas.drawText("Main Menu", 5, h/3, paint);
+        canvas.drawText("Game Over", w / 2, h / 3, paint);
+        canvas.drawText("Main Menu", w / 2, h * 2/3, paint);
+
+        paint.setTextAlign(Paint.Align.LEFT);
     }
+
     private void drawMainUI(Canvas canvas) {
         /** What happens right here is the scaling process so that the game is always scaled adequately to the screen size
          *  The standard size of a room is 288 pixels (12 tiles * 24 pixels each)
@@ -419,6 +460,14 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             state = GameState.Item;
         }
         else resume();
+    }
+
+    public void pauseMain() {
+        if (state == GameState.Running) {
+            state = GameState.Main;
+        }
+        else if (state != GameState.Over) resume();
+        else goToMenu();
     }
 
     public void resume()
