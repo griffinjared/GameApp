@@ -40,7 +40,7 @@ public abstract class Equipment {
 
     public void setSprite(Bitmap sprite, int x, int y) {
         System.gc();
-        Bitmap spriteSheet = Bitmap.createScaledBitmap(sprite, 96, 144, true);
+        Bitmap spriteSheet = Bitmap.createScaledBitmap(sprite, 96, 96, true);
 
         this.sprite = Bitmap.createBitmap(spriteSheet, x*SIZE, y*SIZE, SIZE, SIZE);
     }

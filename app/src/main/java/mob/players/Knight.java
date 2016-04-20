@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 
 import com.gameapp.gameapp.R;
 
+import equipment.spell.Fireball;
+
 /**
  * Created by Andrew on 3/23/2016.
  */
@@ -19,10 +21,12 @@ public class Knight extends Player {
         setSprites(sprites);
 
         hp = maxHP = 15;
-        mp = maxMP = 5;
+        mp = maxMP = 10;
         speed = baseSpeed = 12;
         pwr = 2;
         mag = 1;
+
+        spell = new Fireball(-1, -1, context);
     }
 
 }

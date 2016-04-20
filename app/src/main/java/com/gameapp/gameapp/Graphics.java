@@ -46,14 +46,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     }
     GameState state = GameState.Running;
 
-    public enum CombatDirection {
-        NORTH, EAST, SOUTH, WEST,
-        NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-        NONE
-    }
-
-    CombatDirection combatDirection = CombatDirection.NONE;
-
     //Primary Components
     private Game context;
     private MainThread thread;
@@ -97,8 +89,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
 
-        //attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.attackgrid);
-        //attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
+        attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.directional_pad);
+        attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
 
         joystick = joy_center;
     }
@@ -181,7 +173,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             joystick = joy_center;
             isSwiping = false;
             combat = Combat.NONE;
-            combatDirection = CombatDirection.NONE;
             speed = 0;
         }
         return true;
@@ -198,37 +189,36 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         //NorthWest corner
         if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.NORTHWEST;
+            player.magic(8);
         }
         //North corner
         else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.NORTH;
+            player.magic(1);
         }
         //NorthEast corner
         else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.NORTHEAST;
+            player.magic(2);
         }
         //West corner
         else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.WEST;
+            player.magic(7);
         }
         //East corner
         else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.EAST;
+            player.magic(3);
         }
         //SouthWest corner
         else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.SOUTHWEST;
+            player.magic(6);
         }
         //South corner
         else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.SOUTH;
+            player.magic(5);
         }
         //SouthEast corner
         else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-            combatDirection = CombatDirection.SOUTHEAST;
+            player.magic(4);
         }
-        Log.i(TAG, "Combat Start: " + combatDirection);
     }
 
     public void changeDirection(MotionEvent event) {
@@ -302,7 +292,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             speed = speed % maxSpeed;
         }
 
-        level.update(player.update());
+        level.update(player.update(level.getCurrentRoom()));
 
         if (player.getHP() == 0) state = GameState.Over;
     }
@@ -311,6 +301,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         return (event.getX() > x && event.getX() < x + width - 1 && event.getY() > y && event.getY() < y + height - 1);
     }
 
+    //DRAWING UI and GAME GRAPHICS
     @Override
     public void onDraw(Canvas canvas) {
 
@@ -421,14 +412,17 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("Item", 5, w / 18, paint);
         canvas.drawText("Equip", w - (paint.getTextSize() * 6), w / 18, paint);
 
-        paint.setColor(BLACK);
+        if (player.getHP() < 5) paint.setColor(RED);
+        else paint.setColor(BLACK);
         canvas.drawText("HP: " + player.getHP() + "/" + player.getMaxHP(), 5, w + paint.getTextSize(), paint); //HP
+        paint.setColor(BLACK);
+
         canvas.drawText("MP: " + player.getMP() + "/" + player.getMaxMP(), w - (5 * paint.getTextSize()), w + paint.getTextSize(), paint); //MP
 
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         //canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
-        //canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
+        canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
 
         /*
         paint.setColor(RED);
@@ -447,6 +441,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         */
     }
 
+    //VARIOUS PAUSED SCREENS and GAMEOVER states
     public void pauseEquip()
     {
         if(state == GameState.Running)

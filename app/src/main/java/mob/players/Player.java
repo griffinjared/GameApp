@@ -1,13 +1,18 @@
 package mob.players;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 import java.util.ArrayList;
 
+import equipment.spell.Spell;
 import mob.Enemy;
 import mob.Mob;
 import rooms.Room;
 
 /** The real purpose of the Player class is to provide a sprite and controls
  */
+
 public class Player extends Mob {
 
     /** 1 2 3
@@ -16,12 +21,16 @@ public class Player extends Mob {
      */
 
     private int roomX, roomY; //coordinates in the level layout grid
+    protected Spell spell;
 
     public Player(int x, int y) {
         super(x, y);
     }
 
-    public int update() {
+    public int update(Room room) {
+        spell.update();
+        spellCollision(room);
+
         if (x <= -SIZE) { //West
             x = (SIZE*12) - SIZE;
             return 4;
@@ -59,13 +68,43 @@ public class Player extends Mob {
         }
     }
 
+    public void spellCollision(Room room) {
+        ArrayList<Enemy> enemies = room.getEnemies();
+
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+
+            if (spell.getX() == e.getX() && spell.getY() == e.getY()) {
+                spell.attack(e);
+            }
+        }
+    }
+
     public void attack(int xa, int ya, Enemy e) {
         e.setHP(-pwr);
+        attackSprites(xa, ya);
+    }
 
+    public void attackSprites(int xa, int ya) {
         if (ya == -1) sprite = atk_up;
         else if (ya == 1) sprite = atk_down;
         else if (xa == -1) sprite = atk_right;
         else if (xa == 1) sprite = atk_left;
+    }
+
+    public void magicAttackSprites() {
+        if (sprite == up) sprite = atk_up;
+        else if (sprite == down) sprite = atk_down;
+        else if (sprite == right) sprite = atk_right;
+        else if (sprite == left) sprite = atk_left;
+    }
+
+    public void magic(int direction) {
+        if (mp < spell.getCost() || spell.isCasting()) return;
+
+        spell.cast(x, y, direction);
+        setMP(-spell.getCost());
+        magicAttackSprites();
     }
 
     //Movement
@@ -79,5 +118,11 @@ public class Player extends Mob {
     public void setY(int num, Room room) {
         super.setY(num, room);
         enemyCollision(0, num, room);
+    }
+
+    @Override
+    public void draw(Canvas c, Paint p) {
+        super.draw(c, p);
+        spell.draw(c, p);
     }
 }
