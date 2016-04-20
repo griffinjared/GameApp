@@ -66,6 +66,7 @@ public class Room {
     public void update() {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update(this);
+            if (enemies.get(i).getHP() == 0) enemies.remove(i);
         }
     }
 
