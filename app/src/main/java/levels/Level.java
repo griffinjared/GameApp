@@ -65,6 +65,7 @@ public class Level{
 
     //Reusable tiles will have their sprites changed per level
     public void changeTilesSprites(Bitmap sprites) {
+        System.gc();
         Bitmap spriteSheet = Bitmap.createScaledBitmap(sprites, 96, 144, true);
 
         int size = Tile.SIZE;

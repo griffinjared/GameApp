@@ -20,6 +20,7 @@ public class Fouling extends Enemy {
     public Fouling(int x, int y, Context context, Player player) {
         super(x, y, player);
 
+        System.gc();
         Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.forest_enemy_fouling);
         setSprites(sprites);
 

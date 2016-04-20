@@ -27,6 +27,7 @@ public class Item {
     }
 
     public void setSprite(Bitmap sprite, int x, int y) {
+        System.gc();
         Bitmap spriteSheet = Bitmap.createScaledBitmap(sprite, 96, 144, true);
 
         this.sprite = Bitmap.createBitmap(spriteSheet, x*SIZE, y*SIZE, SIZE, SIZE);

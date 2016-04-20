@@ -14,6 +14,7 @@ public class Knight extends Player {
     public Knight(int x, int y, Context context) {
         super(x, y);
 
+        System.gc();
         Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.knight_sprites);
         setSprites(sprites);
 

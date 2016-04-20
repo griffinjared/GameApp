@@ -15,6 +15,7 @@ public class Sword extends Weapon {
         forwardRange = 1.5f;
         sideRange = 0f;
 
+        System.gc();
         setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.weapons), 0, 0);
     }
 

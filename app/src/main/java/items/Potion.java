@@ -15,6 +15,7 @@ public class Potion extends Item {
 
         name = "Potion";
 
+        System.gc();
         setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.items), 0, 0);
     }
 

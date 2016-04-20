@@ -22,6 +22,7 @@ public class Chest {
         this.x = x;
         this.y = y;
         this.context = context;
+        System.gc();
     }
 
     public void setSprite(Bitmap sprite, int num) {

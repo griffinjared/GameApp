@@ -18,6 +18,7 @@ public class Magic_Arrow extends Spell {
         forwardRange = 5;
         sideRange = 0;
 
+        System.gc();
         setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.spells), 0, 0);
     }
 
