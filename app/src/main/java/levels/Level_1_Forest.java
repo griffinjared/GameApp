@@ -15,8 +15,8 @@ import rooms.stage1_forest.River_Room;
 
 public class Level_1_Forest extends Level {
 
-    private final int SPAWN_X = 2;
-    private final int SPAWN_Y = 2;
+    private final int SPAWN_X = 3;
+    private final int SPAWN_Y = 3;
 
     public Level_1_Forest(Context context, Player player, Bitmap spriteSheet) {
         super(context);

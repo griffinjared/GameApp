@@ -43,10 +43,15 @@ public class Sapling extends Enemy {
     public void update(Room room) {
         long currentTime = System.currentTimeMillis();
 
+        if (Math.abs(currentTime - timer) > 1000 && Math.abs(currentTime - timer) < 1500) {
+            sprite = down;
+        }
+
         if (Math.abs(currentTime - timer) > 5000) {
             timer = currentTime;
 
             magic = new eMagArrow(getX(), getY(), context, player, mag);
+            sprite = atk_down;
         }
 
         magic.update();
