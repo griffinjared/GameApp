@@ -382,7 +382,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         //canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
-        canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
+        //canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
 
         /*
         paint.setColor(RED);

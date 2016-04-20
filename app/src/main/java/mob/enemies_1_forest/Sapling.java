@@ -28,6 +28,7 @@ public class Sapling extends Enemy {
         super(x, y, player);
         this.context = context;
 
+        magic = new eSpell(x, y, context, player, mag);
         Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.forest_enemy_sapling);
         setSprites(sprites);
 
@@ -42,15 +43,15 @@ public class Sapling extends Enemy {
     public void update(Room room) {
         long currentTime = System.currentTimeMillis();
 
-        if (Math.abs(currentTime - timer) > 2500) {
+        //if (magic.isFinished()) magic = new eSpell(x, y, context, player, mag);
+
+        if (Math.abs(currentTime - timer) > 5000) {
             timer = currentTime;
 
-            magic = new eMagArrow(x/24, y/24, context, player, mag);
+            magic = new eMagArrow(getX(), getY(), context, player, mag);
         }
 
-        if (magic != null) {
-            magic.update();
-        }
+        magic.update();
     }
 
     public void draw(Canvas c, Paint p) {

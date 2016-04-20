@@ -1,6 +1,8 @@
 package equipment.enemySpells;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import equipment.Equipment;
 import mob.Mob;
@@ -12,11 +14,12 @@ public class eSpell extends Equipment {
 
     protected Mob mob;
 
-    protected int x, y;
+    protected int spd;
     protected int damage;
     protected int cost;
     protected int forwardRange;
     protected int sideRange;
+    protected boolean hit = false;
 
     public eSpell(int x, int y, Context context, Mob mob, int mag) {
         super(x, y, context);
@@ -26,27 +29,20 @@ public class eSpell extends Equipment {
     }
 
     public void update() {
-        if (x < mob.getX()) {
-            x++;
-        }
-        else if (x > mob.getY()) {
-            x--;
-        }
 
-        if (y < mob.getY()) {
-            y++;
-        }
-        else if (y > mob.getY()) {
-            y--;
-        }
+    }
 
-        if (Math.abs(x - mob.getX()) <= 12 && Math.abs(y - mob.getY()) <= 12) {
-            damage();
-        }
+    public void draw(Canvas c, Paint p) {
+
     }
 
     public void damage() {
         mob.setHP(-damage);
+        hit = true;
+    }
+
+    public boolean isFinished() {
+        return hit;
     }
 
 }
