@@ -1,6 +1,10 @@
 package mob.players;
 
+import java.util.ArrayList;
+
+import mob.Enemy;
 import mob.Mob;
+import rooms.Room;
 
 /** The real purpose of the Player class is to provide a sprite and controls
  */
@@ -43,4 +47,37 @@ public class Player extends Mob {
         roomY = y;
     }
 
+    public void enemyCollision(int xa, int ya, Room room) {
+        //Detect enemies
+        ArrayList<Enemy> enemies = room.getEnemies();
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+
+            if (e.getX() - xa == getX() && e.getY() - ya == getY()) {
+                attack(xa, ya, e);
+            }
+        }
+    }
+
+    public void attack(int xa, int ya, Enemy e) {
+        e.setHP(-pwr);
+
+        if (ya == -1) sprite = atk_up;
+        else if (ya == 1) sprite = atk_down;
+        else if (xa == -1) sprite = atk_right;
+        else if (xa == 1) sprite = atk_left;
+    }
+
+    //Movement
+    @Override
+    public void setX(int num, Room room) {
+        super.setX(num, room);
+        enemyCollision(num, 0, room);
+    }
+
+    @Override
+    public void setY(int num, Room room) {
+        super.setY(num, room);
+        enemyCollision(0, num, room);
+    }
 }

@@ -33,6 +33,7 @@ public class Mob {
     //Statistics
     protected int maxHP, maxMP, baseSpeed;
     protected int hp, mp, level, speed;
+    protected int pwr, mag;
 
     public Mob(int x, int y) {
         this.x = x*SIZE;
@@ -136,6 +137,8 @@ public class Mob {
         hp += num;
         if (hp > maxHP) hp = maxHP;
         if (hp < 0) hp = 0;
+
+        if (num < 0) sprite = hit;
     }
 
     public int getMP() {

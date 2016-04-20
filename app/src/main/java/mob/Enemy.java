@@ -13,7 +13,6 @@ import rooms.Room;
  */
 public class Enemy extends Mob {
 
-    protected int pwr, mag;
     protected long timer = 0;
     protected Player player;
 

@@ -20,6 +20,8 @@ public class Knight extends Player {
         hp = maxHP = 15;
         mp = maxMP = 5;
         speed = baseSpeed = 12;
+        pwr = 2;
+        mag = 1;
     }
 
 }
