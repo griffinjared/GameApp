@@ -2,6 +2,7 @@ package rooms.stage1_forest;
 
 import android.content.Context;
 
+import mob.enemies_1_forest.Sapling;
 import rooms.Room;
 
 public class River_Room extends Room {
@@ -26,6 +27,7 @@ public class River_Room extends Room {
         };
 
         defineDoorLayout(doorLayout);
+        enemies.add(new Sapling(7, 9, context, player));
     }
 
 }

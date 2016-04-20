@@ -2,9 +2,7 @@ package rooms.common_rooms;
 
 import android.content.Context;
 
-import assets.chests.Weapon_Chest;
 import mob.enemies_1_forest.Fouling;
-import mob.enemies_1_forest.Sapling;
 import mob.players.Player;
 import rooms.Room;
 
@@ -32,6 +30,6 @@ public class Empty_Room extends Room {
         defineDoorLayout(doorLayout);
 
         enemies.add(new Fouling(5, 5, context, player));
-        enemies.add(new Sapling(7, 7, context, player));
+        enemies.add(new Fouling(7, 7, context, player));
     }
 }
