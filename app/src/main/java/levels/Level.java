@@ -97,6 +97,8 @@ public class Level{
             currentRoom = changeRoom(roomX, roomY);
         }
 
+
+
         currentRoom.update();
     }
 

@@ -30,7 +30,6 @@ public class eMagArrow extends eSpell {
 
         //Set direction
 
-
         //UP and RIGHT
         if (mob.getX() > getX() && mob.getY() < getY()) direction = 2;
 
@@ -74,7 +73,7 @@ public class eMagArrow extends eSpell {
     }
 
     public void draw(Canvas c, Paint p) {
-        c.drawBitmap(sprite, x, y, p);
+        if (!hit) c.drawBitmap(sprite, x, y, p);
     }
 
 }

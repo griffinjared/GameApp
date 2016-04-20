@@ -15,8 +15,8 @@ import rooms.stage1_forest.River_Room;
 
 public class Level_1_Forest extends Level {
 
-    private final int SPAWN_X = 3;
-    private final int SPAWN_Y = 3;
+    private final int SPAWN_X = 2;
+    private final int SPAWN_Y = 2;
 
     public Level_1_Forest(Context context, Player player, Bitmap spriteSheet) {
         super(context);
@@ -30,8 +30,8 @@ public class Level_1_Forest extends Level {
                 switch(levelLayout[y][x]) {
                     case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
-                    case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
-                    case 'R': rooms.add(new River_Room(context, configureDoors(x, y))); break;
+                    case 'X': rooms.add(new Exit_Room(context, player, configureDoors(x, y))); break;
+                    case 'R': rooms.add(new River_Room(context, player, configureDoors(x, y))); break;
                     case 'D': rooms.add(new Deforested_Room(context, configureDoors(x, y))); break;
                     default: rooms.add(new Room(context)); break;
                 }

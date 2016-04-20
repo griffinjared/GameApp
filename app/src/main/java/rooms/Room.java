@@ -18,7 +18,7 @@ import mob.players.Player;
 public class Room {
 
     protected int[][] tileLayout = new int[12][12];
-    protected ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    protected ArrayList<Enemy> enemies;
     protected Player player;
     protected String name;
 
@@ -43,6 +43,7 @@ public class Room {
 
     public Room(Context context) {
         this.context = context;
+        enemies = new ArrayList<Enemy>();
 
         //map tileLayout formation here.
         /** Layout numbering key:

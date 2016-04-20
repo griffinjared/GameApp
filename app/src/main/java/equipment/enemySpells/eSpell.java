@@ -41,8 +41,4 @@ public class eSpell extends Equipment {
         hit = true;
     }
 
-    public boolean isFinished() {
-        return hit;
-    }
-
 }

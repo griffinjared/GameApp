@@ -415,6 +415,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         }
         else resume();
     }
+
     public void resume()
     {
         state = GameState.Running;

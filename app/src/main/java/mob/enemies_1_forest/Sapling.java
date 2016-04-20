@@ -43,8 +43,6 @@ public class Sapling extends Enemy {
     public void update(Room room) {
         long currentTime = System.currentTimeMillis();
 
-        //if (magic.isFinished()) magic = new eSpell(x, y, context, player, mag);
-
         if (Math.abs(currentTime - timer) > 5000) {
             timer = currentTime;
 
@@ -54,6 +52,7 @@ public class Sapling extends Enemy {
         magic.update();
     }
 
+    @Override
     public void draw(Canvas c, Paint p) {
         c.drawBitmap(sprite, x, y, p);
 
