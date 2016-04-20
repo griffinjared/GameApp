@@ -50,7 +50,10 @@ public class Sapling extends Enemy {
         if (Math.abs(currentTime - timer) > 5000) {
             timer = currentTime;
 
+            if (mp == 0) return;
+
             magic = new eMagArrow(getX(), getY(), context, player, mag);
+            setMP(-1);
             sprite = atk_down;
         }
 
