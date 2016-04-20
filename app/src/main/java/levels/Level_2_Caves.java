@@ -43,8 +43,8 @@ public class Level_2_Caves extends Level {
                     case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y), levelName)); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y), levelName)); break;
                     case 'X': rooms.add(new Exit_Room(context, player, configureDoors(x, y), levelName)); break;
-                    case 'O': rooms.add(new Sea_Cave(context, configureDoors(x, y))); break;
-                    case 'L': rooms.add(new Lava_Cave(context, configureDoors(x, y))); break;
+                    case 'O': rooms.add(new Sea_Cave(context, player, configureDoors(x, y))); break;
+                    case 'L': rooms.add(new Lava_Cave(context, player, configureDoors(x, y))); break;
                     case 'T': rooms.add(new Talis_Cave(context, configureDoors(x, y))); break;
                     default: rooms.add(new Room(context)); break;
                 }

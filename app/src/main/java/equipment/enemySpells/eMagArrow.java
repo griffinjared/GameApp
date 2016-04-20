@@ -17,14 +17,12 @@ public class eMagArrow extends eSpell {
     private int direction = 1;
 
     public eMagArrow(int x, int y, Context context, Mob mob, int mag) {
-        super(x, y, context, mob, mag);
+        super(x, y, context, mob);
 
         name = "Magic Arrow";
-        damage = 1;
+        damage = 1 * mag;
         cost = 1;
         spd = 3;
-        forwardRange = 5;
-        sideRange = 0;
 
         setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.spells), 0, 0);
 
@@ -55,6 +53,7 @@ public class eMagArrow extends eSpell {
         else if (mob.getX() < getX() && mob.getY() == getY()) direction = 7;
     }
 
+    @Override
     public void update() {
         switch(direction) {
             case 1: y--; break;
@@ -70,10 +69,6 @@ public class eMagArrow extends eSpell {
         if (Math.abs(getX() - mob.getX()) <= 0 && Math.abs(getY() - mob.getY()) <= 0) {
             if (!hit) damage();
         }
-    }
-
-    public void draw(Canvas c, Paint p) {
-        if (!hit) c.drawBitmap(sprite, x, y, p);
     }
 
 }

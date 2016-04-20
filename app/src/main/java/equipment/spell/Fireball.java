@@ -12,7 +12,7 @@ public class Fireball extends Spell {
     public Fireball(int x, int y, Context context) {
         super(x, y, context);
 
-        name = "Magic Arrow";
+        name = "Fireball";
         damage = 1;
         cost = 1;
         forwardRange = 5;

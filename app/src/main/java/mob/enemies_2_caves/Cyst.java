@@ -1,4 +1,4 @@
-package mob.enemies_1_forest;
+package mob.enemies_2_caves;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,7 @@ import com.gameapp.gameapp.R;
 import java.lang.Override;
 
 import equipment.enemySpells.eMagArrow;
+import equipment.enemySpells.eMagmaRock;
 import equipment.enemySpells.eSpell;
 import mob.Enemy;
 import mob.players.Player;
@@ -19,21 +20,24 @@ import rooms.Room;
 /**
  * Created by Andrew on 3/23/2016.
  */
-public class Sapling extends Enemy {
+public class Cyst extends Enemy {
 
-    private eSpell magic;
+    private eSpell magic1, magic2, magic3, magic4;
     private Context context;
 
-    public Sapling(int x, int y, Context context, Player player) {
+    public Cyst(int x, int y, Context context, Player player) {
         super(x, y, player);
         this.context = context;
 
-        magic = new eSpell(x, y, context, player);
-        Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.forest_enemy_sapling);
+        magic1 = new eSpell(x, y, context, player);
+        magic2 = new eSpell(x, y, context, player);
+        magic3 = new eSpell(x, y, context, player);
+        magic4 = new eSpell(x, y, context, player);
+        Bitmap sprites = BitmapFactory.decodeResource(context.getResources(), R.drawable.caves_enemy_cyst);
         setSprites(sprites);
 
-        hp = maxHP = 2;
-        mp = maxMP = 5;
+        hp = maxHP = 3;
+        mp = maxMP = 4;
         speed = baseSpeed = 0;
         pwr = 0;
         mag = 1;
@@ -52,20 +56,29 @@ public class Sapling extends Enemy {
 
             if (mp == 0) return;
 
-            magic = new eMagArrow(getX(), getY(), context, player, mag);
+            magic1 = new eMagmaRock(getX(), getY(), context, player, mag, 2);
+            magic2 = new eMagmaRock(getX(), getY(), context, player, mag, 4);
+            magic3 = new eMagmaRock(getX(), getY(), context, player, mag, 6);
+            magic4 = new eMagmaRock(getX(), getY(), context, player, mag, 8);
+
             setMP(-1);
             sprite = atk_down;
         }
 
-        magic.update();
+        magic1.update(); magic2.update(); magic3.update(); magic4.update();
+
     }
 
     @Override
     public void draw(Canvas c, Paint p) {
         c.drawBitmap(sprite, x, y, p);
 
-        if (magic != null) {
-            magic.draw(c, p);
+        if (magic1 != null) {
+            magic1.draw(c, p);
+            magic2.draw(c, p);
+            magic3.draw(c, p);
+            magic4.draw(c, p);
         }
+
     }
 }

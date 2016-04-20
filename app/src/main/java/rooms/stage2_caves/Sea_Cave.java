@@ -2,11 +2,14 @@ package rooms.stage2_caves;
 
 import android.content.Context;
 
+import mob.enemies_2_caves.Cyst;
+import mob.enemies_2_caves.Troll;
+import mob.players.Player;
 import rooms.Room;
 
 public class Sea_Cave extends Room {
 
-    public Sea_Cave(Context context, int doorLayout) {
+    public Sea_Cave(Context context, Player player, int doorLayout) {
         super(context);
         name = "Sea_Cave";
 
@@ -26,6 +29,9 @@ public class Sea_Cave extends Room {
         };
 
         defineDoorLayout(doorLayout);
+
+        enemies.add(new Cyst(6, 8, context, player));
+        enemies.add(new Troll(7, 5, context, player));
     }
 
 }

@@ -2,11 +2,13 @@ package rooms.stage2_caves;
 
 import android.content.Context;
 
+import mob.enemies_2_caves.Cyst;
+import mob.players.Player;
 import rooms.Room;
 
 public class Lava_Cave extends Room {
 
-    public Lava_Cave(Context context, int doorLayout) {
+    public Lava_Cave(Context context, Player player, int doorLayout) {
         super(context);
         name = "Lava_Cave";
 
@@ -26,6 +28,9 @@ public class Lava_Cave extends Room {
         };
 
         defineDoorLayout(doorLayout);
+
+        enemies.add(new Cyst(3, 3, context, player));
+        enemies.add(new Cyst(7, 9, context, player));
     }
 
 }

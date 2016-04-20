@@ -9,12 +9,9 @@ import rooms.Room;
 
 public class Exit_Room extends Room {
 
-    private String level;
-
     public Exit_Room(Context context, Player player, int doorLayout, String level) {
         super(context);
         name = "Exit_Room";
-        this.level = level;
 
         /** The Exit Room contains the tile that leads to the next area upon being touched
          *  The player should be prompted to continue before going to the next level
