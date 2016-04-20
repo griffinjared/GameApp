@@ -81,8 +81,13 @@ public class Room {
     public int[][] getTileLayout() {
         return tileLayout;
     }
+
     public ArrayList<Chest> getTreasures() {
         return treasure;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
     //DOORWAY LAYOUTS

@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import com.gameapp.gameapp.Graphics;
 import com.gameapp.gameapp.R;
 
+import java.util.ArrayList;
+
 import levels.Level;
 import levels.Level_2_Caves;
 import rooms.Room;
@@ -87,10 +89,20 @@ public class Mob {
     }
 
     public boolean collision(int xa, int ya, Room room) {
+        //Detect enemies
+        ArrayList<Enemy> enemies = room.getEnemies();
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+
+            if (e.getX() - xa == getX() && e.getY() - ya == getY()) return true;
+        }
+
+        //Detect outer walls and solid tiles
         try {
             if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] == 0) return true;
             else if (room.getTileLayout()[(y/24)+ya][(x/24)+xa] > 4 && room.getTileLayout()[(y/24)+ya][(x/24)+xa] != 9) return true;
             else return false;
+
         } catch (Exception e) {
             return false;
         }
