@@ -65,6 +65,20 @@ public class Enemy extends Mob {
         }
     }
 
+    public void chaserMovement(Room room) {
+        if (attack()) {
+            attackSprite();
+            return;
+        }
+
+        //Follow Player
+        if (player.getX() < getX()) setX(-1, room);
+        else if (player.getX() > getX()) setX(1, room);
+
+        if (player.getY() < getY()) setY(-1, room);
+        else if (player.getY() > getY()) setY(1, room);
+    }
+
     public boolean attack() {
         if (Math.abs(player.getX() - getX()) <= 1 && Math.abs(player.getY() - getY()) <= 1) {
             player.setHP(-pwr);

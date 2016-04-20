@@ -38,9 +38,9 @@ public class Level_4_Volcano extends Level {
         for (int y = 0; y < levelLayout.length; y++) {
             for (int x = 0; x < levelLayout[y].length; x++) {
                 switch(levelLayout[y][x]) {
-                    case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
-                    case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
-                    case 'X': rooms.add(new Exit_Room(context, player, configureDoors(x, y))); break;
+                    case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y), levelName)); break;
+                    case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y), levelName)); break;
+                    case 'X': rooms.add(new Exit_Room(context, player, configureDoors(x, y), levelName)); break;
                     case 'P': rooms.add(new Lava_Pool(context, configureDoors(x, y))); break;
                     case 'C': rooms.add(new Chamber(context, configureDoors(x, y))); break;
                     case 'R': rooms.add(new Lava_River(context, configureDoors(x, y))); break;
