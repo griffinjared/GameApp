@@ -112,8 +112,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         joy_right = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_right);
         joy_right = Bitmap.createScaledBitmap(joy_right, joy, joy, true);
 
-        attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.attackgrid);
-        attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
+        //attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.attackgrid);
+        //attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
 
         joystick = joy_center;
     }
@@ -382,7 +382,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
         //canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
-        canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
+        //canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
 
         /*
         paint.setColor(RED);
@@ -415,6 +415,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         }
         else resume();
     }
+
     public void resume()
     {
         state = GameState.Running;

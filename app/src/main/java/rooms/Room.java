@@ -18,7 +18,7 @@ import mob.players.Player;
 public class Room {
 
     protected int[][] tileLayout = new int[12][12];
-    protected ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    protected ArrayList<Enemy> enemies;
     protected Player player;
     protected String name;
 
@@ -43,6 +43,7 @@ public class Room {
 
     public Room(Context context) {
         this.context = context;
+        enemies = new ArrayList<Enemy>();
 
         //map tileLayout formation here.
         /** Layout numbering key:
@@ -65,6 +66,7 @@ public class Room {
     public void update() {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update(this);
+            if (enemies.get(i).getHP() == 0) enemies.remove(i);
         }
     }
 
@@ -80,8 +82,13 @@ public class Room {
     public int[][] getTileLayout() {
         return tileLayout;
     }
+
     public ArrayList<Chest> getTreasures() {
         return treasure;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
     //DOORWAY LAYOUTS

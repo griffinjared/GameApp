@@ -2,11 +2,13 @@ package rooms.stage1_forest;
 
 import android.content.Context;
 
+import mob.enemies_1_forest.Sapling;
+import mob.players.Player;
 import rooms.Room;
 
 public class River_Room extends Room {
 
-    public River_Room(Context context, int doorLayout) {
+    public River_Room(Context context, Player player, int doorLayout) {
         super(context);
         name = "River_Room";
 
@@ -26,6 +28,8 @@ public class River_Room extends Room {
         };
 
         defineDoorLayout(doorLayout);
+
+        enemies.add(new Sapling(5, 9, context, player));
     }
 
 }

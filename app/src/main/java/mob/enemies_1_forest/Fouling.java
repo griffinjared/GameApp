@@ -3,8 +3,6 @@ package mob.enemies_1_forest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import com.gameapp.gameapp.R;
 
@@ -36,7 +34,14 @@ public class Fouling extends Enemy {
     public void update(Room room) {
         long currentTime = System.currentTimeMillis();
 
-        if (Math.abs(currentTime - timer) > 1000) {
+        if (Math.abs(currentTime - timer) > 500 && Math.abs(currentTime - timer) < 600) {
+            if (sprite == atk_down) sprite = down;
+            else if (sprite == atk_up) sprite = up;
+            else if (sprite == atk_left) sprite = left;
+            else if (sprite == atk_right) sprite = right;
+        }
+
+        if (Math.abs(currentTime - timer) > 2500) {
             timer = currentTime;
 
             randomMovement(room);

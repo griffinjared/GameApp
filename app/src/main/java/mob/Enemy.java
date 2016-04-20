@@ -13,7 +13,6 @@ import rooms.Room;
  */
 public class Enemy extends Mob {
 
-    protected int pwr, mag;
     protected long timer = 0;
     protected Player player;
 
@@ -42,7 +41,10 @@ public class Enemy extends Mob {
     }
 
     public void randomMovement(Room room) {
-        if (attack()) return;
+        if (attack()) {
+            attackSprite();
+            return;
+        }
 
         Random random = new Random();
 
@@ -76,4 +78,38 @@ public class Enemy extends Mob {
         super.draw(c, p);
     }
 
+    public void attackSprite() {
+        int direction = 0;
+
+        //UP and RIGHT
+        if (player.getX() > getX() && player.getY() < getY()) direction = 2;
+
+        //DOWN and RIGHT
+        else if (player.getX() > getX() && player.getY() > getY()) direction = 4;
+
+        //DOWN and LEFT
+        else if (player.getX() < getX() && player.getY() > getY()) direction = 6;
+
+        //UP and LEFT
+        else if (player.getX() < getX() && player.getY() < getY()) direction = 8;
+
+        //Straight UP
+        else if (player.getX() == getX() && player.getY() < getY()) direction = 1;
+
+        //Straight RIGHT
+        else if (player.getX() > getX() && player.getY() == getY()) direction = 3;
+
+        //Straight DOWN
+        else if (player.getX() == getX() && player.getY() > getY()) direction = 5;
+
+        //Straight LEFT
+        else if (player.getX() < getX() && player.getY() == getY()) direction = 7;
+
+        switch(direction) {
+            case 1: sprite = atk_up; break;
+            case 2:case 3:case 4: sprite = atk_right; break;
+            case 5: sprite = atk_down; break;
+            case 6:case 7:case 8: sprite = atk_left;
+        }
+    }
 }

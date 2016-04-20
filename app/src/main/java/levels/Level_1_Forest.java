@@ -30,8 +30,8 @@ public class Level_1_Forest extends Level {
                 switch(levelLayout[y][x]) {
                     case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
-                    case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
-                    case 'R': rooms.add(new River_Room(context, configureDoors(x, y))); break;
+                    case 'X': rooms.add(new Exit_Room(context, player, configureDoors(x, y))); break;
+                    case 'R': rooms.add(new River_Room(context, player, configureDoors(x, y))); break;
                     case 'D': rooms.add(new Deforested_Room(context, configureDoors(x, y))); break;
                     default: rooms.add(new Room(context)); break;
                 }

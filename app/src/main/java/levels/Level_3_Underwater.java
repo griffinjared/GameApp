@@ -42,7 +42,7 @@ public class Level_3_Underwater extends Level {
                 switch(levelLayout[y][x]) {
                     case 'E': rooms.add(new Empty_Room(context, player, configureDoors(x, y))); break;
                     case 'S': rooms.add(new Spawn_Room(context, configureDoors(x, y))); break;
-                    case 'X': rooms.add(new Exit_Room(context, configureDoors(x, y))); break;
+                    case 'X': rooms.add(new Exit_Room(context, player, configureDoors(x, y))); break;
                     case 'D': rooms.add(new Deep_Water(context, configureDoors(x, y))); break;
                     case 'C': rooms.add(new Underwater_Cave(context, configureDoors(x, y))); break;
                     case 'T': rooms.add(new Toxic_Lake(context, configureDoors(x, y))); break;
