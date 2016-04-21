@@ -13,7 +13,7 @@ public class Level_1_Forest_Layout {
     private static final char EMPTY_ROOM = 'E';
     private static final int TOTAL_ROOMS = 24; //total rooms is the total size of the 2d char array minus 1
 
-    static Random r = new Random();
+    private static Random r = new Random();
 
     public static char[][] generateLevel() {
         ArrayList<Character> rooms = new ArrayList<>();

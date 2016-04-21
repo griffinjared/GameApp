@@ -14,6 +14,8 @@ import levels.Level;
 import levels.Level_1_Forest;
 import levels.Level_2_Caves;
 import levels.Level_3_Underwater;
+import levels.Level_4_Volcano;
+import levels.Level_5_Labs;
 import mob.players.Knight;
 import mob.players.Player;
 
@@ -512,6 +514,10 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
             return new Level_2_Caves(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level2_caves));
         } else if (level.getLevelName().equals("Caves")) {
             return new Level_3_Underwater(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level3_underwater));
+        } else if (level.getLevelName().equals("Underwater")) {
+            return new Level_4_Volcano(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level4_volcano));
+        } else if (level.getLevelName().equals("Volcano")) {
+            return new Level_5_Labs(getContext(), player, BitmapFactory.decodeResource(getResources(), R.drawable.tiles_level5_labs));
         } else {
             return new Level(getContext());
         }
