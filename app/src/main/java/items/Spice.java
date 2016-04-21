@@ -7,20 +7,20 @@ import com.gameapp.gameapp.R;
 
 import mob.players.Player;
 
-public class Potion extends Item {
+public class Spice extends Item {
 
-    public Potion(int x, int y, Player player, Context context) {
+    public Spice(int x, int y, Player player, Context context) {
         super(x, y, player, context);
 
-        name = "Potion";
+        name = "Spice";
 
         System.gc();
-        setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.items), 0, 0);
+        setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.items), 1, 0);
     }
 
     @Override
     public void effect() {
-        player.setHP(5);
+        player.setMP(10);
     }
 
 }

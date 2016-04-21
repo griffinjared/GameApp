@@ -2,11 +2,16 @@ package rooms.common_rooms;
 
 import android.content.Context;
 
+import java.util.Random;
+
 import items.Potion;
+import items.Spice;
 import mob.players.Player;
 import rooms.Room;
 
 public class Spawn_Room extends Room {
+
+    private Random random = new Random();
 
     public Spawn_Room(Context context, int doorLayout, Player player, String level) {
         super(context);
@@ -34,8 +39,11 @@ public class Spawn_Room extends Room {
 
         defineDoorLayout(doorLayout);
 
-        switch(level) {
-            case "Forest": items.add(new Potion(10, 1, player, context)); break;
+        int rand = random.nextInt(2);
+
+        switch(rand) {
+            case 0: items.add(new Potion(10, 1, player, context)); break;
+            case 1: items.add(new Spice(10, 1, player, context)); break;
         }
     }
 }
