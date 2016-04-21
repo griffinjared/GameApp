@@ -88,7 +88,7 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.directional_pad);
         attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
 
-        itemsList = BitmapFactory.decodeResource(getResources(), R.drawable.items_list);
+        itemsList = BitmapFactory.decodeResource(getResources(), R.drawable.items);
         itemsList = Bitmap.createScaledBitmap(itemsList, getWidth(), getHeight(), true);
 
         joystick = joy_center;
