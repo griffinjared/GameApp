@@ -19,8 +19,9 @@ public class Potion extends Item {
         setSprite(BitmapFactory.decodeResource(context.getResources(), R.drawable.items), 0, 0);
     }
 
+    @Override
     public void effect() {
-        player.setHP(3);
+        player.setHP(5);
     }
 
 }

@@ -36,11 +36,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         UP, LEFT, RIGHT, DOWN, STOP
     }
 
-    public enum Combat {
-        NONE, MAGIC, PHYSICAL
-    }
-    private Combat combat = Combat.NONE;
-
     enum GameState {
         Running, Equip, Item, Main, Over
     }
@@ -53,11 +48,12 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private Level level; //one instant of the level can be used for all levels
     private Player player; //the only playable and controllable character on-screen
     private Paint paint; //for drawing graphics
+
     private Bitmap joy_center, joy_up, joy_down, joy_left, joy_right;
-    private Bitmap joystick;
-    private Bitmap attackGrid;
+    private Bitmap joystick, attackGrid;
+    private Bitmap itemsList;
+
     private boolean isHolding;
-    private boolean isSwiping;
     private Direction direction;
     private int speed;
 
@@ -91,6 +87,9 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         attackGrid = BitmapFactory.decodeResource(getResources(), R.drawable.directional_pad);
         attackGrid = Bitmap.createScaledBitmap(attackGrid, joy, joy, true);
+
+        itemsList = BitmapFactory.decodeResource(getResources(), R.drawable.items_list);
+        itemsList = Bitmap.createScaledBitmap(itemsList, getWidth(), getHeight(), true);
 
         joystick = joy_center;
     }
@@ -171,8 +170,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             isHolding = false;
             joystick = joy_center;
-            isSwiping = false;
-            combat = Combat.NONE;
             speed = 0;
         }
         return true;
@@ -184,40 +181,47 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         int h = getHeight();
         int size = (h - w - (w/15));
 
-        isSwiping = true;
         isHolding = false;
 
-        //NorthWest corner
-        if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
-            player.magic(8);
-        }
         //North corner
-        else if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
+        if(inBounds(event, (2*w/40) + (16*w/27), h - size, 4*w/27, 4*w/27)) {
             player.magic(1);
         }
         //NorthEast corner
         else if(inBounds(event, (2*w/40) + (20*w/27), h - size, 4*w/27, 4*w/27)) {
             player.magic(2);
         }
-        //West corner
-        else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
-            player.magic(7);
-        }
         //East corner
         else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
             player.magic(3);
         }
-        //SouthWest corner
-        else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-            player.magic(6);
+        //SouthEast corner
+        else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+            player.magic(4);
         }
         //South corner
         else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (8*w/28), 4*w/27, 4*w/27)) {
             player.magic(5);
         }
-        //SouthEast corner
-        else if (inBounds(event, (2*w/40) + (20*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
-            player.magic(4);
+        //SouthWest corner
+        else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (8*w/27), 4*w/27, 4*w/27)) {
+            player.magic(6);
+        }
+        //West corner
+        else if (inBounds(event, (2*w/40) + (12*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+            player.magic(7);
+        }
+        //NorthWest corner
+        else if(inBounds(event, (2*w/40) + (12*w/27), h - size, 4*w/27, 4*w/27)) {
+            player.magic(8);
+        }
+
+        //Item Slot
+        else if (inBounds(event, (2*w/40) + (16*w/27), h - size + (4*w/27), 4*w/27, 4*w/27)) {
+            if (player.getItem() == null) return;
+
+            player.getItem().effect();
+            player.setItem(null);
         }
     }
 
@@ -350,17 +354,21 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
     private void drawInventoryUI(Canvas canvas) {
         int w = getWidth();
         int h = getHeight();
-
-        paint.setColor(WHITE);
-        paint.setTextSize(30);
-        canvas.drawRect(0, 0, w, h, paint);
-        paint.setTextAlign(Paint.Align.CENTER);
-
-        paint.setColor(BLACK);
-        canvas.drawText("Back Button to Resume", w / 2, h / 3, paint);
-        canvas.drawText("Inventory", w / 2, h * 2/3, paint);
+        int space = (w/6) / 2;
 
         paint.setTextAlign(Paint.Align.LEFT);
+
+        paint.setColor(BLACK);
+        canvas.drawText("Potion, +5 HP", w / 3, space, paint);
+        canvas.drawText("Spice, +10 MP", w / 3, (h / 6) + space, paint);
+        canvas.drawText("Bomb, PWR: 3", w / 3, ((h / 6) * 2) + space, paint);
+        //canvas.drawText("Spice, +10 MP", w / 3, ((h / 6) * 3) + space, paint);
+        //canvas.drawText("Spice, +10 MP", w / 3, ((h / 6) * 4) + space, paint);
+        //canvas.drawText("Spice, +10 MP", w / 3, ((h / 6) * 5) + space, paint);
+
+        paint.setTextAlign(Paint.Align.LEFT);
+
+        canvas.drawBitmap(itemsList, 0, 0, paint);
     }
 
     private void drawGameOverUI(Canvas canvas)
@@ -421,7 +429,6 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawBitmap(joystick, w / 40, h - size, paint); //joystick
 
-        //canvas.drawRect((w / 20) + (w * 4 / 9), h - size, w - (w / 40), h - size + (w * 4 / 9), paint); //Attack pad
         canvas.drawBitmap(attackGrid, (w / 20) + (w * 4 / 9), h - size, paint);
 
         /*
@@ -490,10 +497,8 @@ public class Graphics extends SurfaceView implements SurfaceHolder.Callback {
         maxSpeed = player.getBaseSpeed();
         paint = new Paint();
         isHolding = false;
-        isSwiping = false;
         speed = 0;
         direction = Direction.STOP;
-        combat = Combat.NONE;
 
         setFocusable(true);
 

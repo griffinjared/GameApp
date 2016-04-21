@@ -1,11 +1,14 @@
 package rooms.common_rooms;
 
 import android.content.Context;
+
+import items.Potion;
+import mob.players.Player;
 import rooms.Room;
 
 public class Spawn_Room extends Room {
 
-    public Spawn_Room(Context context, int doorLayout, String level) {
+    public Spawn_Room(Context context, int doorLayout, Player player, String level) {
         super(context);
         name = "Spawn_Room";
 
@@ -30,5 +33,9 @@ public class Spawn_Room extends Room {
         };
 
         defineDoorLayout(doorLayout);
+
+        switch(level) {
+            case "Forest": items.add(new Potion(10, 1, player, context)); break;
+        }
     }
 }

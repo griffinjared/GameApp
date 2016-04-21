@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 
 import equipment.spell.Spell;
+import items.Item;
 import mob.Enemy;
 import mob.Mob;
 import rooms.Room;
@@ -22,6 +23,7 @@ public class Player extends Mob {
 
     private int roomX, roomY; //coordinates in the level layout grid
     protected Spell spell;
+    protected Item item;
 
     public Player(int x, int y) {
         super(x, y);
@@ -56,7 +58,7 @@ public class Player extends Mob {
         roomY = y;
     }
 
-    public void enemyCollision(int xa, int ya, Room room) {
+    public void objectCollision(int xa, int ya, Room room) {
         //Detect enemies
         ArrayList<Enemy> enemies = room.getEnemies();
         for (int i = 0; i < enemies.size(); i++) {
@@ -64,6 +66,26 @@ public class Player extends Mob {
 
             if (e.getX() - xa == getX() && e.getY() - ya == getY()) {
                 attack(xa, ya, e);
+            }
+        }
+
+        //Detect items
+        ArrayList<Item> items = room.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            Item it = items.get(i);
+
+            if (it.getX() == getX() && it.getY() == getY()) {
+                if (item != null) {
+                    item = it;
+                    room.takeItem(it, item);
+                }
+                else
+                {
+                    item = it;
+                    room.takeItem(it, null);
+                }
+
+                item.setActive();
             }
         }
     }
@@ -111,18 +133,28 @@ public class Player extends Mob {
     @Override
     public void setX(int num, Room room) {
         super.setX(num, room);
-        enemyCollision(num, 0, room);
+        objectCollision(num, 0, room);
     }
 
     @Override
     public void setY(int num, Room room) {
         super.setY(num, room);
-        enemyCollision(0, num, room);
+        objectCollision(0, num, room);
     }
 
     @Override
     public void draw(Canvas c, Paint p) {
         super.draw(c, p);
         spell.draw(c, p);
+        if (item != null) item.draw(c, p);
+    }
+
+    //Items and Equipment
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item it) {
+        item = it;
     }
 }

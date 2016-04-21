@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 
 import assets.chests.Chest;
+import items.Item;
 import mob.Enemy;
 import mob.players.Player;
 
@@ -19,8 +20,12 @@ public class Room {
 
     protected int[][] tileLayout = new int[12][12];
     protected ArrayList<Enemy> enemies;
+    protected ArrayList<Chest> treasure;
+    protected ArrayList<Item> items;
     protected Player player;
     protected String name;
+
+    protected Context context;
 
     /** Door Layouts
      *  0 - Four-way
@@ -35,15 +40,11 @@ public class Room {
      *  9 - Single East
      *  10 - Single West
      */
-
-    //Chests will typically be put in individually with specific coordinates instead of on the tileLayout grid
-    protected ArrayList<Chest> treasure = new ArrayList<Chest>();
-
-    protected Context context;
-
     public Room(Context context) {
         this.context = context;
         enemies = new ArrayList<Enemy>();
+        treasure = new ArrayList<Chest>();
+        items = new ArrayList<Item>();
 
         //map tileLayout formation here.
         /** Layout numbering key:
@@ -77,6 +78,9 @@ public class Room {
         for (int i = 0; i < treasure.size(); i++) {
             treasure.get(i).draw(c, p);
         }
+        for (int i = 0; i < items.size(); i++) {
+            items.get(i).draw(c, p);
+        }
     }
 
     public int[][] getTileLayout() {
@@ -89,6 +93,15 @@ public class Room {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void takeItem(Item item1, Item item2) {
+        items.remove(item1);
+        if (item2 != null) items.add(item2);
     }
 
     //DOORWAY LAYOUTS

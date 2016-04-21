@@ -2,6 +2,8 @@ package items;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import mob.players.Player;
 import tiles.Tile;
@@ -26,11 +28,31 @@ public class Item {
 
     }
 
+    public void setActive() {
+        x = 2 * SIZE;
+        y = 0;
+    }
+
     public void setSprite(Bitmap sprite, int x, int y) {
         System.gc();
-        Bitmap spriteSheet = Bitmap.createScaledBitmap(sprite, 96, 144, true);
+        Bitmap spriteSheet = Bitmap.createScaledBitmap(sprite, 96, 96, true);
 
         this.sprite = Bitmap.createBitmap(spriteSheet, x*SIZE, y*SIZE, SIZE, SIZE);
+    }
+
+    public Bitmap getSprite() {
+        return sprite;
+    }
+
+    public void draw(Canvas c, Paint p) {
+        c.drawBitmap(sprite, x, y, p);
+    }
+
+    public int getX() {
+        return x / SIZE;
+    }
+    public int getY() {
+        return y / SIZE;
     }
 
 }
